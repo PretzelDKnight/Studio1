@@ -3,24 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using System;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class StorySystem : MonoBehaviour
 {
-    private static StorySystem instance = null;
-
-    [SerializeField] static List<Story> stories;
-
-    [SerializeField] static Animator dialogueLHS;
-    [SerializeField] static Animator dialogueRHS;
-
-    UnityEvent currentEvent;
-
-    public event EventHandler eventHandler;
-
+    public static StorySystem instance = null;
+    [SerializeField] Sprite transparent;
+    [SerializeField] Image portraitLHS;
+    [SerializeField] Animator dialogueLHS;
+    [SerializeField] Text speakerLHS;
+    [SerializeField] Text textLHS;
+    [SerializeField] Image portraitRHS;
+    [SerializeField] Animator dialogueRHS;
+    [SerializeField] Text speakerRHS;
+    [SerializeField] Text textRHS;
+    [SerializeField] List<Story> stories;
     static int current = 0;
-
     static bool playing = false;
+    static bool sideVal = false;
+    static bool noMoreStories = false;
 
     void Awake()
     {
@@ -37,6 +39,7 @@ public class StorySystem : MonoBehaviour
 
     public void Update()
     {
+        ResetExitTrigger();
         if(playing)
             stories[current].Update();
     }
@@ -46,36 +49,114 @@ public class StorySystem : MonoBehaviour
 
     }
 
-    static public void PlayStory()
+    public void PlayStory()
     {
-        playing = true;
-        stories[current].PlayDialogue();
+        if (!noMoreStories)
+        {
+            playing = true;
+            stories[current].PlayDialogue();
+        }
+        else
+            Debug.Log("NO MORE STORIES FOR YOU");
     }
 
-    static public void EndStory()
+    public void EndStory()
     {
+        DialogueBoxClose(sideVal);
         playing = false;
-        current++;
+        if (current < stories.Count - 1)
+            current++;
+        else
+            noMoreStories = true;
+        Debug.Log(current);
     }
 
     public void LoadStoryState()
     {
-        currentEvent = stories[current].trigger;
+        Debug.Log("Accessing current trigger");
     }
 
-    static public void DialogueBoxOpen(bool right)
+    public void DialogueBoxOpen(string speaker, string text, bool right)
     {
-        if (right)
-            dialogueRHS.SetTrigger("EnterBox");
+        DialogueBoxText(speaker, text, right);
+
+        if (right != sideVal)
+        {
+            if (right)
+            {
+                dialogueRHS.SetTrigger("EnterBox");
+            }
+            else
+            {
+                dialogueLHS.SetTrigger("EnterBox");
+            }
+            sideVal = right;
+
+            DialogueBoxClose(!right);
+        }
         else
-            dialogueLHS.SetTrigger("EnterBox");
+        {
+            if (right)
+                dialogueRHS.SetTrigger("SameSideAgain");
+            else
+                dialogueLHS.SetTrigger("SameSideAgain");
+            Debug.Log("SAME SIDE BUB");
+        }
     }
 
-    static public void DialogueBoxClose(bool right)
+    public void DialogueBoxClose(bool right)
     {
         if (right)
-            dialogueRHS.SetTrigger("ExitBox");
+            dialogueRHS.SetBool("ExitBox", true);
         else
-            dialogueLHS.SetTrigger("ExitBox");
+            dialogueLHS.SetBool("ExitBox", true);
+        ClearSprites();
+    }
+
+    public void ResetExitTrigger()
+    {
+        if (dialogueRHS.GetBool("ExitBox"))
+            dialogueRHS.SetBool("ExitBox", false);
+        if (dialogueLHS.GetBool("ExitBox"))
+            dialogueLHS.SetBool("ExitBox", false);
+    }
+
+    /// <summary>
+    /// This is to make sure Animation plays correctly for the Dialogue boxes
+    /// </summary>
+    /// <param name="right"></param>
+    public void SetSideBool(bool right)
+    {
+        sideVal = !right;
+    }
+
+    void DialogueBoxText(string speaker, string text, bool right)
+    {
+        if (right)
+        {
+            speakerRHS.text = speaker;
+            textRHS.text = text;
+        }
+        else
+        {
+            speakerLHS.text = speaker;
+            textLHS.text = text;
+        }
+    }
+
+    public void AssignSprite(Sprite sprite, bool right)
+    {
+        ClearSprites();
+
+        if (right)
+            portraitRHS.sprite = sprite;
+        else
+            portraitLHS.sprite = sprite;
+    }
+
+    public void ClearSprites()
+    {
+        portraitRHS.sprite = transparent;
+        portraitLHS.sprite = transparent;
     }
 }

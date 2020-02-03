@@ -10,8 +10,6 @@ public class Story
 
     [SerializeField] public List<Dialogue> dialogues;
 
-    [SerializeField] public UnityEvent trigger;
-
     [SerializeField] List<Character> enemies;
 
     int current = 0;
@@ -19,19 +17,25 @@ public class Story
     public void Update()
     {
         dialogues[current].Update();
+
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            NextDialogue();
+        }
     }
 
     public void PlayDialogue()
     {
+        if (current == 0)
+            StorySystem.instance.SetSideBool(dialogues[current].right);
         dialogues[current].PlayDialogue();
     }
 
     void NextDialogue()
     {
-        dialogues[current].CloseDialogue();
         current += 1;
-        if (current > dialogues.Count)
-            StorySystem.EndStory();
+        if (current >= dialogues.Count) 
+            StorySystem.instance.EndStory();
         else
             dialogues[current].PlayDialogue();
     }

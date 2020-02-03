@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class Dialogue
 {
     [SerializeField] string speaker;
-    GameObject portrait;
-    [SerializeField] bool right = false;
+    [SerializeField] Sprite portrait;
+    [SerializeField] public bool right = false;
     [SerializeField] string text;
 
     [SerializeField] bool triggerBattle;
@@ -21,16 +22,13 @@ public class Dialogue
 
     public void PlayDialogue()
     {
-        StorySystem.DialogueBoxOpen(right);
+        StorySystem.instance.DialogueBoxOpen(speaker, text, right);
+        StorySystem.instance.AssignSprite(portrait, right);
     }
 
     public void CloseDialogue()
     {
-        StorySystem.DialogueBoxClose(right);
-    }
-
-    public void PlayText()
-    {
-
+        StorySystem.instance.DialogueBoxClose(right);
+        StorySystem.instance.ClearSprites();
     }
 }
