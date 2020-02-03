@@ -8,7 +8,15 @@ using UnityEngine.UI;
 [System.Serializable]
 public class StorySystem : MonoBehaviour
 {
+    // Singleton Instance
     public static StorySystem instance = null;
+
+    // Objects which StorySystem can change values for
+    [SerializeField] float dialogueBoxTimeGap = 1f;
+    [SerializeField] Font font;
+    [SerializeField] Color fontColor;
+    [SerializeField] int speakerFontSize = 24;
+    [SerializeField] int textFontSize = 24;
     [SerializeField] Sprite transparent;
     [SerializeField] Image portraitLHS;
     [SerializeField] Animator dialogueLHS;
@@ -19,6 +27,9 @@ public class StorySystem : MonoBehaviour
     [SerializeField] Text speakerRHS;
     [SerializeField] Text textRHS;
     [SerializeField] List<Story> stories;
+
+    // StorySystem centric variables
+    static float exitTime = 0;
     static int current = 0;
     static bool playing = false;
     static bool sideVal = false;
@@ -35,18 +46,42 @@ public class StorySystem : MonoBehaviour
     void Start()
     {
         LoadStoryState();
+        Initialize();
     }
 
     public void Update()
     {
         ResetExitTrigger();
-        if(playing)
+        if (playing)
+        {
+            exitTime += Time.deltaTime;
             stories[current].Update();
+        }
     }
 
     void CheckCurrentTrigger()
     {
 
+    }
+
+    // Adds in the fonts and values that go in at game start
+    private void Initialize()
+    {
+        speakerLHS.font = font;
+        speakerLHS.color = fontColor;
+        speakerLHS.fontSize = speakerFontSize;
+
+        speakerRHS.font = font;
+        speakerRHS.color = fontColor;
+        speakerRHS.fontSize = speakerFontSize;
+
+        textLHS.font = font;
+        textLHS.color = fontColor;
+        textLHS.fontSize = textFontSize;
+
+        textRHS.font = font;
+        textRHS.color = fontColor;
+        textRHS.fontSize = textFontSize;
     }
 
     public void PlayStory()
@@ -115,10 +150,10 @@ public class StorySystem : MonoBehaviour
 
     public void ResetExitTrigger()
     {
-        if (dialogueRHS.GetBool("ExitBox"))
-            dialogueRHS.SetBool("ExitBox", false);
-        if (dialogueLHS.GetBool("ExitBox"))
-            dialogueLHS.SetBool("ExitBox", false);
+            if (dialogueRHS.GetBool("ExitBox"))
+                dialogueRHS.SetBool("ExitBox", false);
+            if (dialogueLHS.GetBool("ExitBox"))
+                dialogueLHS.SetBool("ExitBox", false);
     }
 
     /// <summary>
@@ -158,5 +193,15 @@ public class StorySystem : MonoBehaviour
     {
         portraitRHS.sprite = transparent;
         portraitLHS.sprite = transparent;
+    }
+
+    public bool CheckTimer()
+    {
+        if (exitTime >= dialogueBoxTimeGap)
+        {
+            exitTime = 0;
+            return true;
+        }
+        return false;
     }
 }

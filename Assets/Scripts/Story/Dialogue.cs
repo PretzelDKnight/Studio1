@@ -12,7 +12,6 @@ public class Dialogue
     [SerializeField] Sprite portrait;
     [SerializeField] public bool right = false;
     [SerializeField] string text;
-
     [SerializeField] bool triggerBattle;
 
     public void Update()

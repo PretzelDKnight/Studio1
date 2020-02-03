@@ -7,9 +7,7 @@ using UnityEngine.Events;
 public class Story
 {
     [SerializeField] string description;
-
     [SerializeField] public List<Dialogue> dialogues;
-
     [SerializeField] List<Character> enemies;
 
     int current = 0;
@@ -19,9 +17,8 @@ public class Story
         dialogues[current].Update();
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            NextDialogue();
-        }
+            if(StorySystem.instance.CheckTimer())
+                NextDialogue();
     }
 
     public void PlayDialogue()
