@@ -6,19 +6,23 @@ using UnityEngine.Events;
 [System.Serializable]
 public class Story
 {
-    [SerializeField] string description;
-    [SerializeField] public List<Dialogue> dialogues;
-    [SerializeField] List<Character> enemies;
+    [SerializeField] string description = "";
+    [SerializeField] List<Dialogue> dialogues = null;
+    [SerializeField] List<Character> enemies = null;
 
     int current = 0;
+    bool playingCutScene = false;
 
     public void Update()
     {
         dialogues[current].Update();
 
+        // Replace Input commands with Input script functions as soon as possible!!!
+
         if (Input.GetKeyDown(KeyCode.Mouse0))
-            if(StorySystem.instance.CheckTimer())
-                NextDialogue();
+            if (StorySystem.instance.CheckTimer())
+                if (!playingCutScene)
+                    NextDialogue();
     }
 
     public void PlayDialogue()
@@ -35,5 +39,25 @@ public class Story
             StorySystem.instance.EndStory();
         else
             dialogues[current].PlayDialogue();
+    }
+
+    public void StorySystemCall()
+    {
+        if(StorySystem.instance.CheckStoryCall(this))
+        {
+            // Insert Code Snippet to de-activate button/trigger or Interact with Menu System!!!
+
+
+        }
+    }
+
+    public void CutScene()
+    {
+        playingCutScene = true;
+    }
+
+    public void EndCutscene()
+    {
+        playingCutScene = false;
     }
 }

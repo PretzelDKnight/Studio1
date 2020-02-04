@@ -965,6 +965,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3046d47734feefc4c99e4bbeef14a643, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boxTimeGap: 0.6
+  font: {fileID: 12800000, guid: df8d66de39de5e843b37dfd378dea3c2, type: 3}
+  fontColor: {r: 1, g: 1, b: 1, a: 1}
+  speakerFontSize: 24
+  textFontSize: 24
   transparent: {fileID: 21300000, guid: 986b49a75d47278409297417d05e8363, type: 3}
   portraitLHS: {fileID: 1910132677}
   dialogueLHS: {fileID: 618223867}
@@ -977,20 +982,23 @@ MonoBehaviour:
   stories:
   - description: Test Story
     dialogues:
-    - speaker: Evil Sans
+    - cutScene: 0
+      speaker: Evil Sans
       portrait: {fileID: 21300000, guid: 1fb8857ab806fd14bad60f9c4065a5d0, type: 3}
       right: 1
-      text: Hue Hue...
+      text: Hue hue hue...
       triggerBattle: 0
-    - speaker: Evil Sans
+    - cutScene: 0
+      speaker: Evil Sans
       portrait: {fileID: 21300000, guid: 1fb8857ab806fd14bad60f9c4065a5d0, type: 3}
       right: 1
       text: Fool!
       triggerBattle: 0
-    - speaker: Sans
+    - cutScene: 0
+      speaker: Sans
       portrait: {fileID: 21300000, guid: 1fb8857ab806fd14bad60f9c4065a5d0, type: 3}
       right: 0
-      text: Pls nu...
+      text: Ples nu...
       triggerBattle: 0
     enemies: []
 --- !u!1 &1770517076

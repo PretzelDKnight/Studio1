@@ -12,21 +12,21 @@ public class StorySystem : MonoBehaviour
     public static StorySystem instance = null;
 
     // Objects which StorySystem can change values for
-    [SerializeField] float dialogueBoxTimeGap = 1f;
-    [SerializeField] Font font;
-    [SerializeField] Color fontColor;
+    [SerializeField] float boxTimeGap = 0.6f;
+    [SerializeField] Font font = null;
+    [SerializeField] Color fontColor = Color.white;
     [SerializeField] int speakerFontSize = 24;
     [SerializeField] int textFontSize = 24;
-    [SerializeField] Sprite transparent;
-    [SerializeField] Image portraitLHS;
-    [SerializeField] Animator dialogueLHS;
-    [SerializeField] Text speakerLHS;
-    [SerializeField] Text textLHS;
-    [SerializeField] Image portraitRHS;
-    [SerializeField] Animator dialogueRHS;
-    [SerializeField] Text speakerRHS;
-    [SerializeField] Text textRHS;
-    [SerializeField] List<Story> stories;
+    [SerializeField] Sprite transparent = null;
+    [SerializeField] Image portraitLHS = null;
+    [SerializeField] Animator dialogueLHS = null;
+    [SerializeField] Text speakerLHS = null;
+    [SerializeField] Text textLHS = null;
+    [SerializeField] Image portraitRHS = null;
+    [SerializeField] Animator dialogueRHS = null;
+    [SerializeField] Text speakerRHS = null;
+    [SerializeField] Text textRHS = null;
+    [SerializeField] List<Story> stories = null;
 
     // StorySystem centric variables
     static float exitTime = 0;
@@ -34,6 +34,7 @@ public class StorySystem : MonoBehaviour
     static bool playing = false;
     static bool sideVal = false;
     static bool noMoreStories = false;
+    static bool battle = false;
 
     void Awake()
     {
@@ -59,9 +60,14 @@ public class StorySystem : MonoBehaviour
         }
     }
 
-    void CheckCurrentTrigger()
+    public bool CheckStoryCall(Story story)
     {
-
+        if (stories[current] == story)
+        {
+            PlayStory();
+            return true;
+        }
+        return false;
     }
 
     // Adds in the fonts and values that go in at game start
@@ -109,33 +115,47 @@ public class StorySystem : MonoBehaviour
     public void LoadStoryState()
     {
         Debug.Log("Accessing current trigger");
+        // Insert Loading Story state from save file code snippet!!!
+
+
+
     }
 
     public void DialogueBoxOpen(string speaker, string text, bool right)
     {
-        DialogueBoxText(speaker, text, right);
-
-        if (right != sideVal)
+        if (!Battle)
         {
-            if (right)
+            DialogueBoxText(speaker, text, right);
+
+            if (right != sideVal)
             {
-                dialogueRHS.SetTrigger("EnterBox");
+                if (right)
+                {
+                    dialogueRHS.SetTrigger("EnterBox");
+                }
+                else
+                {
+                    dialogueLHS.SetTrigger("EnterBox");
+                }
+                sideVal = right;
+
+                DialogueBoxClose(!right);
             }
             else
             {
-                dialogueLHS.SetTrigger("EnterBox");
+                if (right)
+                    dialogueRHS.SetTrigger("SameSideAgain");
+                else
+                    dialogueLHS.SetTrigger("SameSideAgain");
+                Debug.Log("SAME SIDE BUB");
             }
-            sideVal = right;
-
-            DialogueBoxClose(!right);
         }
         else
         {
-            if (right)
-                dialogueRHS.SetTrigger("SameSideAgain");
-            else
-                dialogueLHS.SetTrigger("SameSideAgain");
-            Debug.Log("SAME SIDE BUB");
+            DialogueBoxClose(right);
+            // Insert Initiate Battle Manager Code Snippet!!!
+
+
         }
     }
 
@@ -197,11 +217,23 @@ public class StorySystem : MonoBehaviour
 
     public bool CheckTimer()
     {
-        if (exitTime >= dialogueBoxTimeGap)
+        if (exitTime >= boxTimeGap)
         {
             exitTime = 0;
             return true;
         }
         return false;
+    }
+
+    public bool Battle
+    {
+        get
+        {
+            return battle;
+        }
+        set
+        {
+            battle = value;
+        }
     }
 }

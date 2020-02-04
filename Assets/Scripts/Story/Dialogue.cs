@@ -8,11 +8,13 @@ using UnityEngine.UI;
 [System.Serializable]
 public class Dialogue
 {
-    [SerializeField] string speaker;
-    [SerializeField] Sprite portrait;
+    [SerializeField] public bool cutScene = false;
+    // [SerializeField] insert scene to load here!!!
+    [SerializeField] string speaker = "";
+    [SerializeField] Sprite portrait = null;
     [SerializeField] public bool right = false;
-    [SerializeField] string text;
-    [SerializeField] bool triggerBattle;
+    [SerializeField] string text = "";
+    [SerializeField] bool triggerBattle = false;
 
     public void Update()
     {
@@ -21,8 +23,18 @@ public class Dialogue
 
     public void PlayDialogue()
     {
-        StorySystem.instance.DialogueBoxOpen(speaker, text, right);
-        StorySystem.instance.AssignSprite(portrait, right);
+        if (!cutScene)
+        {
+            StorySystem.instance.Battle = triggerBattle;
+            StorySystem.instance.DialogueBoxOpen(speaker, text, right);
+            StorySystem.instance.AssignSprite(portrait, right);
+        }
+        else
+        {
+            // Insert Code Snippet to load cutscene scene!!!
+
+
+        }
     }
 
     public void CloseDialogue()

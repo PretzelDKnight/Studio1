@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
 {
     public static Player instance = null;
 
-    List<Character> allies;
+    List<Character> allies = null;
     Character[] party = new Character[3];
 
     // Save specific variables
