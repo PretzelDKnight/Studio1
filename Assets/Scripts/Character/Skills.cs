@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Character : MonoBehaviour
+public class Skills : MonoBehaviour
 {
-    // Start is called before the first frame update
     void Start()
     {
         
