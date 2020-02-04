@@ -4,22 +4,48 @@ using UnityEngine;
 
 public class HexTile : MonoBehaviour
 {
+    [HideInInspector] public int hCost;
+    [HideInInspector] public int gCost;
+    [HideInInspector] public int fCost;
+    
+    HexGrid grid;
+
     List<HexTile> neighbours;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    bool walkable;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [HideInInspector] public HexTile parent;
+
+    public LayerMask layersToCheck;
 
     void FindNeighbours()
     {
+        for (int i = 0; i < 6; i++)
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, grid.directions[i], out hit, 0.5f, layersToCheck))
+            {
+                if (hit.collider.tag != "Enviro")
+                {
+                    neighbours.Add(hit.collider.gameObject.GetComponent<HexTile>());
+                    walkable = true;
+                }
+            }
+        }
+    }
 
+    public HexTile returnParent()
+    {
+        return parent;
+    }
+
+    public List<HexTile> returnNeighbours()
+    {
+        return neighbours;
+    }
+
+    public void CalculateFCost()
+    {
+        fCost = hCost + gCost;
     }
 }

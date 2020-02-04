@@ -767,7 +767,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55950311c740cc7448f0b3dcbd2dde28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  refer: {fileID: 8426013784161918312, guid: e84fbbc09394aa74db89cb6d1fe7bc87, type: 3}
+  hexTile: {fileID: 0}
+  directions: []
   x: 10
   z: 10
   radius: 0.5
