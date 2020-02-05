@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Stats : ScriptableObject
 {
-    [SerializeField] float attack;
-    [SerializeField] float defence;
-    [SerializeField] float speed;
-    [SerializeField] float resist;
-    [SerializeField] int energyPool;
+    [SerializeField] public float attack;
+    [SerializeField] public float defence;
+    [SerializeField] public float speed;
+    [SerializeField] public float resist;
+    [SerializeField] public int energyPool;
 }

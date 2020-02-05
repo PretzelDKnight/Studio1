@@ -72,9 +72,12 @@ public class Player : MonoBehaviour
     /// Returns the array of Characters in the Players Party
     /// </summary>
     /// <returns></returns>
-    public Character[] GetParty()
+    public List<Character> GetParty()
     {
-        return party;
+        List<Character> temp = new List<Character>();
+        foreach (var item in party)
+            temp.Add(item);
+        return temp;
     }
 
     /// <summary>
