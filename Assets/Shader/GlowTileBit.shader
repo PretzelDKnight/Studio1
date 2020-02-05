@@ -45,6 +45,7 @@
             float4 _MainTex_ST;
 			float4 _Color;
 			float _Frequency;
+            float _IsStable;
 
 			vertexOutput VertexShaderFunction(appdata input)
             {
@@ -64,7 +65,11 @@
 				float4 color = _Color;
 
 				//float blink = (1 + (sin(input.worldPos.x + (_Frequency * _Time)) + sin(input.worldPos.z + (_Frequency * _Time))) / 2) / 2;
-                float blink = (1 + sin(input.worldPos.x + (_Frequency * _Time))) / 2;
+                float blink = 0;
+                if (_IsStable > 0)
+                    blink = _IsStable;
+                else
+                    blink = (1 + sin(input.worldPos.x + (_Frequency * _Time))) / 2;
 
 				color.a = albedo.a;
 				color.a = color.a * blink;

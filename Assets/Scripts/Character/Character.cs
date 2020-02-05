@@ -13,6 +13,7 @@ public enum Status
 public abstract class Character : MonoBehaviour , IComparable
 {
     Stats stats = null;
+    Stats currentStats = null;
     Status status = Status.Normal;
     bool AI = false;
 
@@ -22,6 +23,31 @@ public abstract class Character : MonoBehaviour , IComparable
     public abstract void SkillOne();
     public abstract void SkillTwo();
 
+    protected void Awake()
+    {
+
+    }
+
+    public void GetCurrentTile()
+    {
+        tile = GetTargetTile(this);
+    }
+
+    protected HexTile GetTargetTile(Character chara)
+    {
+        HexTile hTile = null;
+        RaycastHit hit;
+        if (Physics.Raycast(chara.gameObject.transform.position, -Vector3.up, out hit, 1))
+        {
+            hTile = hit.collider.GetComponent<HexTile>();
+        }
+        return hTile;
+    }
+
+    protected void FindSelectableTiles()
+    {
+
+    }
 
     protected void Move()
     {
@@ -86,9 +112,9 @@ public abstract class Character : MonoBehaviour , IComparable
     public int CompareTo(object obj)
     {
         Character chara = (Character)obj;
-        if (stats.speed > chara.stats.speed)
+        if (currentStats.speed > chara.currentStats.speed)
             return 1;
-        else if (stats.speed == chara.stats.speed)
+        else if (currentStats.speed == chara.currentStats.speed)
             return 0;
         else
             return -1;

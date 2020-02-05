@@ -7,14 +7,25 @@ public class HexGrid : MonoBehaviour
     public static HexGrid instance = null;
 
     public GameObject hexTile;
-
     public int x = 5;
     public int z = 5;
-
     public float radius = 0.5f;
     public bool useAsInnerCircleRadius = true;
-
     private float offsetX, offsetZ;
+
+    // Tile Color
+    public Material mat = null;
+    public Color normal;
+    public Color whenSelected = Color.white;
+    public Color whenHovered = Color.white;
+    public Color whenWalkable = Color.white;
+
+    public float hoverRate = 2;
+    float time = 0;
+    float lerpValue = 0;
+    bool change = false;
+
+    public LayerMask layerMask;
 
     private void Awake()
     {
@@ -26,12 +37,13 @@ public class HexGrid : MonoBehaviour
 
     void Start()
     {
+        normal = mat.color;
         GenerateHexGrid();
     }
 
     private void Update()
     {
-        
+
     }
 
     void GenerateHexGrid()
@@ -44,9 +56,9 @@ public class HexGrid : MonoBehaviour
         offsetX = unitLength * Mathf.Sqrt(3);
         offsetZ = unitLength * 1.5f;
 
-        for (int i = -x/2; i < x/2; i++)
+        for (int i = -x / 2; i < x / 2; i++)
         {
-            for (int j = -z/2; j < z/2; j++)
+            for (int j = -z / 2; j < z / 2; j++)
             {
                 Vector2 hexpos = HexOffset(i, j);
                 Vector3 pos = new Vector3(hexpos.x, transform.position.y, hexpos.y);
@@ -94,5 +106,30 @@ public class HexGrid : MonoBehaviour
         dir.Add(temp);
 
         return dir;
+    }
+
+    public float ShaderLerp()
+    {
+        time += Time.deltaTime * hoverRate;
+        
+        if (change)
+        {
+            lerpValue = Mathf.Lerp(0.5f, 1f, time);
+            if (time >= 1f)
+            {
+                time = 0;
+                change = false;
+            }
+        }
+        else
+        {
+            lerpValue = Mathf.Lerp(1f, 0.5f, time);
+            if (time >= 1f)
+            {
+                time = 0;
+                change = true;
+            }
+        }
+        return lerpValue;
     }
 }
