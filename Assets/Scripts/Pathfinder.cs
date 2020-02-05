@@ -2,19 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pathfinder : HexTile
-{    
+public class Pathfinder : MonoBehaviour
+{
+    public static Pathfinder instance = null;
+
     List<HexTile> openList;
     List<HexTile> closedList;
-
-    HexTile tile;
-
+    
     private const int moveCost = 10;
+
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
+    }
 
     List<HexTile> FindPath(HexTile start, HexTile destination)
     {
-        openList = new List<HexTile> { start };
-        closedList = new List<HexTile>();
+        openList = new List<HexTile>();
+        closedList = new List<HexTile> { start };
 
         for (int i = 0; i < tile.returnNeighbours().Count; i++)
         {
@@ -22,7 +30,7 @@ public class Pathfinder : HexTile
             {
                 tile.gCost = int.MaxValue;
                 tile.CalculateFCost();
-                tile.parent = null;
+                tile.Parent = null;
             }
         }
 
@@ -35,7 +43,10 @@ public class Pathfinder : HexTile
             HexTile currentTile = GetLowestFTile(openList);
             if (currentTile = destination)
                 return CalculatePath(destination); //Reached end
-        }
+
+            openList.Remove(currentTile);
+            closedList.Add(currentTile);
+        }               
 
         return null;
     }
@@ -45,12 +56,12 @@ public class Pathfinder : HexTile
         return null;
     }
 
-    int CalculateDistance(HexTile a, HexTile b)
+    float CalculateDistance(HexTile a, HexTile b)
     {
-        int xDist = (int)Mathf.Abs(a.transform.position.x - b.transform.position.x);
-        int yDist = (int)Mathf.Abs(a.transform.position.z - b.transform.position.z);
-        int remainDist = (int)Mathf.Abs(xDist - yDist);
-        return moveCost*Mathf.Min(xDist,yDist) + moveCost*remainDist;
+        float xDist = Mathf.Abs(a.transform.position.x - b.transform.position.x);
+        float yDist = Mathf.Abs(a.transform.position.z - b.transform.position.z);
+        float remainDist = Mathf.Abs(xDist - yDist);
+        return moveCost*remainDist;
     }
 
     HexTile GetLowestFTile(List<HexTile> list)

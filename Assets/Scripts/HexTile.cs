@@ -4,28 +4,34 @@ using UnityEngine;
 
 public class HexTile : MonoBehaviour
 {
-    [HideInInspector] public int hCost;
-    [HideInInspector] public int gCost;
-    [HideInInspector] public int fCost;
-    
-    HexGrid grid;
+    [HideInInspector] public float hCost = 0;
+    [HideInInspector] public int gCost = 0;
+    [HideInInspector] public int fCost = 0;
 
-    List<HexTile> neighbours;
+    List<HexTile> neighbours = new List<HexTile>();
 
-    bool walkable;
+    bool walkable = true;
 
-    [HideInInspector] public HexTile parent;
+    HexTile parent;
 
     public LayerMask layersToCheck;
 
+    private void Start()
+    {
+        CheckAbove();
+        FindNeighbours();
+    }
+
     void FindNeighbours()
     {
+        List<Vector3> dir = HexGrid.instance.Directions(this.transform); 
+
         for (int i = 0; i < 6; i++)
         {
             RaycastHit hit;
-            if (Physics.Raycast(transform.position, grid.directions[i], out hit, 0.5f, layersToCheck))
+            if (Physics.Raycast(transform.position, dir[i], out hit, 0.5f, layersToCheck))
             {
-                if (hit.collider.tag != "Enviro")
+                if (hit.collider.tag == "Tile")
                 {
                     neighbours.Add(hit.collider.gameObject.GetComponent<HexTile>());
                     walkable = true;
@@ -34,9 +40,16 @@ public class HexTile : MonoBehaviour
         }
     }
 
-    public HexTile returnParent()
+    public HexTile Parent
     {
-        return parent;
+        get
+        {
+            return parent;
+        }
+        set
+        {
+            parent = value;
+        }
     }
 
     public List<HexTile> returnNeighbours()
@@ -46,6 +59,18 @@ public class HexTile : MonoBehaviour
 
     public void CalculateFCost()
     {
-        fCost = hCost + gCost;
+        fCost = (int)hCost + gCost;
+    }
+
+    void CheckAbove()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.up, out hit, 0.5f))
+        {
+            if (hit.collider.tag == "Enviro")
+            {
+                Destroy(this.gameObject);
+            }
+        }
     }
 }

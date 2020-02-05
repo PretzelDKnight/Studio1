@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class HexGrid : MonoBehaviour
 {
-    public GameObject hexTile;
+    public static HexGrid instance = null;
 
-    public List<Vector3> directions;
+    public GameObject hexTile;
 
     public int x = 5;
     public int z = 5;
@@ -16,12 +16,17 @@ public class HexGrid : MonoBehaviour
 
     private float offsetX, offsetZ;
 
-
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
+    }
 
     void Start()
     {
         GenerateHexGrid();
-        directions = Directions();
     }
 
     private void Update()
@@ -66,25 +71,26 @@ public class HexGrid : MonoBehaviour
         return position;
     }
 
-    List<Vector3> Directions()
+    public List<Vector3> Directions(Transform trans)
     {
         List<Vector3> dir = new List<Vector3>();
+
         Vector3 temp;
         // 0 degrees face
-        dir.Add(transform.right);
+        dir.Add(trans.right);
         // 60 degrees face
-        temp = transform.InverseTransformDirection(new Vector3(Mathf.Tan(60), 0, Mathf.Tan(60)));
+        temp = trans.InverseTransformDirection(new Vector3(Mathf.Tan(60), 0, Mathf.Tan(60)));
         dir.Add(temp);
         // 120 degrees face
-        temp = transform.InverseTransformDirection(new Vector3(-Mathf.Tan(60), 0, Mathf.Tan(60)));
+        temp = trans.InverseTransformDirection(new Vector3(-Mathf.Tan(60), 0, Mathf.Tan(60)));
         dir.Add(temp);
         // 180 degrees face
-        dir.Add(-transform.right);
+        dir.Add(-trans.right);
         // 240 degrees face
-        temp = transform.InverseTransformDirection(new Vector3(-Mathf.Tan(60), 0, -Mathf.Tan(60)));
+        temp = trans.InverseTransformDirection(new Vector3(-Mathf.Tan(60), 0, -Mathf.Tan(60)));
         dir.Add(temp);
         // 300 degrees face
-        temp = transform.InverseTransformDirection(new Vector3(Mathf.Tan(60), 0, Mathf.Tan(60)));
+        temp = trans.InverseTransformDirection(new Vector3(Mathf.Tan(60), 0, Mathf.Tan(60)));
         dir.Add(temp);
 
         return dir;

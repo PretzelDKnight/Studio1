@@ -768,7 +768,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTile: {fileID: 0}
-  directions: []
   x: 10
   z: 10
   radius: 0.5
