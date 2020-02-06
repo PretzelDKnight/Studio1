@@ -8,7 +8,9 @@ public class Player : MonoBehaviour
 {
     public static Player instance = null;
 
-    List<Character> allies = null;
+    public Character proto;
+
+    List<Character> allies = new List<Character>();
     Character[] party = new Character[3];
 
     // Save specific variables
@@ -25,7 +27,8 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        
+        allies.Add(proto);
+        party[0] = proto;
     }
 
     void Update()
@@ -76,7 +79,10 @@ public class Player : MonoBehaviour
     {
         List<Character> temp = new List<Character>();
         foreach (var item in party)
+        {
+            if (item != null)
             temp.Add(item);
+        }
         return temp;
     }
 

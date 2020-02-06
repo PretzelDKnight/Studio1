@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8426013784161918327}
   - component: {fileID: 8426013784161918326}
   - component: {fileID: 3284216123677048944}
-  - component: {fileID: 4373885058103058372}
+  - component: {fileID: 541268081045390987}
   m_Layer: 8
   m_Name: HexTile
   m_TagString: Tile
@@ -94,7 +94,7 @@ CapsuleCollider:
   m_Height: 10.133462
   m_Direction: 1
   m_Center: {x: -0.012936294, y: -0.08046329, z: 0}
---- !u!114 &4373885058103058372
+--- !u!114 &541268081045390987
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

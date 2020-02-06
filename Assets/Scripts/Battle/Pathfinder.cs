@@ -19,14 +19,72 @@ public class Pathfinder : MonoBehaviour
             Destroy(gameObject);
     }
 
-    List<HexTile> FindSelectableTiles()
+    public List<HexTile> FindSelectableTiles(Character source)
     {
+        HexTile start = source.GetCurrentTile();
+        float energy = source.currentStats.energyPool;
+        List<HexTile> temp = new List<HexTile>() { start };
+        int energyUsed = 0;
 
-        return null;
+        while (energyUsed >= energy)
+        {
+            foreach (var tile in temp)
+            {
+                temp.Add(tile);
+                foreach (var item in tile.returnNeighbours())
+                {
+                    if (item.energyCost == 0)
+                        if (!item.Occupied)
+                        {
+                            item.energyCost = energyUsed;
+                            item.Walkable = true;
+                            temp.Add(item);
+                        }
+                }
+            }
+            energyUsed++;
+        }
+
+        start.ResetTileValues();
+
+        return temp;
+    }
+
+    public List<HexTile> FindAttackableCharacters(Character source)
+    {
+        HexTile start = source.GetCurrentTile();
+        float range = source.currentStats.range;
+        List<HexTile> temp = new List<HexTile>() { start };
+        int checkRange = 0;
+
+        while (checkRange >= range)
+        {
+            foreach (var tile in temp)
+            {
+                temp.Add(tile);
+                foreach (var item in tile.returnNeighbours())
+                {
+                    if (item.Occupied)
+                    {
+                        Character targetable = item.ReturnTarget(source);
+                        if (targetable != null)
+                        {
+                            item.Attackable = true;
+                            temp.Add(item);
+                        }
+                    }
+                }
+            }
+            checkRange++;
+        }
+
+        start.ResetTileValues();
+
+        return temp;
     }
 
     // A Star!!!
-    List<HexTile> FindPath(HexTile start, HexTile destination)
+    public List<HexTile> FindPath(HexTile start, HexTile destination)
     {
         openList = new List<HexTile>() { start };
         closedList = new List<HexTile>();
@@ -42,7 +100,7 @@ public class Pathfinder : MonoBehaviour
             closedList.Add(tile);
 
             if (tile = destination)
-                return CalculatePath(destination); //Reached end
+                return closedList; //Reached end
 
             foreach (var item in tile.returnNeighbours())
             {
@@ -70,11 +128,6 @@ public class Pathfinder : MonoBehaviour
             }
         }
         return closedList;
-    }
-
-    List<HexTile> CalculatePath(HexTile tile)
-    {
-        return null;
     }
 
     float CalculateDistance(HexTile a, HexTile b)

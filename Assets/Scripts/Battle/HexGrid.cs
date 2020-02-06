@@ -6,6 +6,8 @@ public class HexGrid : MonoBehaviour
 {
     public static HexGrid instance = null;
 
+    public static List<HexTile> tiles = new List<HexTile>();
+
     public GameObject hexTile;
     public int x = 5;
     public int z = 5;
@@ -19,6 +21,7 @@ public class HexGrid : MonoBehaviour
     public Color whenSelected = Color.white;
     public Color whenHovered = Color.white;
     public Color whenWalkable = Color.white;
+    public Color whenAttackable = Color.white;
 
     public float hoverRate = 2;
     float time = 0;
@@ -33,12 +36,12 @@ public class HexGrid : MonoBehaviour
             instance = this;
         else
             Destroy(gameObject);
+        normal = mat.color;
     }
 
     void Start()
     {
-        normal = mat.color;
-        GenerateHexGrid();
+
     }
 
     private void Update()
@@ -46,7 +49,7 @@ public class HexGrid : MonoBehaviour
 
     }
 
-    void GenerateHexGrid()
+    public void GenerateHexGrid()
     {
         float unitLength;
         if (useAsInnerCircleRadius)
@@ -62,7 +65,7 @@ public class HexGrid : MonoBehaviour
             {
                 Vector2 hexpos = HexOffset(i, j);
                 Vector3 pos = new Vector3(hexpos.x, transform.position.y, hexpos.y);
-                Instantiate(hexTile, pos, Quaternion.identity);
+                tiles.Add(Instantiate(hexTile, pos, Quaternion.identity).GetComponent<HexTile>());
             }
         }
     }
@@ -131,5 +134,24 @@ public class HexGrid : MonoBehaviour
             }
         }
         return lerpValue;
+    }
+
+    public void DeleteGrid()
+    {
+        HexTile temp;
+        for (int i = 0; i < tiles.Count; i++)
+        {
+            temp = tiles[i];
+            tiles.Remove(temp);
+            Destroy(temp.gameObject);
+        }
+    }
+
+    static public void ResetAllTiles()
+    {
+        foreach (var item in tiles)
+        {
+            item.ResetTileValues();
+        }
     }
 }

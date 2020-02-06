@@ -5,46 +5,17 @@ using System;
 
 public class TurnManager : MonoBehaviour
 {
-    // Event Related variables
-    public delegate void ClickAction();
-    public static event ClickAction Function;
+    static List<Character> allies = new List<Character>();
+    static List<Character> enemies = new List<Character>();
 
-    bool transition = false;
-
-    static List<Character> allies;
-    static List<Character> enemies;
-
-    static Queue<Character> turnOrder;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        turnOrder.Clear();
-        allies = Player.instance.GetParty();
-        // Place Function to retrieve enemy list
-        Debug.Log("Need to load enemies list");
-
-        // Place Function to Make Characters move to nearest tile!!!
-        Debug.Log("Characters run to nearest tile");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (turnOrder.Count == 0)
-        {
-            InitTurnQueue();
-        }
-    }
+    static Queue<Character> turnOrder = new Queue<Character>();
 
     static void InitTurnQueue()
     {
         List<Character> teamList = SortFastest();
 
         foreach (Character unit in teamList)
-        {
             turnOrder.Enqueue(unit);
-        }
 
         StartTurn();
     }
@@ -54,12 +25,9 @@ public class TurnManager : MonoBehaviour
         List<Character> tempList = new List<Character>(allies);
 
         foreach (var item in enemies)
-        {
             tempList.Add(item);
-        }
 
         tempList.Sort();
-
         return tempList;
     }
 
@@ -71,16 +39,16 @@ public class TurnManager : MonoBehaviour
             unit.BeginTurn();
         }
         else
-        {
             InitTurnQueue();
-        }
     }
 
-    public static void EndTurn()
+    public static IEnumerator EndTurn()
     {
+        yield return new WaitForSeconds(1f);
         Character unit = turnOrder.Dequeue();
         unit.EndTurn();
         StartTurn();
+        yield return null;
     }
 
     public static void DeleteFromQueue(Character unit)
@@ -112,6 +80,7 @@ public class TurnManager : MonoBehaviour
         {
             // Game Over Call
             Debug.Log("Game Over! You lost the fight! BooHoo!");
+            BattleManager.instance.Battle = false;
         }
 
         if (enemies.Contains(unit))
@@ -121,6 +90,28 @@ public class TurnManager : MonoBehaviour
         {
             // Battle Win Call
             Debug.Log("You Won! You beat them into dust!!");
+            BattleManager.instance.Battle = false;
         }
+    }
+
+    static public IEnumerator NewBattle(List<Character> enemyList)
+    {
+        turnOrder.Clear();
+        allies = Player.instance.GetParty();
+        enemies = enemyList;
+
+        HexGrid.instance.GenerateHexGrid();
+
+        foreach (var ally in allies)
+        {
+            ally.MoveToNearestTile();
+        }
+        foreach (var enemy in enemies)
+        {
+            enemy.MoveToNearestTile();
+        }
+
+        InitTurnQueue();
+        yield return null;
     }
 }
