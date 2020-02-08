@@ -5,6 +5,7 @@
         [HDR] _Color("Color", Color) = (0.5, 0.65, 1, 1)
         _MainTex("Color (RGB) Alpha (A)", 2D) = "white"
         _Frequency("Frequency", float) = 32
+        _Transparency("Transparency", float) = 1
     }
 
     SubShader
@@ -46,6 +47,7 @@
 			float4 _Color;
 			float _Frequency;
             float _IsStable;
+            float _Transparency;
 
 			vertexOutput VertexShaderFunction(appdata input)
             {
@@ -69,7 +71,7 @@
                 if (_IsStable > 0)
                     blink = _IsStable;
                 else
-                    blink = (1 + sin(input.worldPos.x + (_Frequency * _Time))) / 2;
+                    blink = _Transparency * (1 + sin(input.worldPos.x + (_Frequency * _Time))) / 2;
 
 				color.a = albedo.a;
 				color.a = color.a * blink;

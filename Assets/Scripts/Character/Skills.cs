@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleController : Controller
+public class Skills : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -14,10 +14,5 @@ public class BattleController : Controller
     void Update()
     {
         
-    }
-
-    public override void ReadInput(InputData data)
-    {
-        throw new System.NotImplementedException();
     }
 }

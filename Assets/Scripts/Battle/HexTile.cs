@@ -10,10 +10,13 @@ public class HexTile : MonoBehaviour
     public int energyCost = 0;
 
     List<HexTile> neighbours = new List<HexTile>();
+    bool occupied = false;
     bool walkable = false;
     bool selected = false;
     bool hovered = false;
+    bool attackable = false;
     HexTile parent;
+    Vector3 position;
 
     // Mesh and Shader variables
     Renderer render;
@@ -22,11 +25,18 @@ public class HexTile : MonoBehaviour
     private void Start()
     {
         // 0 for False, 1 for True
-        render = GetComponent<MeshRenderer>();
+        render = transform.GetComponent<MeshRenderer>();
+        if(render == null)
+        {
+            Debug.Log("Bruh, we got this");
+        }
+
         isStable = Shader.PropertyToID("_IsStable");
+        Walkable = false;
 
         CheckAbove();
         FindNeighbours();
+        position = transform.position;
     }
 
     private void Update()
@@ -75,7 +85,10 @@ public class HexTile : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(transform.position, Vector3.up, out hit, 0.5f))
             if (hit.collider.tag == "Enviro")
+            {
+                HexGrid.tiles.Remove(this);
                 Destroy(this.gameObject);
+            }
     }
 
     public void ResetTileValues()
@@ -84,6 +97,10 @@ public class HexTile : MonoBehaviour
         gCost = 0;
         fCost = 0;
         energyCost = 0;
+        walkable = false;
+        selected = false;
+        hovered = false;
+        ResetTileColor();
     }
 
     public void ResetTileColor()
@@ -101,6 +118,26 @@ public class HexTile : MonoBehaviour
             if (value)
             {
                 render.material.color = HexGrid.instance.whenWalkable;
+                isStable = 1;
+            }
+            else
+            {
+                render.material.color = HexGrid.instance.normal;
+                Debug.Log(render.material.color.ToString());
+                isStable = 0;
+            }
+        }
+    }
+
+    public bool Attackable
+    {
+        get { return walkable; }
+        set
+        {
+            walkable = value;
+            if (value)
+            {
+                render.material.color = HexGrid.instance.whenAttackable;
                 isStable = 1;
             }
             else
@@ -142,8 +179,33 @@ public class HexTile : MonoBehaviour
         }
     }
 
+    public bool Occupied
+    {
+        get { return occupied; }
+        set { occupied = value; }
+    }
+
     void PropertyToShader()
     {
         render.material.SetFloat("_IsStable", isStable);
+    }
+
+    /// <summary>
+    /// Returns determines position of the character on top of the said tile
+    /// </summary>
+    /// <param name="charaPos"></param>
+    /// <returns></returns>
+    public Vector3 ReturnPosition(Vector3 charaPos)
+    {
+        return new Vector3(position.x, charaPos.y, position.z);
+    }
+
+    public Character ReturnTarget(Character source)
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.up, out hit, 0.5f))
+            if (hit.collider.tag != source.transform.tag)
+                return hit.collider.GetComponent<Character>();
+        return null;
     }
 }

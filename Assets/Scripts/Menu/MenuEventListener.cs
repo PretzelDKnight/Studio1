@@ -15,7 +15,6 @@ public class MenuEventListener : MonoBehaviour
             if(MenuEvent.CheckListener(this))
             {
                 MenuEvent.AddListener(this);
-                Debug.Log("I Added Myself!");
             }
         }
     }

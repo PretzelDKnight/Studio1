@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleController : Controller
+public class TempButton : MonoBehaviour
 {
+    public Character enemy;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,8 +18,8 @@ public class BattleController : Controller
         
     }
 
-    public override void ReadInput(InputData data)
+    public void Battle()
     {
-        throw new System.NotImplementedException();
+        BattleManager.instance.StartBattle(new List<Character> { enemy });
     }
 }
