@@ -28,6 +28,9 @@ public class StorySystem : MonoBehaviour
     [SerializeField] Text textRHS = null;
     [SerializeField] List<Story> stories = null;
 
+    public GameEvent storyStart;  // Input streamlining while in story
+    public GameEvent storyEnd;
+
     // StorySystem centric variables
     static float exitTime = 0;
     static int current = 0;
@@ -95,10 +98,9 @@ public class StorySystem : MonoBehaviour
         if (!noMoreStories)
         {
             playing = true;
+            storyStart.Raise();
             stories[current].PlayDialogue();
         }
-        else
-            Debug.Log("NO MORE STORIES FOR YOU");
     }
 
     public void EndStory()
@@ -109,7 +111,7 @@ public class StorySystem : MonoBehaviour
             current++;
         else
             noMoreStories = true;
-        Debug.Log(current);
+        storyEnd.Raise();
     }
 
     public void LoadStoryState()
@@ -146,7 +148,6 @@ public class StorySystem : MonoBehaviour
                     dialogueRHS.SetTrigger("SameSideAgain");
                 else
                     dialogueLHS.SetTrigger("SameSideAgain");
-                Debug.Log("SAME SIDE BUB");
             }
         }
         else

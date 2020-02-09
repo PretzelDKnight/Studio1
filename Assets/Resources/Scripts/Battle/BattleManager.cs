@@ -33,6 +33,8 @@ public class BattleManager : MonoBehaviour
     public GameEvent battleStart;
     public GameEvent endChara;
 
+    bool interaction = true;
+
     private void Awake()
     {
         if (instance == null)
@@ -45,7 +47,8 @@ public class BattleManager : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (!busy)
+        Debug.Log("Interaction : " + interaction);
+        if (!busy && interaction)
             MouseFunction();
     }
 
@@ -171,5 +174,15 @@ public class BattleManager : MonoBehaviour
         targetTile = null;
         resetTiles.Raise();
         busy = false;
+    }
+
+    public void SetInteractionFalse()
+    {
+        interaction = false;
+    }
+
+    public void SetInteractionTrue()
+    {
+        interaction = true;
     }
 }

@@ -101,16 +101,19 @@ public abstract class Character : MonoBehaviour , IComparable
     {
         foreach(var tile in path)
         {
-            Vector3 currentPos = transform.position;
-            while (time < 1)
+            if (tile != currentTile)
             {
-                transform.position = Vector3.Lerp(currentPos, tile.ReturnTargetPosition(currentPos), time);
-                time += Time.deltaTime * stats.speed;
-                yield return null;
-            }
+                Vector3 currentPos = transform.position;
+                while (time < 1)
+                {
+                    transform.position = Vector3.Lerp(currentPos, tile.ReturnTargetPosition(currentPos), time);
+                    time += Time.deltaTime * stats.speed;
+                    yield return null;
+                }
 
-            if (time >= 1)
-                time = 0;
+                if (time >= 1)
+                    time = 0;
+            }
         }
 
         transform.position = path[path.Count - 1].ReturnTargetPosition(transform.position);
