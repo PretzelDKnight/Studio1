@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     public static Player instance = null;
 
     public Character proto;
+    public Character proto1;
+    public Character proto2;
 
     public CharacterListVariable allies;
     public PartyVariable party;
@@ -29,6 +31,8 @@ public class Player : MonoBehaviour
     {
         allies.list.Add(proto);
         party.members[0] = proto;
+        party.members[1] = proto1;
+        party.members[2] = proto2;
     }
 
     void Update()

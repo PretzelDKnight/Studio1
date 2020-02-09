@@ -43,7 +43,7 @@ public class HexTile : MonoBehaviour
     private void LateUpdate()
     {
         if (isStable != 0) 
-            isStable = HexGrid.ShaderLerp();
+            isStable = HexGrid.LerpValue();
         PropertyToShader();
     }
 
@@ -203,5 +203,6 @@ public class HexTile : MonoBehaviour
     public void DestroyMeself()
     {
         Destroy(gameObject);
+        Destroy(this);
     }
 }

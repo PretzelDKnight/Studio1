@@ -6,6 +6,7 @@
         _MainTex("Color (RGB) Alpha (A)", 2D) = "white"
         _Frequency("Frequency", float) = 32
         _Transparency("Transparency", float) = 1
+        _Times("Transparency Times", float) = 3
     }
 
     SubShader
@@ -48,6 +49,7 @@
 			float _Frequency;
             float _IsStable;
             float _Transparency;
+            float _Times;
 
 			vertexOutput VertexShaderFunction(appdata input)
             {
@@ -66,10 +68,10 @@
                 // apply Color
 				float4 color = _Color;
 
-				//float blink = (1 + (sin(input.worldPos.x + (_Frequency * _Time)) + sin(input.worldPos.z + (_Frequency * _Time))) / 2) / 2;
+				//float blink = _ Transparency * (1 + (sin(input.worldPos.x + (_Frequency * _Time)) + sin(input.worldPos.z + (_Frequency * _Time))) / 2) / 2;
                 float blink = 0;
                 if (_IsStable > 0)
-                    blink = _IsStable;
+                    blink = _IsStable * _Transparency * _Times;
                 else
                     blink = _Transparency * (1 + sin(input.worldPos.x + (_Frequency * _Time))) / 2;
 

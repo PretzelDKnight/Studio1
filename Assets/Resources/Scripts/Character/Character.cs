@@ -23,6 +23,7 @@ public abstract class Character : MonoBehaviour , IComparable
     bool targetable = false;
     bool hovered = false;
     bool selected = false;
+    float current = 0;
 
     public static float checkTileRange = 3f;
 
@@ -40,6 +41,7 @@ public abstract class Character : MonoBehaviour , IComparable
     protected void Awake()
     {
         render = GetComponent<MeshRenderer>();
+        current = Shader.PropertyToID("_Current");
         finishMove = Resources.Load<GameEvent>("ScriptableObject/Events/FinishMove");
         normal = render.material.color;
     }
@@ -47,6 +49,11 @@ public abstract class Character : MonoBehaviour , IComparable
     protected void Update()
     {
         hovered = false;
+    }
+
+    protected void LateUpdate()
+    {
+        PropertyToShader();   
     }
 
     protected void Initialize()
@@ -61,7 +68,6 @@ public abstract class Character : MonoBehaviour , IComparable
 
     public HexTile GetCurrentTile()
     {
-        Debug.Log(currentTile.returnNeighbours().Count + " Yuh");
         return currentTile;
     }
 
@@ -257,5 +263,20 @@ public abstract class Character : MonoBehaviour , IComparable
         hovered = false;
         targetable = false;
         render.material.color = normal;
+    }
+
+    public void SetShown()
+    {
+        current = 1;
+    }
+
+    public void SetNotShown()
+    {
+        current = 0;
+    }
+
+    void PropertyToShader()
+    {
+        render.material.SetFloat("_Current", current);
     }
 }

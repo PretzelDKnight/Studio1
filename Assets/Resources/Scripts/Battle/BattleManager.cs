@@ -64,14 +64,12 @@ public class BattleManager : MonoBehaviour
                 {
                     if (targetTile == null)
                     {
-                        //if (!temp.Occupied)
-                            //if (temp.Walkable && state == State.Move)
-                            {
-                                targetTile = temp;
-                                targetTile.SetSelected();
-                                Debug.Log(targetTile.returnNeighbours().Count);
-                                RecievedInput();
-                            }
+                        if (temp.Walkable && state == State.Move)
+                        {
+                            targetTile = temp;
+                            targetTile.SetSelected();
+                            RecievedInput();
+                        }
                     }
                 }
             }
@@ -92,6 +90,7 @@ public class BattleManager : MonoBehaviour
                 break;
             case State.Move:
                 StartCoroutine(currentChar.character.MoveDownPath(Pathfinder.instance.FindPath(currentChar.character.GetCurrentTile(), targetTile)));
+                currentChar.character.energy.runTimeValue -= targetTile.energyCost;
                 break;
             case State.Skill1:
                 break;
@@ -102,28 +101,30 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    static public void Attack()
+    public void Attack()
     {
         state = State.Attack;
     }
 
-    static public void Skill1()
+    public void Skill1()
     {
         state = State.Skill1;
     }
 
-    static public void Skill2()
+    public void Skill2()
     {
         state = State.Skill2;
     }
 
-    static public void Move()
+    public void Move()
     {
         state = State.Move;
+        Pathfinder.instance.FindSelectableTiles(currentChar.character);
     }
 
     public void Pass()
     {
+        currentChar.character.SetNotShown();
         endChara.Raise();
     }
 
@@ -131,12 +132,6 @@ public class BattleManager : MonoBehaviour
     {
         get { return battle; }
         set { battle = value; }
-    }
-
-    static void ResetTargets()
-    {
-        targetChara = null;
-        targetTile = null;
     }
 
     public void StartBattle()
@@ -155,14 +150,19 @@ public class BattleManager : MonoBehaviour
     public void NewChara()
     {
         currentChar.character.RefreshEnergy();
+        currentChar.character.SetShown();
         ResetEverything();
-        // Insert event to reset Hexgrid tiles and make target tiles and chara null
-        Debug.Log("We Moving BRUH!");
+        Move();
     }
 
     public void NextMove()
     {
         ResetEverything();
+
+        if (currentChar.character.energy.runTimeValue != 0)
+            Move();
+        else
+            Pass();
     }
 
     public void ResetEverything()

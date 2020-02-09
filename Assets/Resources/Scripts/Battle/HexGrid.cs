@@ -44,7 +44,7 @@ public class HexGrid : MonoBehaviour
 
     private void Update()
     {
-
+        ShaderLerp();
     }
 
     public void GenerateHexGrid()
@@ -110,10 +110,10 @@ public class HexGrid : MonoBehaviour
         return dir;
     }
 
-    static public float ShaderLerp()
+    static void ShaderLerp()
     {
         time += Time.deltaTime * hoverRate;
-        
+
         if (change)
         {
             lerpValue = Mathf.Lerp(0.5f, 1f, time);
@@ -132,6 +132,10 @@ public class HexGrid : MonoBehaviour
                 change = true;
             }
         }
+    }
+
+    static public float LerpValue()
+    {
         return lerpValue;
     }
 }

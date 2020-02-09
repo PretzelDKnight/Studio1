@@ -17,38 +17,35 @@ public class Pathfinder : MonoBehaviour
             Destroy(gameObject);
     }
 
-    public List<HexTile> FindSelectableTiles(Character source)
+    public void FindSelectableTiles(Character source)
     {
         HexTile start = source.GetCurrentTile();
         float energy = source.energy.runTimeValue;
-        List<HexTile> temp = new List<HexTile>() { start };
-        int energyUsed = 0;
+        List<HexTile> tempList = new List<HexTile>() { start };
 
-        while (energyUsed <= energy)
+        while (tempList.Count > 0)
         {
-            foreach (var tile in temp)
+            HexTile tile = GetLowestEnergyCost(tempList);
+
+            tempList.Remove(tile);
+
+            foreach (var item in tile.returnNeighbours())
             {
-                temp.Add(tile);
-                foreach (var item in tile.returnNeighbours())
+                if (item.energyCost == 0 && !item.Occupied)
                 {
-                    if (item.energyCost == 0)
-                        if (!item.Occupied)
-                        {
-                            item.energyCost = energyUsed;
-                            item.Walkable = true;
-                            temp.Add(item);
-                        }
+                    item.energyCost = 1 + tile.energyCost;
+                    if (item.energyCost <= energy)
+                    {
+                        tempList.Add(item);
+                        item.Walkable = true;
+                    }
                 }
             }
-            ++energyUsed;
         }
-
         start.ResetTileValues();
-
-        return temp;
     }
 
-    public List<HexTile> FindAttackableCharacters(Character source)
+    public void FindAttackableCharacters(Character source)
     {
         HexTile start = source.GetCurrentTile();
         float range = source.stats.attackRange;
@@ -77,8 +74,6 @@ public class Pathfinder : MonoBehaviour
         }
 
         start.ResetTileValues();
-
-        return temp;
     }
 
     // A Star!!!
@@ -105,33 +100,34 @@ public class Pathfinder : MonoBehaviour
 
             foreach (var item in tile.returnNeighbours())
             {
-                if (closedList.Contains(item)) { } //Do Nothing
-                else if (openList.Contains(item)) //Found new route with lesser cost
-                {
-                    float tempG = tile.gCost + CalculateDistance(item, tile);
-                    if (tempG < item.gCost)
+                if (!item.Occupied)
+                    if (closedList.Contains(item)) { } //Do Nothing
+                    else if (openList.Contains(item)) //Found new route with lesser cost
+                    {
+                        float tempG = tile.gCost + CalculateDistance(item, tile);
+                        if (tempG < item.gCost)
+                        {
+                            item.Parent = tile;
+                            item.gCost = tempG;
+                            item.fCost = item.gCost + item.hCost;
+
+                        }
+                    }
+                    else //Continuing to explore current path
                     {
                         item.Parent = tile;
-                        item.gCost = tempG;
+
+                        item.gCost = tile.gCost + CalculateDistance(item, tile);
+                        item.hCost = CalculateDistance(item, destination);
                         item.fCost = item.gCost + item.hCost;
-
+                        openList.Add(item);
                     }
-                }
-                else //Continuing to explore current path
-                {
-                    item.Parent = tile;
-
-                    item.gCost = tile.gCost + CalculateDistance(item, tile);
-                    item.hCost = CalculateDistance(item, destination);
-                    item.fCost = item.gCost + item.hCost;
-                    openList.Add(item);
-                }
             }
         }
 
         List<HexTile> temp = new List<HexTile>();
         HexTile ht = closedList[closedList.Count - 1];
-        while (ht != start)
+        while (ht != null)
         {
             temp.Insert(0,ht);
             ht = ht.Parent;
@@ -147,14 +143,26 @@ public class Pathfinder : MonoBehaviour
 
     HexTile GetLowestFTile(List<HexTile> list)
     {
-        HexTile lowestf = list[0];
+        HexTile lowest = list[0];
         foreach (var item in list)
         {
-            if (item.fCost < lowestf.fCost)
-                lowestf = item;
+            if (item.fCost < lowest.fCost)
+                lowest = item;
         }
 
-        return lowestf;
+        return lowest;
+    }
+
+    HexTile GetLowestEnergyCost(List<HexTile> list)
+    {
+        HexTile lowest = list[0];
+        foreach (var item in list)
+        {
+            if (item.energyCost < lowest.energyCost)
+                lowest = item;
+        }
+
+        return lowest;
     }
 }
 
