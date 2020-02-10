@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 [System.Serializable]
 public class Story
@@ -39,16 +37,6 @@ public class Story
             StorySystem.instance.EndStory();
         else
             dialogues[current].PlayDialogue();
-    }
-
-    public void StorySystemCall()
-    {
-        if(StorySystem.instance.CheckStoryCall(this))
-        {
-            // Insert Code Snippet to de-activate button/trigger or Interact with Menu System!!!
-
-
-        }
     }
 
     public void CutScene()

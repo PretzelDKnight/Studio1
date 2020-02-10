@@ -6,14 +6,4 @@ using UnityEngine;
 public class CharacterVariable : ScriptableObject
 {
     public Character character;
-
-    public void TurnStart()
-    {
-        character.BeginTurn();
-    }
-
-    public void TurnEnd()
-    {
-        character.EndTurn();
-    }
 }

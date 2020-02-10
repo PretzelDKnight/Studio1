@@ -1,7 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
+// SINGLETON CLASS!
 public class Pathfinder : MonoBehaviour
 {
     public static Pathfinder instance = null;
@@ -16,7 +16,8 @@ public class Pathfinder : MonoBehaviour
         else
             Destroy(gameObject);
     }
-
+    
+    // Finds the selectable tiles within energy range
     public void FindSelectableTiles(Character source)
     {
         HexTile start = source.GetCurrentTile();
@@ -29,7 +30,7 @@ public class Pathfinder : MonoBehaviour
 
             tempList.Remove(tile);
 
-            foreach (var item in tile.returnNeighbours())
+            foreach (var item in tile.ReturnNeighbours())
             {
                 if (item.energyCost == 0 && !item.Occupied)
                 {
@@ -45,6 +46,7 @@ public class Pathfinder : MonoBehaviour
         start.ResetTileValues();
     }
 
+    // Finds Attackable characters on the tiles within attackble range
     public void FindAttackableCharacters(Character source)
     {
         HexTile start = source.GetCurrentTile();
@@ -57,7 +59,7 @@ public class Pathfinder : MonoBehaviour
             foreach (var tile in temp)
             {
                 temp.Add(tile);
-                foreach (var item in tile.returnNeighbours())
+                foreach (var item in tile.ReturnNeighbours())
                 {
                     if (item.Occupied)
                     {
@@ -98,7 +100,7 @@ public class Pathfinder : MonoBehaviour
                 break; //Reached end
             }
 
-            foreach (var item in tile.returnNeighbours())
+            foreach (var item in tile.ReturnNeighbours())
             {
                 if (!item.Occupied)
                     if (closedList.Contains(item)) { } //Do Nothing
@@ -136,11 +138,13 @@ public class Pathfinder : MonoBehaviour
         return temp;
     }
 
+    // Calculates Distance between 2 tiles
     float CalculateDistance(HexTile a, HexTile b)
     {
         return Vector3.Distance(a.transform.position, b.transform.position);
     }
 
+    // Returns tile with the lowest F value in the list
     HexTile GetLowestFTile(List<HexTile> list)
     {
         HexTile lowest = list[0];
@@ -153,6 +157,7 @@ public class Pathfinder : MonoBehaviour
         return lowest;
     }
 
+    // Returns tile with the lowest energy cost
     HexTile GetLowestEnergyCost(List<HexTile> list)
     {
         HexTile lowest = list[0];
@@ -165,4 +170,3 @@ public class Pathfinder : MonoBehaviour
         return lowest;
     }
 }
-

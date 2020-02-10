@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
-
+// SINGLETON CLASS!
 public class Player : MonoBehaviour
 {
     public static Player instance = null;
@@ -149,12 +147,13 @@ public class Player : MonoBehaviour
         }
     }
 
-
+    // Function to load player from save
     void LoadPlayer()
     {
 
     }
 
+    // Function to save player info to a file
     void SavePlayer()
     {
 

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class HexGrid : MonoBehaviour
@@ -47,6 +46,7 @@ public class HexGrid : MonoBehaviour
         ShaderLerp();
     }
 
+    // Generates Hexagon Grid (Can only produce grids of even size as it is generated from the centre of the gameObject)
     public void GenerateHexGrid()
     {
         float unitLength;
@@ -69,6 +69,7 @@ public class HexGrid : MonoBehaviour
         gridFinish.Raise();
     }
 
+    // Calculates HexOffset in relation to passed values for finding position of generated tile
     Vector2 HexOffset(int x, int z)
     {
         Vector2 position = Vector3.zero;
@@ -85,6 +86,7 @@ public class HexGrid : MonoBehaviour
         return position;
     }
 
+    // Calculates and returns a list of the 6 faces of the hexagon tiles in which neighbours should be checked
     public List<Vector3> Directions(Transform trans)
     {
         List<Vector3> dir = new List<Vector3>();
@@ -110,6 +112,7 @@ public class HexGrid : MonoBehaviour
         return dir;
     }
 
+    // Shader lerp value function for passing property into shader
     static void ShaderLerp()
     {
         time += Time.deltaTime * hoverRate;
@@ -134,6 +137,7 @@ public class HexGrid : MonoBehaviour
         }
     }
 
+    // Returns shader lerp value for tiles accessing this value
     static public float LerpValue()
     {
         return lerpValue;

@@ -1,8 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using System;
 
+
+// SINGLETON CLASS!
 public class TurnManager : MonoBehaviour
 {
     public CharacterVariable currentChara;
@@ -19,6 +19,7 @@ public class TurnManager : MonoBehaviour
     public GameEvent battleEnd;
     public GameEvent newChara;
 
+    // Re-initializes turn queue and reorders characters 
     void InitTurnQueue()
     {
         //HealthCheck();
@@ -31,19 +32,20 @@ public class TurnManager : MonoBehaviour
         StartTurn();
     }
 
+    // Starts turn phase for the next character
     void StartTurn()
     {
         currentChara.character = turnOrder.Dequeue();
-        currentChara.TurnStart();
         newChara.Raise();
     }
 
+    // Ends the turn and re-initiates queue check
     public void EndTurn()
     {
-        currentChara.TurnEnd();
         InitTurnQueue();
     }
 
+    // Checks health of relevant characters and checks if the party or enemies are wiped and calls battle to an end
     void HealthCheck()
     {
         int allyDead = 0;
@@ -116,6 +118,7 @@ public class TurnManager : MonoBehaviour
         }
     }
 
+    // Starts new battle
     public void NewBattle()
     {
         turnOrder.Clear();

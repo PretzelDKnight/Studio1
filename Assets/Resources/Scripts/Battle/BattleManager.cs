@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
+﻿using UnityEngine;
 
 enum State
 {
@@ -11,6 +8,7 @@ enum State
     Move
 }
 
+// SINGLETON CLASS!
 public class BattleManager : MonoBehaviour
 {
     static public BattleManager instance = null;
@@ -47,11 +45,11 @@ public class BattleManager : MonoBehaviour
 
     private void LateUpdate()
     {
-        Debug.Log("Interaction : " + interaction);
         if (!busy && interaction)
             MouseFunction();
     }
 
+    // Mouse functions for battle phase
     public void MouseFunction()
     {
         RaycastHit hit;
@@ -83,6 +81,7 @@ public class BattleManager : MonoBehaviour
         }
     }
 
+    // Executes the function depending on state of the battle manager
     void RecievedInput()
     {
         busy = true;
@@ -104,52 +103,59 @@ public class BattleManager : MonoBehaviour
         }
     }
 
+    // Attack function to change state of battle manager functions
     public void Attack()
     {
         state = State.Attack;
     }
 
+    // Skill 1 Function to change state of battle manager functions
     public void Skill1()
     {
         state = State.Skill1;
     }
 
+    // Skill 2 Function to change state of battle manager functions
     public void Skill2()
     {
         state = State.Skill2;
     }
 
+    // Move function to change state of battle manager functions
     public void Move()
     {
         state = State.Move;
         Pathfinder.instance.FindSelectableTiles(currentChar.character);
     }
 
+    // Pass to send the turn to the next character in queue
     public void Pass()
     {
         currentChar.character.SetNotShown();
         endChara.Raise();
     }
 
+    // Get set battle function
     public bool Battle
     {
         get { return battle; }
         set { battle = value; }
     }
 
+    // Starts the battle after event is raised
     public void StartBattle()
     {
         if (!Battle)
         {
             Battle = true;
             busy = true;
-            // Insert Event to Start Battle!
             battleStart.Raise();
         }
         else
             Debug.Log("Battle already running!");
     }
 
+    // Is raised when a new character enters the Battle manager
     public void NewChara()
     {
         currentChar.character.RefreshEnergy();
@@ -158,6 +164,7 @@ public class BattleManager : MonoBehaviour
         Move();
     }
 
+    // If the same character has energy left and is making a move after having done a move, an event raises this function
     public void NextMove()
     {
         ResetEverything();
@@ -168,6 +175,7 @@ public class BattleManager : MonoBehaviour
             Pass();
     }
 
+    // Resets the all targeting values to null and raises events
     public void ResetEverything()
     {
         targetChara = null;
@@ -176,11 +184,13 @@ public class BattleManager : MonoBehaviour
         busy = false;
     }
 
+    // Sets interaction with battle manager to false when story or other events are raised in battle
     public void SetInteractionFalse()
     {
         interaction = false;
     }
 
+    // Sets interaction with battle manager back to true after said story
     public void SetInteractionTrue()
     {
         interaction = true;

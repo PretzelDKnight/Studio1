@@ -1,10 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-using System;
 using UnityEngine.UI;
 
+// SINGLETON CLASS!
 [System.Serializable]
 public class StorySystem : MonoBehaviour
 {
@@ -30,6 +29,7 @@ public class StorySystem : MonoBehaviour
 
     public GameEvent storyStart;  // Input streamlining while in story
     public GameEvent storyEnd;
+    public float storyEndWaitTime = 1f;
 
     // StorySystem centric variables
     static float exitTime = 0;
@@ -63,16 +63,6 @@ public class StorySystem : MonoBehaviour
         }
     }
 
-    public bool CheckStoryCall(Story story)
-    {
-        if (stories[current] == story)
-        {
-            PlayStory();
-            return true;
-        }
-        return false;
-    }
-
     // Adds in the fonts and values that go in at game start
     private void Initialize()
     {
@@ -93,6 +83,7 @@ public class StorySystem : MonoBehaviour
         textRHS.fontSize = textFontSize;
     }
 
+    // Function to play story and raise relevant event flags
     public void PlayStory()
     {
         if (!noMoreStories)
@@ -103,6 +94,7 @@ public class StorySystem : MonoBehaviour
         }
     }
 
+    // Function to end story and raise relevent event flags
     public void EndStory()
     {
         DialogueBoxClose(sideVal);
@@ -111,9 +103,10 @@ public class StorySystem : MonoBehaviour
             current++;
         else
             noMoreStories = true;
-        storyEnd.Raise();
+        StartCoroutine(StoryEndInvoke());
     }
 
+    // Loads current story state from the save file
     public void LoadStoryState()
     {
         // Insert Loading Story state from save file code snippet!!!
@@ -122,6 +115,7 @@ public class StorySystem : MonoBehaviour
 
     }
 
+    // Plays current Dialogue of the story
     public void DialogueBoxOpen(string speaker, string text, bool right)
     {
         if (!Battle)
@@ -159,6 +153,7 @@ public class StorySystem : MonoBehaviour
         }
     }
 
+    // Closes the dialogue box on a specific side
     public void DialogueBoxClose(bool right)
     {
         if (right)
@@ -168,6 +163,7 @@ public class StorySystem : MonoBehaviour
         ClearSprites();
     }
 
+    // Resets exit trigger for the animation controller of both the dialogue boxes
     public void ResetExitTrigger()
     {
             if (dialogueRHS.GetBool("ExitBox"))
@@ -185,6 +181,7 @@ public class StorySystem : MonoBehaviour
         sideVal = !right;
     }
 
+    // Function to initialize the text, speaker and direction of the dialogue box
     void DialogueBoxText(string speaker, string text, bool right)
     {
         if (right)
@@ -199,6 +196,7 @@ public class StorySystem : MonoBehaviour
         }
     }
 
+    // Function to assign sprite to the required position relevant to dialogue box direction
     public void AssignSprite(Sprite sprite, bool right)
     {
         ClearSprites();
@@ -209,12 +207,14 @@ public class StorySystem : MonoBehaviour
             portraitLHS.sprite = sprite;
     }
 
+    // Function to set images of the sprites back to transparent
     public void ClearSprites()
     {
         portraitRHS.sprite = transparent;
         portraitLHS.sprite = transparent;
     }
 
+    // Function to check exitTime of the dialogue boxes
     public bool CheckTimer()
     {
         if (exitTime >= boxTimeGap)
@@ -225,15 +225,17 @@ public class StorySystem : MonoBehaviour
         return false;
     }
 
+    // Get set for battle boolean
     public bool Battle
     {
-        get
-        {
-            return battle;
-        }
-        set
-        {
-            battle = value;
-        }
+        get { return battle; }
+        set { battle = value; }
+    }
+
+    // Coroutine to raise story end event flag after said time
+    IEnumerator StoryEndInvoke()
+    {
+        yield return new WaitForSeconds(storyEndWaitTime);
+        storyEnd.Raise();
     }
 }

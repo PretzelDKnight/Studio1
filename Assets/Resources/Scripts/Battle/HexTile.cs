@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class HexTile : MonoBehaviour
@@ -10,11 +9,11 @@ public class HexTile : MonoBehaviour
     public int energyCost = 0;
 
     List<HexTile> neighbours = new List<HexTile>();
-    [SerializeField] bool occupied = false;
-    [SerializeField] bool walkable = false;
-    [SerializeField] bool selected = false;
-    [SerializeField] bool hovered = false;
-    [SerializeField] bool attackable = false;
+    bool occupied = false;
+    bool walkable = false;
+    bool selected = false;
+    bool hovered = false;
+    bool attackable = false;
     HexTile parent;
     Vector3 position;
 
@@ -47,6 +46,7 @@ public class HexTile : MonoBehaviour
         PropertyToShader();
     }
 
+    // Function to find neighbours of the current tile
     void FindNeighbours()
     {
         List<Vector3> dir = HexGrid.instance.Directions(transform); 
@@ -60,22 +60,26 @@ public class HexTile : MonoBehaviour
         }
     }
 
+    // Function to get set parent
     public HexTile Parent
     {
         get { return parent; }
         set { parent = value; }
     }
 
-    public List<HexTile> returnNeighbours() 
+    // Function to return neighbours
+    public List<HexTile> ReturnNeighbours() 
     { 
         return neighbours; 
     }
 
+    // Calculates and assigns Fcost
     public void CalculateFCost()
     {
         fCost = (int)hCost + gCost;
     }
 
+    // Checks above the tile, if it is hindered, it deletes itself
     void CheckAbove()
     {
         RaycastHit hit;
@@ -86,6 +90,7 @@ public class HexTile : MonoBehaviour
             }
     }
 
+    // Resets tile values
     public void ResetTileValues()
     {
         hCost = 0;
@@ -99,12 +104,14 @@ public class HexTile : MonoBehaviour
         ResetTileColor();
     }
 
+    // Resets tile color and shader properties
     public void ResetTileColor()
     {
         isStable = 0;
         render.material.color = HexGrid.normal;
     }
 
+    // Get set for Walkable that changes shader property depending on value
     public bool Walkable
     {
         get { return walkable; }
@@ -124,6 +131,7 @@ public class HexTile : MonoBehaviour
         }
     }
 
+    // Get set for Attackable that changes shader property depending on value
     public bool Attackable
     {
         get { return walkable; }
@@ -143,6 +151,7 @@ public class HexTile : MonoBehaviour
         }
     }
 
+    // Get set for Hovered that changes shader property depending on value
     public bool Hovered
     {
         get { return hovered; }
@@ -169,28 +178,34 @@ public class HexTile : MonoBehaviour
         }
     }
 
+    // Sets the tile as selected and changes shader color
     public void SetSelected()
     {
         selected = true;
+        isStable = 1;
         render.material.color = HexGrid.instance.whenSelected;
     }
 
+    // Get set for Occupied 
     public bool Occupied
     {
         get { return occupied; }
         set { occupied = value; }
     }
 
+    // Writes the value of the variables into the relevent shader properties for shader manipulation
     void PropertyToShader()
     {
         render.material.SetFloat("_IsStable", isStable);
     }
 
+    // Returns estimated position of the character above said tile
     public Vector3 ReturnTargetPosition(Vector3 charaPos)
     {
         return new Vector3(position.x, charaPos.y, position.z);
     }
 
+    // Returns the enemy relative to the character being passed as parameter if they exist above the said tile
     public Character ReturnTarget(Character source)
     {
         RaycastHit hit;
@@ -200,6 +215,7 @@ public class HexTile : MonoBehaviour
         return null;
     }
 
+    // Destroys meself!!!
     public void DestroyMeself()
     {
         Destroy(gameObject);

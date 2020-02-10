@@ -56,6 +56,7 @@ public abstract class Character : MonoBehaviour , IComparable
         PropertyToShader();   
     }
 
+    // Instantiates and assigns Scriptable object
     protected void Initialize()
     {
         health = ScriptableObject.CreateInstance<FloatVariable>();
@@ -66,11 +67,13 @@ public abstract class Character : MonoBehaviour , IComparable
         stats.Copy(baseStats);
     }
 
+    // Returns current tile of the character
     public HexTile GetCurrentTile()
     {
         return currentTile;
     }
 
+    // Moves the character to the nearest tile (Called after hexgrid is generated when battle event is raised)
     public void MoveToNearestTile()
     {
         HexTile destination = ReturnNearestUnoccupiedTile();
@@ -80,6 +83,7 @@ public abstract class Character : MonoBehaviour , IComparable
         StartCoroutine(MoveToTile(currentPos, destination));
     }
 
+    // Coroutine for smoothly moving character to a tile
     public IEnumerator MoveToTile(Vector3 currentPos, HexTile destination)
     {
         while (time < 1)
@@ -97,6 +101,7 @@ public abstract class Character : MonoBehaviour , IComparable
         yield return null;
     }
 
+    // Coroutine for smoothly moving character down a list of tiles
     public IEnumerator MoveDownPath(List<HexTile> path)
     {
         foreach(var tile in path)
@@ -126,61 +131,61 @@ public abstract class Character : MonoBehaviour , IComparable
         yield return null;
     }
 
+    // Function for Vangaurd Attack
     protected void VangaurdAttack(Character target)
     {
 
     }
 
+    // Function for Vangaurd Skill 1
     protected void VangaurdSkillOne()
     {
 
     }
 
+    // Function for Vangaurd Skill 2
     protected void VangaurdSkillTwo()
     {
 
     }
 
+    // Function for Gunner attack
     protected void GunnerAttack()
     {
 
     }
 
+    // Function for Gunner skill 1
     protected void GunnerSkillOne()
     {
 
     }
 
+    // Function for Gunner skill 2
     protected void GunnerSkillTwo()
     {
 
     }
 
-    protected void ArcanistAttack()
+    // Function for Arsonist attack
+    protected void ArsonistAttack()
     {
 
     }
 
-    protected void ArcanistSkillOne()
+    // Function for Arsonist skill 1
+    protected void ArsonistSkillOne()
     {
 
     }
 
-    protected void ArcanistSkillTwo()
+    // Function for Arsonist skill 2
+    protected void ArsonistSkillTwo()
     {
 
     }
 
-    public void BeginTurn()
-    {
-
-    }
-
-    public void EndTurn()
-    {
-
-    }
-
+    // Compare function for IComparable, ordering by speed of the characters
     public int CompareTo(object obj)
     {
         Character chara = (Character)obj;
@@ -192,6 +197,7 @@ public abstract class Character : MonoBehaviour , IComparable
             return -1;
     }
 
+    // Returns nearest Unoccupied tile
     HexTile ReturnNearestUnoccupiedTile()
     {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, checkTileRange);
@@ -215,11 +221,13 @@ public abstract class Character : MonoBehaviour , IComparable
         return lowest;
     }
 
+    // Refils energy of the character
     public void RefreshEnergy()
     {
         energy.runTimeValue = baseStats.energy;
     }
 
+    // Sets character as targetable and assigns material color
     public bool Targetable
     {
         get { return targetable; }
@@ -237,6 +245,7 @@ public abstract class Character : MonoBehaviour , IComparable
         }
     }
 
+    // Sets character as hovered and assigns material color
     public bool Hovered
     {
         get { return Hovered; }
@@ -254,12 +263,14 @@ public abstract class Character : MonoBehaviour , IComparable
         }
     }
 
+    // Sets character as selected and assigns material color
     public void SetSelected()
     {
         selected = true;
         render.material.color = BattleManager.instance.whenSelected;
     }
 
+    // Resets character values and material color back to normal
     public void ResetCharaValues()
     {
         selected = false;
@@ -268,16 +279,19 @@ public abstract class Character : MonoBehaviour , IComparable
         render.material.color = normal;
     }
 
+    // Sets shader property for character to be outlined
     public void SetShown()
     {
         current = 1;
     }
 
+    // Resets shader property for the character to not have an outline
     public void SetNotShown()
     {
         current = 0;
     }
 
+    // Sends value of shader property back to the shader
     void PropertyToShader()
     {
         render.material.SetFloat("_Current", current);
