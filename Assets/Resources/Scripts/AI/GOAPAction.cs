@@ -31,6 +31,7 @@ public abstract class GOAPAction
     public abstract bool CheckPrecon(DummyCharacter chara);
     public abstract void Execute(DummyCharacter chara);
     public abstract bool NeedsRange();
+    public abstract bool NeedsEnergy();
 
     public bool InRange
     {
