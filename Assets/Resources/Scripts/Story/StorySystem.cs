@@ -26,9 +26,13 @@ public class StorySystem : MonoBehaviour
     [SerializeField] Text speakerRHS = null;
     [SerializeField] Text textRHS = null;
     [SerializeField] List<Story> stories = null;
+    Story currentStory = null;
+    bool mainStory = false;
 
     public GameEvent storyStart;  // Input streamlining while in story
     public GameEvent storyEnd;
+    public GameEvent battleStart;
+
     public float storyEndWaitTime = 1f;
 
     // StorySystem centric variables
@@ -55,11 +59,13 @@ public class StorySystem : MonoBehaviour
 
     public void Update()
     {
-        ResetExitTrigger();
         if (playing)
         {
+            ResetExitTrigger();
             exitTime += Time.deltaTime;
-            stories[current].Update();
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+                if (CheckTimer())
+                        currentStory.NextDialogue();
         }
     }
 
@@ -86,11 +92,24 @@ public class StorySystem : MonoBehaviour
     // Function to play story and raise relevant event flags
     public void PlayStory()
     {
-        if (!noMoreStories)
+        if (!noMoreStories && !playing)
         {
             playing = true;
             storyStart.Raise();
-            stories[current].PlayDialogue();
+            currentStory = stories[current];
+            currentStory.PlayDialogue();
+            mainStory = true;
+        }
+    }
+
+    public void PlayStory(Story sideStory)
+    {
+        if (!playing)
+        {
+            playing = true;
+            storyStart.Raise();
+            currentStory = sideStory;
+            currentStory.PlayDialogue();
         }
     }
 
@@ -99,10 +118,14 @@ public class StorySystem : MonoBehaviour
     {
         DialogueBoxClose(sideVal);
         playing = false;
-        if (current < stories.Count - 1)
-            current++;
-        else
-            noMoreStories = true;
+        if (mainStory)
+        {
+            if (current < stories.Count - 1)
+                current++;
+            else
+                noMoreStories = true;
+            mainStory = false;
+        }
         StartCoroutine(StoryEndInvoke());
     }
 
@@ -148,8 +171,7 @@ public class StorySystem : MonoBehaviour
         {
             DialogueBoxClose(right);
             // Insert Initiate Battle Manager Code Snippet!!!
-
-
+            battleStart.Raise();
         }
     }
 

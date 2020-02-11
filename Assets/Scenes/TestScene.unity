@@ -568,6 +568,13 @@ GameObject:
   - component: {fileID: 653235693}
   - component: {fileID: 653235692}
   - component: {fileID: 653235696}
+  - component: {fileID: 653235697}
+  - component: {fileID: 653235698}
+  - component: {fileID: 653235700}
+  - component: {fileID: 653235701}
+  - component: {fileID: 653235703}
+  - component: {fileID: 653235702}
+  - component: {fileID: 653235699}
   m_Layer: 11
   m_Name: Playah
   m_TagString: Ally
@@ -583,7 +590,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 653235691}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5000001
   m_Height: 2
@@ -665,6 +672,187 @@ MonoBehaviour:
   energy: {fileID: 0}
   health: {fileID: 0}
   stats: {fileID: 0}
+--- !u!114 &653235697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 653235691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0e3ae2243c4e234eac201ec83eabc46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 6
+  interaction: 1
+  storyStart: {fileID: 0}
+  storyEnd: {fileID: 0}
+--- !u!114 &653235698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 653235691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4043819973e0eb0498e0c94b72e04e2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  story:
+    description: Side Story
+    dialogues:
+    - cutScene: 0
+      speaker: Player
+      portrait: {fileID: 21300000, guid: 1fb8857ab806fd14bad60f9c4065a5d0, type: 3}
+      right: 1
+      text: Take this
+      triggerBattle: 0
+    - cutScene: 0
+      speaker: Ally 1
+      portrait: {fileID: 21300000, guid: 1fb8857ab806fd14bad60f9c4065a5d0, type: 3}
+      right: 1
+      text: Yeah bro!
+      triggerBattle: 0
+    - cutScene: 0
+      speaker: Ally 2
+      portrait: {fileID: 21300000, guid: 1fb8857ab806fd14bad60f9c4065a5d0, type: 3}
+      right: 1
+      text: Rad dude!
+      triggerBattle: 0
+    - cutScene: 0
+      speaker: Enemy
+      portrait: {fileID: 21300000, guid: 1fb8857ab806fd14bad60f9c4065a5d0, type: 3}
+      right: 0
+      text: Noooooooo!
+      triggerBattle: 1
+    enemies:
+    - {fileID: 6505240598726608744}
+--- !u!54 &653235699
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 653235691}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &653235700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 653235691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45afc41fe0a6f58408326469c958c194, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 5e64a56ecf0dcb143b73f27a72a291e2, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 653235697}
+        m_MethodName: SetInteractFalse
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &653235701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 653235691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45afc41fe0a6f58408326469c958c194, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 3698b3402285a61438cc585dd736f78f, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 653235697}
+        m_MethodName: SetInteractTrue
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &653235702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 653235691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45afc41fe0a6f58408326469c958c194, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 992b369051f1a23488a9dd5576203817, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 653235697}
+        m_MethodName: SetInteractTrue
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &653235703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 653235691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45afc41fe0a6f58408326469c958c194, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 3ee5288fd6a718b4494c3e12e24e5321, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 653235697}
+        m_MethodName: SetInteractFalse
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &767415085
 GameObject:
   m_ObjectHideFlags: 0
@@ -1758,47 +1946,64 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bf9d81d1e6665d4d9a940e60206d94c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  goals: []
   actionsList:
   - action: BasicAttack
     effect: kAttack
     preCon: kFindTarget
-    cost: 1
+    energyUsed: 0
+    energyLeft: 0
     priority: 0
+    CD: 0
   - action: SkillOne
     effect: kAttack
     preCon: kFindTarget
-    cost: 2
+    energyUsed: 0
+    energyLeft: 0
     priority: 1
+    CD: 0
   - action: SkillTwo
     effect: kAttack
     preCon: kFindTarget
-    cost: 3
+    energyUsed: 0
+    energyLeft: 0
     priority: 2
+    CD: 0
   - action: Move
     effect: kInRange
     preCon: 
-    cost: 0
+    energyUsed: 0
+    energyLeft: 0
     priority: 0
+    CD: 0
   - action: CheckMostFatal
     effect: kFindTarget
     preCon: kFindTarget
-    cost: 0
+    energyUsed: 0
+    energyLeft: 0
     priority: 2
+    CD: 0
   - action: CheckLowestHealth
     effect: kFindTarget
     preCon: kFindTarget
-    cost: 0
+    energyUsed: 0
+    energyLeft: 0
     priority: 1
+    CD: 0
   - action: CheckNearest
     effect: kFindTarget
     preCon: kFindTarget
-    cost: 0
+    energyUsed: 0
+    energyLeft: 0
     priority: 0
+    CD: 0
   - action: CheckAllies
     effect: kFindAlly
     preCon: kInrange
-    cost: 0
+    energyUsed: 0
+    energyLeft: 0
     priority: -1
+    CD: 0
 --- !u!4 &1658805330
 Transform:
   m_ObjectHideFlags: 0
@@ -1978,9 +2183,16 @@ MonoBehaviour:
       right: 0
       text: Ples nu...
       triggerBattle: 0
+    - cutScene: 0
+      speaker: Sans
+      portrait: {fileID: 21300000, guid: 1fb8857ab806fd14bad60f9c4065a5d0, type: 3}
+      right: 0
+      text: Ples nu...
+      triggerBattle: 1
     enemies: []
   storyStart: {fileID: 11400000, guid: 5e64a56ecf0dcb143b73f27a72a291e2, type: 2}
   storyEnd: {fileID: 11400000, guid: 3698b3402285a61438cc585dd736f78f, type: 2}
+  battleStart: {fileID: 11400000, guid: 3ee5288fd6a718b4494c3e12e24e5321, type: 2}
   storyEndWaitTime: 1
 --- !u!1 &1770517076
 GameObject:
@@ -2427,3 +2639,157 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2123706331}
   m_CullTransparentMesh: 0
+--- !u!1 &2126360035
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2126360037}
+  - component: {fileID: 2126360036}
+  m_Layer: 13
+  m_Name: StoryTrigger
+  m_TagString: StoryTrigger
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!135 &2126360036
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2126360035}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &2126360037
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2126360035}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.28, y: 0.045, z: -2.33}
+  m_LocalScale: {x: 1, y: 1, z: 3.679496}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6505240598726608744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6505240598726608745}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ec1ab6c15d26394e9cdb75c0033d296, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseStats: {fileID: 11400000, guid: b4290d0fe41e54e4db888ba4706aba3d, type: 2}
+  energy: {fileID: 0}
+  health: {fileID: 0}
+  stats: {fileID: 0}
+--- !u!1 &6505240598726608745
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6505240598726608748}
+  - component: {fileID: 6505240598726608749}
+  - component: {fileID: 6505240598726608746}
+  - component: {fileID: 6505240598726608747}
+  - component: {fileID: 6505240598726608744}
+  m_Layer: 10
+  m_Name: Enemeh
+  m_TagString: Enemy
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!23 &6505240598726608746
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6505240598726608745}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: cbf5e87ef4f66bb4187a73ea01352da4, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!136 &6505240598726608747
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6505240598726608745}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5000001
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!4 &6505240598726608748
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6505240598726608745}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.66, y: 0.298, z: -2.36}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &6505240598726608749
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6505240598726608745}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}

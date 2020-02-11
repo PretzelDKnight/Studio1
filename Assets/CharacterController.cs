@@ -8,6 +8,11 @@ public class CharacterController : MonoBehaviour
 
     Vector3 forward, right;
 
+    [HideInInspector] public bool interaction = true;
+
+    [SerializeField] GameEvent storyStart;
+    [SerializeField] GameEvent storyEnd;
+    
     Rigidbody rb;
     void Start()
     {
@@ -21,20 +26,33 @@ public class CharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.anyKey)
+        if (Input.anyKey && interaction)
             Move();
     }
 
-    private void Move()
+    public void Move()
     {
-        Vector3 direction = new Vector3(Input.GetAxis("HorizontalKey"), 0, Input.GetAxis("VerticalKey"));
-        Vector3 rightMove = right * moveSpeed * Time.deltaTime * Input.GetAxis("HorizontalKey");
-        Vector3 forwardMove = forward * moveSpeed * Time.deltaTime * Input.GetAxis("VerticalKey");
+        {
+            Vector3 direction = new Vector3(Input.GetAxis("HorizontalKey"), 0, Input.GetAxis("VerticalKey"));
+            Vector3 rightMove = right * moveSpeed * Time.deltaTime * Input.GetAxis("HorizontalKey");
+            Vector3 forwardMove = forward * moveSpeed * Time.deltaTime * Input.GetAxis("VerticalKey");
 
-        Vector3 unison = Vector3.Normalize(rightMove + forwardMove);
+            Vector3 unison = Vector3.Normalize(rightMove + forwardMove);
 
-        transform.forward = unison;
-        transform.position += rightMove;
-        transform.position += forwardMove;
+            {
+                transform.forward = unison;
+                transform.position += rightMove;
+                transform.position += forwardMove;
+            }
+        }
+    }
+
+    public void SetInteractFalse()
+    {
+        interaction = false;
+    }
+    public void SetInteractTrue()
+    {
+        interaction = true;
     }
 }
