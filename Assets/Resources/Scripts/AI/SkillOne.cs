@@ -6,41 +6,31 @@ public class SkillOne : GOAPAction
 {
     bool attacked = false;
 
+    private void Start()
+    {
+        AddEffect("kAttack", true);
+        AddPrecon("kFindTarget", false);
+    }
+
     public override bool CheckExecuted()
     {
         return attacked;
     }
 
-    public override bool CheckPrecon(DummyCharacter chara)
+    public override bool CheckProceduralPrecon(DummyCharacter chara)
     {
-        DummyCharacter dummy = null;
-        Collider[] hitColliders = Physics.OverlapSphere(chara.transform.position, chara.range);
-        int dist = 100;
-        foreach (var item in hitColliders)
-        {
-            if (item.tag != chara.tag)
-            {
-                DummyCharacter temp = item.GetComponent<DummyCharacter>();
-                if (dist > Vector3.Distance(chara.transform.position, temp.transform.position))
-                    dummy = temp;
-            }
-        }
-
-        if (dummy != null)
-        {
-            target = dummy;
+        if (chara.energy >= 2 && InRange)
             return true;
-        }
-        else
-            return false;
+        return false;
     }
 
-    public override void Execute(DummyCharacter chara)
+    public override bool Execute(DummyCharacter chara)
     {
         chara.SkillOne(target);
         chara.energy -= energyCost;
         target.health -= chara.damage - target.armour;
         attacked = true;
+        return true;
     }
 
     public override bool NeedsEnergy()
