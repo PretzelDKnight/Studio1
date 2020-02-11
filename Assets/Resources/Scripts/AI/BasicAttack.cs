@@ -19,7 +19,7 @@ public class BasicAttack : GOAPAction
 
     public override bool CheckProceduralPrecon(DummyCharacter chara)
     {
-        if (chara.energy > 0 && InRange)
+        if (chara.energy >= energyCost && InRange)
             return true;
         return false;
     }
