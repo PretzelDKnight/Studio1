@@ -62,7 +62,7 @@ public class HexGrid : MonoBehaviour
             for (int j = -z / 2; j < z / 2; j++)
             {
                 Vector2 hexpos = HexOffset(i, j);
-                Vector3 pos = new Vector3(hexpos.x, transform.position.y, hexpos.y);
+                Vector3 pos = new Vector3(hexpos.x + transform.position.x, transform.position.y, hexpos.y + transform.position.z);
                 Instantiate(hexTile, pos, Quaternion.identity);
             }
         }
