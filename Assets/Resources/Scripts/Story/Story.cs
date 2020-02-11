@@ -11,17 +11,6 @@ public class Story
     int current = 0;
     bool playingCutScene = false;
 
-    public void Update()
-    {
-        dialogues[current].Update();
-
-        // Replace Input commands with Input script functions as soon as possible!!!
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-            if (StorySystem.instance.CheckTimer())
-                if (!playingCutScene)
-                    NextDialogue();
-    }
-
     // Plays current dialogue
     public void PlayDialogue()
     {
@@ -29,9 +18,8 @@ public class Story
             StorySystem.instance.SetSideBool(dialogues[current].right);
         dialogues[current].PlayDialogue();
     }
-
     // Plays next Dialogue
-    void NextDialogue()
+    public void NextDialogue()
     {
         current += 1;
         if (current >= dialogues.Count) 

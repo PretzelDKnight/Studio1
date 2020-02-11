@@ -16,11 +16,6 @@ public class Dialogue
     [SerializeField] string text = "";
     [SerializeField] bool triggerBattle = false;
 
-    public void Update()
-    {
-
-    }
-
     public void PlayDialogue()
     {
         if (!cutScene)
