@@ -766,6 +766,7 @@ GameObject:
   - component: {fileID: 1075859285}
   - component: {fileID: 1075859284}
   - component: {fileID: 1075859283}
+  - component: {fileID: 1075859287}
   m_Layer: 0
   m_Name: Player
   m_TagString: Ally
@@ -847,6 +848,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1075859287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1075859282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3def99b9e08a5e544849e4ee9956c73c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 0
+  armour: 0
+  damage: 0
+  energy: 0
+  basicRange: 0
+  s1Range: 0
+  s2Range: 0
+  tilesMoved: 0
+  target: {fileID: 0}
+  isSupport: 0
+  SkillOneCD: 0
+  SkillTwoCD: 0
+  actionList:
+  - action: 
+    effect: 
+    preCon: 
+    priority: 0
+    check: 0
+    CD: 0
 --- !u!1 &1331892370
 GameObject:
   m_ObjectHideFlags: 0
