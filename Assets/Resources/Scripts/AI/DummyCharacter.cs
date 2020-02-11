@@ -14,6 +14,8 @@ public class DummyCharacter : MonoBehaviour
 
     public bool isSupport = false;
 
+    public bool move = false;
+
     public bool SkillOneCD = false;
     public bool SkillTwoCD = false;
 

@@ -9,8 +9,6 @@ public class GOAP : MonoBehaviour
     public static GOAP instance = null;
     
     [SerializeField] List<GOAPAction> goals;
-    
-    Dictionary<string, List<GOAPAction>> actionsDict = new Dictionary<string, List<GOAPAction>>();
 
     private void Awake()
     {
@@ -19,10 +17,28 @@ public class GOAP : MonoBehaviour
         else
             Destroy(gameObject);
     }
-
-    void CompileDictionary(List<GOAPAction> list)
+    public List<GOAPAction> plan(DummyCharacter character, HashSet<GOAPAction> availableActions)
     {
+        // Reset Actions
+        foreach (GOAPAction a in availableActions)
+        {
+            a.ResetAction();
+        }
+        
+        // Check the usable actions based on their PreCons
+        HashSet<GOAPAction> usableActions = new HashSet<GOAPAction>();
+        foreach (GOAPAction a in availableActions)
+        {
+            if (a.CheckPrecon(character))
+                usableActions.Add(a);
+        }
 
+        List<GOAPAction> resultList = new List<GOAPAction>();
+        while()
+        {
+
+        }
+
+        return null;
     }
-
 }

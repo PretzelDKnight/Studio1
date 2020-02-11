@@ -17,7 +17,7 @@ public abstract class GOAPAction
 
     [NonSerialized] public GOAPAction parent;
 
-    // ImportANT!! Use this to reset action to reset the entire action completely
+    // Important!! Use this to reset action to reset the entire action completely
     public void ResetAction()
     {
         energyCost = 0;
