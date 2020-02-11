@@ -43,6 +43,11 @@ public class SkillOne : GOAPAction
         attacked = true;
     }
 
+    public override bool NeedsEnergy()
+    {
+        return true;
+    }
+
     public override bool NeedsRange()
     {
         return true;

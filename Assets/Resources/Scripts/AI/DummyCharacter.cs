@@ -12,6 +12,8 @@ public class DummyCharacter : MonoBehaviour
     public int tilesMoved;
     public int speed;
 
+    DummyCharacter target;
+
     public bool isSupport = false;
 
     public bool move = false;
@@ -38,19 +40,11 @@ public class DummyCharacter : MonoBehaviour
         Debug.Log("Skill Two kameeeeeeeee   haaaaammmmeeeeeee   copyright strike!");
     }
 
-    public bool Move(GOAPAction nextAction)
+    public void Move()
     {
-        this.transform.position +=(nextAction.target.transform.position - transform.position) * speed * Time.deltaTime;
+        transform.position += (target.transform.position - transform.position) * speed * Time.deltaTime;
 
-        float distance = Vector3.Distance(nextAction.target.transform.position, transform.position);
-
-        if (distance <= range)
-        {
-            nextAction.InRange = true;
-            return true;
-        }
-        else
-            return false;
+        float distance = Vector3.Distance(target.transform.position, transform.position);
     }
 
     public bool CheckMostFatal()
