@@ -8,6 +8,18 @@ public class GOAP : MonoBehaviour
 {
     public static GOAP instance = null;
 
+    HashSet<KeyValuePair<string, object>> AIGoals;
+
+    void Start()
+    {
+        
+    }
+
+    void AddGoal()
+    {
+        AIGoals.Add(new KeyValuePair <string, object>("kAttack", false));
+    }
+
     private void Awake()
     {
         if (instance == null)
@@ -27,7 +39,7 @@ public class GOAP : MonoBehaviour
         HashSet<GOAPAction> usableActions = new HashSet<GOAPAction>();
         foreach (GOAPAction a in availableActions)
         {
-            if (a.CheckPrecon(character))
+            if (a.CheckProceduralPrecon(character))
                 usableActions.Add(a);
         }
 
@@ -58,7 +70,7 @@ public class GOAP : MonoBehaviour
             }
         }
 
-        //Backtracking alon the parents, just like in A*
+        //Backtracking along the parents, just like in A*
         List<GOAPAction> resultList = new List<GOAPAction>();
         Tile t = cheapest;
         while (t != null)
