@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 
-public abstract class GOAPAction
+public abstract class GOAPAction : MonoBehaviour
 {
     HashSet<KeyValuePair<string, object>> preCon = new HashSet<KeyValuePair<string, object>>();
     HashSet<KeyValuePair<string, object>> effects = new HashSet<KeyValuePair<string, object>>();
@@ -28,8 +28,8 @@ public abstract class GOAPAction
 
     public abstract void Reset();
     public abstract bool CheckExecuted();
-    public abstract bool CheckPrecon(DummyCharacter chara);
-    public abstract void Execute(DummyCharacter chara);
+    public abstract bool CheckProceduralPrecon(DummyCharacter chara);
+    public abstract bool Execute(DummyCharacter chara);
     public abstract bool NeedsRange();
     public abstract bool NeedsEnergy();
 
