@@ -19,7 +19,7 @@ public class SkillTwo : GOAPAction
 
     public override bool CheckProceduralPrecon(DummyCharacter chara)
     {
-        if (chara.energy >= 3 && InRange)
+        if (chara.energy >= energyCost && InRange)
             return true;
         return false;
     }
