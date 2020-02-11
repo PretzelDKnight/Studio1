@@ -8,10 +8,8 @@ public class CharacterController : MonoBehaviour
 
     Vector3 forward, right;
 
-    [HideInInspector] public bool interaction = true;
-
-    [SerializeField] GameEvent storyStart;
-    [SerializeField] GameEvent storyEnd;
+    [HideInInspector] public bool interactionS = true;
+    [HideInInspector] public bool interactionB = true;
     
     Rigidbody rb;
     void Start()
@@ -26,7 +24,7 @@ public class CharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.anyKey && interaction)
+        if (Input.anyKey && interactionS && interactionB)
             Move();
     }
 
@@ -47,12 +45,22 @@ public class CharacterController : MonoBehaviour
         }
     }
 
-    public void SetInteractFalse()
+    public void StoryEventStart()
     {
-        interaction = false;
+        interactionS = false;
     }
-    public void SetInteractTrue()
+
+    public void StoryEventEnd()
     {
-        interaction = true;
+        interactionS = true;
+    }
+
+    public void BattleEventStart()
+    {
+        interactionB = false;
+    }
+    public void BattleEventEnd()
+    {
+        interactionB = true;
     }
 }

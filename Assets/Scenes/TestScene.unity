@@ -685,9 +685,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 6
-  interaction: 1
-  storyStart: {fileID: 0}
-  storyEnd: {fileID: 0}
+  interactionS: 1
+  interactionB: 1
 --- !u!114 &653235698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -762,7 +761,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 653235697}
-        m_MethodName: SetInteractFalse
+        m_MethodName: StoryEventStart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -789,7 +788,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 653235697}
-        m_MethodName: SetInteractTrue
+        m_MethodName: StoryEventEnd
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -816,7 +815,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 653235697}
-        m_MethodName: SetInteractTrue
+        m_MethodName: BattleEventEnd
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -843,7 +842,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 653235697}
-        m_MethodName: SetInteractFalse
+        m_MethodName: BattleEventStart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

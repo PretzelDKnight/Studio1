@@ -25,8 +25,6 @@ public abstract class Character : MonoBehaviour , IComparable
     bool selected = false;
     float current = 0;
 
-    public List<Action> actionList;
-
     public static float checkTileRange = 3f;
 
     HexTile currentTile = null;

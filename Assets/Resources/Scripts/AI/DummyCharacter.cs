@@ -8,17 +8,20 @@ public class DummyCharacter : MonoBehaviour
     public int armour;
     public int damage;
     public int energy;
-    public int range;
+    public int basicRange;
+    public int s1Range;
+    public int s2Range;
     public int tilesMoved;
-    public int speed;
 
-    public bool isSupport = false;
+    DummyCharacter target;
 
-    public bool SkillOneCD = false;
-    public bool SkillTwoCD = false;
+    public List<Action> actionList = new List<Action>();
 
-    public List<GOAPAction> actionList = new List<GOAPAction>();
+    bool isSupport = false;
 
+    bool SkillOneCD = false;
+    bool SkillTwoCD = false;
+    
     public void BasicAttack(DummyCharacter target)
     {
         Debug.Log("Basic Attack take that");
@@ -33,28 +36,19 @@ public class DummyCharacter : MonoBehaviour
     // Function for Vangaurd Skill 2
     public void SkillTwo(DummyCharacter target)
     {
-        Debug.Log("Skill Two kameeeeeeeee   haaaaammmmeeeeeee   copyright strike!");
+        Debug.Log("Skill Two kameeeeeeeee   aaaaammmmeeeeeee   copyright strike!");
     }
 
-    public bool Move(GOAPAction nextAction)
+    public void Move()
     {
-        this.transform.position +=(nextAction.target.transform.position - transform.position) * speed * Time.deltaTime;
-
-        float distance = Vector3.Distance(nextAction.target.transform.position, transform.position);
-
-        if (distance <= range)
-        {
-            nextAction.InRange = true;
-            return true;
-        }
-        else
-            return false;
+        //this.transform.position = new Vector3(this.transform.position.x + 10 ,0,0);
+        Debug.Log(tilesMoved + " tiles closer to " + target);
     }
 
     public bool CheckMostFatal()
     {
         DummyCharacter dummy = null;
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, range);
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, basicRange);
         int dmg = 0;
         foreach (var item in hitColliders)
         {
@@ -69,7 +63,7 @@ public class DummyCharacter : MonoBehaviour
 
         if (dummy != null)
         {
-            //target = dummy;
+            target = dummy;
             return true;
         }
         else
@@ -79,7 +73,7 @@ public class DummyCharacter : MonoBehaviour
     public bool CheckLowestHealth()
     {
         DummyCharacter dummy = null;
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, range);
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, basicRange);
         int health = 100;
         foreach (var item in hitColliders)
         {
@@ -93,7 +87,7 @@ public class DummyCharacter : MonoBehaviour
 
         if (dummy != null)
         {
-            //target = dummy;
+            target = dummy;
             return true;
         }
         else
@@ -103,7 +97,7 @@ public class DummyCharacter : MonoBehaviour
     public bool CheckNearest()
     {
         DummyCharacter dummy = null;
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, range);
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, basicRange);
         int dist = 100;
         foreach (var item in hitColliders)
         {
@@ -117,15 +111,25 @@ public class DummyCharacter : MonoBehaviour
 
         if (dummy != null)
         {
-            //target = dummy;
+            target = dummy;
             return true;
         }
         else
             return false;
     }
 
+    int CheckDistToRange()
+    {
+        float dist = Vector3.Distance(this.transform.position, target.transform.position);
+                       
+        return (int)dist;
+    }
+
     public void ReturnActionPlan()
     {
+        foreach (var item in GOAP.instance.CreatePlanner(this))
+        {
 
+        }
     }
 }
