@@ -21,7 +21,18 @@ public class DummyCharacter : MonoBehaviour
     public bool SkillOneCD = false;
     public bool SkillTwoCD = false;
 
-    public List<GOAPAction> actionList = new List<GOAPAction>();
+    HashSet<KeyValuePair<string, object>> AIGoals = new HashSet<KeyValuePair<string, object>>();
+
+    public HashSet<GOAPAction> actionList = new HashSet<GOAPAction>();
+    private void Start()
+    {
+        AddGoal();
+    }
+
+    void AddGoal()
+    {
+        AIGoals.Add(new KeyValuePair<string, object>("kAttack", false));
+    }
 
     public void BasicAttack(DummyCharacter target)
     {
@@ -47,6 +58,11 @@ public class DummyCharacter : MonoBehaviour
 
     public void ReturnActionPlan()
     {
+        Queue<GOAPAction> planQueue = GOAP.instance.plan(this, actionList, AIGoals);
 
+        foreach (var item in planQueue)
+        {
+            item.Execute(this);
+        }
     }
 }

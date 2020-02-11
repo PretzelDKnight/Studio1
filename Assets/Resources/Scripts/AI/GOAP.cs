@@ -7,19 +7,7 @@ using System;
 public class GOAP : MonoBehaviour
 {
     public static GOAP instance = null;
-
-    HashSet<KeyValuePair<string, object>> AIGoals;
-
-    void Start()
-    {
-        
-    }
-
-    void AddGoal()
-    {
-        AIGoals.Add(new KeyValuePair <string, object>("kAttack", false));
-    }
-
+    
     private void Awake()
     {
         if (instance == null)

@@ -274,7 +274,7 @@ GameObject:
   - component: {fileID: 304615145}
   - component: {fileID: 304615144}
   - component: {fileID: 304615148}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Enemy (2)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -378,7 +378,6 @@ MonoBehaviour:
   move: 0
   SkillOneCD: 0
   SkillTwoCD: 1
-  actionList: []
 --- !u!1 &364644456
 GameObject:
   m_ObjectHideFlags: 0
@@ -423,7 +422,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   energyCost: 0
-  priority: 0
+  priority: 2
 --- !u!1 &477608357
 GameObject:
   m_ObjectHideFlags: 0
@@ -536,8 +535,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b6290d1f44d434418e3e7bb68bbeba2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyCost: 0
-  priority: 0
+  energyCost: 3
+  priority: 2
 --- !u!1 &637909532
 GameObject:
   m_ObjectHideFlags: 0
@@ -582,7 +581,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   energyCost: 0
-  priority: 0
+  priority: -1
 --- !u!1 &736981651
 GameObject:
   m_ObjectHideFlags: 0
@@ -596,7 +595,7 @@ GameObject:
   - component: {fileID: 736981653}
   - component: {fileID: 736981652}
   - component: {fileID: 736981656}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -700,7 +699,6 @@ MonoBehaviour:
   move: 0
   SkillOneCD: 0
   SkillTwoCD: 0
-  actionList: []
 --- !u!1 &781652496
 GameObject:
   m_ObjectHideFlags: 0
@@ -996,7 +994,7 @@ GameObject:
   - component: {fileID: 1075859283}
   - component: {fileID: 1075859287}
   - component: {fileID: 1075859288}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Player
   m_TagString: Ally
   m_Icon: {fileID: 0}
@@ -1100,14 +1098,6 @@ MonoBehaviour:
   move: 0
   SkillOneCD: 0
   SkillTwoCD: 0
-  actionList:
-  - {fileID: 1789435173}
-  - {fileID: 364644458}
-  - {fileID: 1141372369}
-  - {fileID: 841898259}
-  - {fileID: 637909534}
-  - {fileID: 1523053698}
-  - {fileID: 571572373}
 --- !u!114 &1075859288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1164,7 +1154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   energyCost: 0
-  priority: 0
+  priority: 1
 --- !u!1 &1331892370
 GameObject:
   m_ObjectHideFlags: 0
@@ -1507,8 +1497,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eb777918e5fab2489278f0d8259ff51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyCost: 0
-  priority: 0
+  energyCost: 2
+  priority: 1
 --- !u!1 &1652905667
 GameObject:
   m_ObjectHideFlags: 0
@@ -1651,7 +1641,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa0eff90136537a4186e8ae66f78c4b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyCost: 0
+  energyCost: 1
   priority: 0
 --- !u!1 &1877600990
 GameObject:
@@ -1666,7 +1656,7 @@ GameObject:
   - component: {fileID: 1877600992}
   - component: {fileID: 1877600991}
   - component: {fileID: 1877600995}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Enemy (1)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -1770,7 +1760,6 @@ MonoBehaviour:
   move: 0
   SkillOneCD: 1
   SkillTwoCD: 0
-  actionList: []
 --- !u!1 &1965167929
 GameObject:
   m_ObjectHideFlags: 0
@@ -1853,20 +1842,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 477608358}
-        m_MethodName: GenerateHexGrid
+      - m_Target: {fileID: 1075859287}
+        m_MethodName: ReturnActionPlan
         m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1965167929}
-        m_MethodName: SetActive
-        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
