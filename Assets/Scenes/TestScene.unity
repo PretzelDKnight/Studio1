@@ -1236,7 +1236,7 @@ MonoBehaviour:
   currentChar: {fileID: 11400000, guid: da5ad235b0273c54e94923e65bdd664b, type: 2}
   layerMask:
     serializedVersion: 2
-    m_Bits: 4096
+    m_Bits: 4352
   whenHovered: {r: 1, g: 0.5573458, b: 0.25943398, a: 1}
   whenTargetable: {r: 1, g: 0, b: 0, a: 1}
   whenSelected: {r: 0, g: 1, b: 0.0791831, a: 1}
@@ -1945,64 +1945,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bf9d81d1e6665d4d9a940e60206d94c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goals: []
-  actionsList:
-  - action: BasicAttack
-    effect: kAttack
-    preCon: kFindTarget
-    energyUsed: 0
-    energyLeft: 0
-    priority: 0
-    CD: 0
-  - action: SkillOne
-    effect: kAttack
-    preCon: kFindTarget
-    energyUsed: 0
-    energyLeft: 0
-    priority: 1
-    CD: 0
-  - action: SkillTwo
-    effect: kAttack
-    preCon: kFindTarget
-    energyUsed: 0
-    energyLeft: 0
-    priority: 2
-    CD: 0
-  - action: Move
-    effect: kInRange
-    preCon: 
-    energyUsed: 0
-    energyLeft: 0
-    priority: 0
-    CD: 0
-  - action: CheckMostFatal
-    effect: kFindTarget
-    preCon: kFindTarget
-    energyUsed: 0
-    energyLeft: 0
-    priority: 2
-    CD: 0
-  - action: CheckLowestHealth
-    effect: kFindTarget
-    preCon: kFindTarget
-    energyUsed: 0
-    energyLeft: 0
-    priority: 1
-    CD: 0
-  - action: CheckNearest
-    effect: kFindTarget
-    preCon: kFindTarget
-    energyUsed: 0
-    energyLeft: 0
-    priority: 0
-    CD: 0
-  - action: CheckAllies
-    effect: kFindAlly
-    preCon: kInrange
-    energyUsed: 0
-    energyLeft: 0
-    priority: -1
-    CD: 0
 --- !u!4 &1658805330
 Transform:
   m_ObjectHideFlags: 0

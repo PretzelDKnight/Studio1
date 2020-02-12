@@ -55,8 +55,9 @@ public class BattleManager : MonoBehaviour
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out hit, layerMask))
+        if (Physics.Raycast(ray, out hit,1000,layerMask))
         {
+            Debug.Log(hit.transform.name);
             if (hit.transform.tag == "Tile")
             {
                 HexTile temp = hit.transform.GetComponent<HexTile>();

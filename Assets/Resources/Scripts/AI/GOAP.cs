@@ -17,13 +17,16 @@ public class GOAP : MonoBehaviour
     }
     public Queue<GOAPAction> plan(DummyCharacter character, HashSet<GOAPAction> availableActions, HashSet<KeyValuePair<string, object>> goal)
     {
-        // Reset Actions
+        //A function that takes in a dummycharacter, and a list of its available actions along with its goal to then return the best plan to achieve the goal
+
+
+        // Resets Actions
         foreach (GOAPAction a in availableActions)
         {
             a.ResetAction();
         }
         
-        // Check the usable actions based on their PreCons
+        // Checks the usable actions based on their PreCons
         HashSet<GOAPAction> usableActions = new HashSet<GOAPAction>();
         foreach (GOAPAction a in availableActions)
         {
@@ -85,7 +88,7 @@ public class GOAP : MonoBehaviour
         bool foundOne = false;
 
         foreach (GOAPAction action in usableActions)
-        {
+        {   
             if (inState(action.ReturnPreCon(), parent.state))
             {
                 //Apply action to parent
@@ -112,6 +115,7 @@ public class GOAP : MonoBehaviour
     }
     protected HashSet<GOAPAction> actionSubset(HashSet<GOAPAction> actions, GOAPAction removeMe)
     {
+        //Adds the action if it is not the action to be removed
         HashSet<GOAPAction> subset = new HashSet<GOAPAction>();
         foreach (GOAPAction a in actions)
         {
@@ -119,30 +123,41 @@ public class GOAP : MonoBehaviour
                 subset.Add(a);
         }
         return subset;
+
+        //We return the subset of actions
     }
 
     protected bool goalInState(HashSet<KeyValuePair<string, object>> test, HashSet<KeyValuePair<string, object>> state)
     {
-        bool match = false;
+        //Checks if the goal is in the curr.state
+        
+        bool isMatch = false;
         foreach (KeyValuePair<string, object> t in test)
         {
             foreach (KeyValuePair<string, object> s in state)
             {
                 if (s.Equals(t))
                 {
-                    match = true;
+                    //If the curr.state is the same as in the test state, then we confirm the match
+
+                    isMatch = true;
                     break;
                 }
             }
         }
-        return match;
+        return isMatch;
     }
 
     protected bool inState(HashSet<KeyValuePair<string, object>> test, HashSet<KeyValuePair<string, object>> state)
     {
-        bool allMatch = true;
+        //To check the action precons with the parent
+
+
+        bool matchAll = true;
         foreach (KeyValuePair<string, object> t in test)
         {
+            //We set the match for each value to test as false
+
             bool match = false;
             foreach (KeyValuePair<string, object> s in state)
             {
@@ -153,12 +168,15 @@ public class GOAP : MonoBehaviour
                 }
             }
             if (!match)
-                allMatch = false;
+                matchAll = false;
         }
-        return allMatch;
+        return matchAll;
     }
     protected HashSet<KeyValuePair<string, object>> populateState(HashSet<KeyValuePair<string, object>> currentState, HashSet<KeyValuePair<string, object>> stateChange)
     {
+        //Function  to apply the action to a state
+
+
         HashSet<KeyValuePair<string, object>> state = new HashSet<KeyValuePair<string, object>>();
         // copy the KVPs over as new objects
         foreach (KeyValuePair<string, object> s in currentState)
@@ -199,13 +217,15 @@ public class GOAP : MonoBehaviour
 
 public class Tile
 {
-    public Tile parent;
-    public GOAPAction action;
-    public float cost;
-    public HashSet<KeyValuePair<string, object>> state;
+    public Tile parent; //Reference to its parent tile
+    public GOAPAction action; //Its action
+    public float cost; //Its cost
+    public HashSet<KeyValuePair<string, object>> state; // Its state
 
     public Tile(Tile parent, float cost, HashSet<KeyValuePair<string,object>> state, GOAPAction action)
     {
+        //Constructor for tile class
+
         this.parent = parent;
         this.action = action;
         this.cost = cost;
