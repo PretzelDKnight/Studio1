@@ -8,6 +8,9 @@ public class CharacterController : MonoBehaviour
 
     Vector3 forward, right;
 
+    [HideInInspector] public bool interactionS = true;
+    [HideInInspector] public bool interactionB = true;
+    
     Rigidbody rb;
     void Start()
     {
@@ -21,20 +24,43 @@ public class CharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.anyKey)
+        if (Input.anyKey && interactionS && interactionB)
             Move();
     }
 
-    private void Move()
+    public void Move()
     {
-        Vector3 direction = new Vector3(Input.GetAxis("HorizontalKey"), 0, Input.GetAxis("VerticalKey"));
-        Vector3 rightMove = right * moveSpeed * Time.deltaTime * Input.GetAxis("HorizontalKey");
-        Vector3 forwardMove = forward * moveSpeed * Time.deltaTime * Input.GetAxis("VerticalKey");
+        {
+            Vector3 direction = new Vector3(Input.GetAxis("HorizontalKey"), 0, Input.GetAxis("VerticalKey"));
+            Vector3 rightMove = right * moveSpeed * Time.deltaTime * Input.GetAxis("HorizontalKey");
+            Vector3 forwardMove = forward * moveSpeed * Time.deltaTime * Input.GetAxis("VerticalKey");
 
-        Vector3 unison = Vector3.Normalize(rightMove + forwardMove);
+            Vector3 unison = Vector3.Normalize(rightMove + forwardMove);
 
-        transform.forward = unison;
-        transform.position += rightMove;
-        transform.position += forwardMove;
+            {
+                transform.forward = unison;
+                transform.position += rightMove;
+                transform.position += forwardMove;
+            }
+        }
+    }
+
+    public void StoryEventStart()
+    {
+        interactionS = false;
+    }
+
+    public void StoryEventEnd()
+    {
+        interactionS = true;
+    }
+
+    public void BattleEventStart()
+    {
+        interactionB = false;
+    }
+    public void BattleEventEnd()
+    {
+        interactionB = true;
     }
 }

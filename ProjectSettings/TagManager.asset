@@ -8,6 +8,7 @@ TagManager:
   - Enviro
   - Enemy
   - Ally
+  - StoryTrigger
   layers:
   - Default
   - TransparentFX
@@ -22,7 +23,7 @@ TagManager:
   - Enemy
   - Ally
   - Mouse
-  - 
+  - StoryTrigger
   - 
   - 
   - 
