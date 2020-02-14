@@ -28,8 +28,6 @@ public class BattleManager : MonoBehaviour
     [SerializeField] public Color whenNormal = Color.white;
 
     public GameEvent resetTiles;
-    public GameEvent battleStart;
-    public GameEvent endChara;
 
     bool interaction = true;
 
@@ -57,7 +55,6 @@ public class BattleManager : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit,1000,layerMask))
         {
-            Debug.Log(hit.transform.name);
             if (hit.transform.tag == "Tile")
             {
                 HexTile temp = hit.transform.GetComponent<HexTile>();
@@ -133,7 +130,7 @@ public class BattleManager : MonoBehaviour
     public void Pass()
     {
         currentChar.character.SetNotShown();
-        endChara.Raise();
+        TurnManager.instance.EndTurn();
     }
 
     // Get set battle function
@@ -150,7 +147,9 @@ public class BattleManager : MonoBehaviour
         {
             Battle = true;
             busy = true;
-            battleStart.Raise();
+            HexGrid.instance.GenerateHexGrid();
+            TurnManager.instance.NewBattle();
+            HandCards.instance.GenerateHand();
         }
         else
             Debug.Log("Battle already running!");

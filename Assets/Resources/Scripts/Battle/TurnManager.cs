@@ -5,6 +5,8 @@ using UnityEngine;
 // SINGLETON CLASS!
 public class TurnManager : MonoBehaviour
 {
+    static public TurnManager instance = null;
+
     public CharacterVariable currentChara;
 
     public PartyVariable party;
@@ -14,10 +16,14 @@ public class TurnManager : MonoBehaviour
 
     static Queue<Character> turnOrder = new Queue<Character>();
 
-    public GameEvent battleLose;
-    public GameEvent battleWin;
-    public GameEvent battleEnd;
-    public GameEvent newChara;
+
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
+    }
 
     // Re-initializes turn queue and reorders characters 
     void InitTurnQueue()
@@ -36,7 +42,7 @@ public class TurnManager : MonoBehaviour
     void StartTurn()
     {
         currentChara.character = turnOrder.Dequeue();
-        newChara.Raise();
+        BattleManager.instance.NewChara();
     }
 
     // Ends the turn and re-initiates queue check
@@ -106,15 +112,11 @@ public class TurnManager : MonoBehaviour
         if (allyDead == party.members.Length)
         {
             // Game Over Call
-            battleEnd.Raise();
-            battleLose.Raise();
         }
 
         if (enemyDead == enemies.members.Length)
         {
             // Battle Win Call
-            battleEnd.Raise();
-            battleWin.Raise();
         }
     }
 
