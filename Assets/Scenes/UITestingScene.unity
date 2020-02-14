@@ -432,6 +432,83 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1153505951
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1153505954}
+  - component: {fileID: 1153505953}
+  - component: {fileID: 1153505952}
+  m_Layer: 0
+  m_Name: BattleObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1153505952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1153505951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbb1d9b6cda95554287b375fdd8e1b2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentChar: {fileID: 11400000, guid: da5ad235b0273c54e94923e65bdd664b, type: 2}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 4096
+  whenHovered: {r: 1, g: 1, b: 1, a: 1}
+  whenTargetable: {r: 1, g: 1, b: 1, a: 1}
+  whenSelected: {r: 1, g: 1, b: 1, a: 1}
+  whenNormal: {r: 1, g: 1, b: 1, a: 1}
+  resetTiles: {fileID: 11400000, guid: 5c531422141398b49a2cb1b3bffc0a77, type: 2}
+--- !u!114 &1153505953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1153505951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3decfcc22f883324482a351aba8379a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hexTile: {fileID: 0}
+  x: 5
+  z: 5
+  radius: 0.5
+  useAsInnerCircleRadius: 1
+  whenSelected: {r: 1, g: 0.57442236, b: 0, a: 1}
+  whenHovered: {r: 0.25943398, g: 0.31207144, b: 1, a: 1}
+  whenWalkable: {r: 0.49363053, g: 0.8396226, b: 0.34456214, a: 1}
+  whenAttackable: {r: 0.7830189, g: 0.380429, b: 0.380429, a: 1}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
+--- !u!4 &1153505954
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1153505951}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.0000001, z: 90}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1357887746
 GameObject:
   m_ObjectHideFlags: 0
@@ -602,6 +679,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1502723820}
   m_CullTransparentMesh: 0
+--- !u!1 &1511188866
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1511188868}
+  - component: {fileID: 1511188867}
+  m_Layer: 0
+  m_Name: TurnQueue
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1511188867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1511188866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c49aa9c1dc41d142bcc797cdb58e1b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentChara: {fileID: 11400000, guid: da5ad235b0273c54e94923e65bdd664b, type: 2}
+  party: {fileID: 11400000, guid: 8994dc76f1245fe41b840d95e5f14a0a, type: 2}
+  enemies: {fileID: 11400000, guid: e69ea85933448944a972d353330c1c00, type: 2}
+--- !u!4 &1511188868
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1511188866}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.0000001, z: 90}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1826645742
 GameObject:
   m_ObjectHideFlags: 0
@@ -638,7 +761,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -259, y: 165}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1826645744
@@ -684,8 +807,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 662952480}
-        m_MethodName: GenerateHand
+      - m_Target: {fileID: 1153505952}
+        m_MethodName: StartBattle
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

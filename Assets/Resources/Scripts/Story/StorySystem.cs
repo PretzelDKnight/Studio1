@@ -29,10 +29,6 @@ public class StorySystem : MonoBehaviour
     Story currentStory = null;
     bool mainStory = false;
 
-    public GameEvent storyStart;  // Input streamlining while in story
-    public GameEvent storyEnd;
-    public GameEvent battleStart;
-
     public float storyEndWaitTime = 1f;
 
     // StorySystem centric variables
@@ -95,7 +91,6 @@ public class StorySystem : MonoBehaviour
         if (!noMoreStories && !playing)
         {
             playing = true;
-            storyStart.Raise();
             currentStory = stories[current];
             currentStory.PlayDialogue();
             mainStory = true;
@@ -107,7 +102,6 @@ public class StorySystem : MonoBehaviour
         if (!playing)
         {
             playing = true;
-            storyStart.Raise();
             currentStory = sideStory;
             currentStory.PlayDialogue();
         }
@@ -119,7 +113,6 @@ public class StorySystem : MonoBehaviour
         if (playing)
         {
             DialogueBoxClose(sideVal);
-            playing = false;
             if (mainStory)
             {
                 if (current < stories.Count - 1)
@@ -174,7 +167,7 @@ public class StorySystem : MonoBehaviour
         {
             DialogueBoxClose(right);
             // Insert Initiate Battle Manager Code Snippet!!!
-            battleStart.Raise();
+            BattleManager.instance.StartBattle();
         }
     }
 
@@ -261,6 +254,11 @@ public class StorySystem : MonoBehaviour
     IEnumerator StoryEndInvoke()
     {
         yield return new WaitForSeconds(storyEndWaitTime);
-        storyEnd.Raise();
+        playing = false;
+    }
+
+    public bool StoryPlaying()
+    {
+        return playing;
     }
 }

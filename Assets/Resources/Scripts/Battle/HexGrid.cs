@@ -25,8 +25,6 @@ public class HexGrid : MonoBehaviour
 
     public LayerMask layerMask;
 
-    public GameEvent gridFinish;
-
     private void Awake()
     {
         if (instance == null)
@@ -66,7 +64,6 @@ public class HexGrid : MonoBehaviour
                 Instantiate(hexTile, pos, Quaternion.identity);
             }
         }
-        gridFinish.Raise();
     }
 
     // Calculates HexOffset in relation to passed values for finding position of generated tile
