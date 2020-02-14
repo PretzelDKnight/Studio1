@@ -57,7 +57,6 @@ public class BattleManager : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit,1000,layerMask))
         {
-            Debug.Log(hit.transform.name);
             if (hit.transform.tag == "Tile")
             {
                 HexTile temp = hit.transform.GetComponent<HexTile>();
@@ -151,6 +150,7 @@ public class BattleManager : MonoBehaviour
             Battle = true;
             busy = true;
             battleStart.Raise();
+            HandCards.instance.GenerateHand();
         }
         else
             Debug.Log("Battle already running!");

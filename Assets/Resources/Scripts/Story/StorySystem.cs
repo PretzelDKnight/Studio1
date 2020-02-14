@@ -116,17 +116,20 @@ public class StorySystem : MonoBehaviour
     // Function to end story and raise relevent event flags
     public void EndStory()
     {
-        DialogueBoxClose(sideVal);
-        playing = false;
-        if (mainStory)
+        if (playing)
         {
-            if (current < stories.Count - 1)
-                current++;
-            else
-                noMoreStories = true;
-            mainStory = false;
+            DialogueBoxClose(sideVal);
+            playing = false;
+            if (mainStory)
+            {
+                if (current < stories.Count - 1)
+                    current++;
+                else
+                    noMoreStories = true;
+                mainStory = false;
+            }
+            StartCoroutine(StoryEndInvoke());
         }
-        StartCoroutine(StoryEndInvoke());
     }
 
     // Loads current story state from the save file
