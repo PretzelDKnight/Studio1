@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-enum State
+public enum State
 {
     Attack,
     Skill1,
@@ -19,8 +19,8 @@ public class BattleManager : MonoBehaviour
     static bool battle = false;
     bool busy = false;
     static State state;
-    static HexTile targetTile;
-    static Character targetChara;
+    static public HexTile targetTile;
+    static public Character targetChara;
 
     [SerializeField] public Color whenHovered = Color.white;
     [SerializeField] public Color whenTargetable = Color.white;
@@ -41,46 +41,8 @@ public class BattleManager : MonoBehaviour
         state = State.Move;
     }
 
-    private void LateUpdate()
-    {
-        if (!busy && interaction)
-            MouseFunction();
-    }
-
-    // Mouse functions for battle phase
-    public void MouseFunction()
-    {
-        RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        if (Physics.Raycast(ray, out hit,1000,layerMask))
-        {
-            if (hit.transform.tag == "Tile")
-            {
-                HexTile temp = hit.transform.GetComponent<HexTile>();
-                temp.Hovered = true;
-                if (Input.GetKeyDown(KeyCode.Mouse0))
-                {
-                    if (targetTile == null)
-                    {
-                        if (temp.Walkable && state == State.Move)
-                        {
-                            targetTile = temp;
-                            targetTile.SetSelected();
-                            RecievedInput();
-                        }
-                    }
-                }
-            }
-            else if (hit.transform.tag == "Enemy" && currentChar.character.tag == "Ally" && state == State.Attack)
-            {
-
-            }
-        }
-    }
-
     // Executes the function depending on state of the battle manager
-    void RecievedInput()
+    public void RecievedInput()
     {
         busy = true;
         switch (state)
@@ -134,7 +96,7 @@ public class BattleManager : MonoBehaviour
     }
 
     // Get set battle function
-    public bool Battle
+    static public bool Battle
     {
         get { return battle; }
         set { battle = value; }
@@ -149,7 +111,6 @@ public class BattleManager : MonoBehaviour
             busy = true;
             HexGrid.instance.GenerateHexGrid();
             TurnManager.instance.NewBattle();
-            HandCards.instance.GenerateHand();
         }
         else
             Debug.Log("Battle already running!");
@@ -160,6 +121,8 @@ public class BattleManager : MonoBehaviour
     {
         currentChar.character.RefreshEnergy();
         currentChar.character.SetShown();
+        HandCards.instance.GenerateHand();
+        TurnCards.instance.GenerateStatCards();
         ResetEverything();
         Move();
     }
@@ -194,5 +157,15 @@ public class BattleManager : MonoBehaviour
     public void SetInteractionTrue()
     {
         interaction = true;
+    }
+
+    static public State ReturnState()
+    {
+        return state;
+    }
+
+    public void EndBattle()
+    {
+        Battle = false;
     }
 }

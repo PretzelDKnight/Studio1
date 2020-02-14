@@ -22,8 +22,7 @@ public class HandCards : MonoBehaviour
     [SerializeField] public float hoverSpd = 0;
 
     Card[] cards;
-    bool buttonCall;
-    bool generated;
+    bool generated = false;
 
     private void Awake()
     {

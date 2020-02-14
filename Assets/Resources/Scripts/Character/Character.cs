@@ -32,8 +32,6 @@ public abstract class Character : MonoBehaviour , IComparable
     Renderer render;
     Color normal = Color.white;
 
-    static public GameEvent finishMove;
-
     public abstract void Attack(Character target);
     public abstract void SkillOne(Character target);
     public abstract void SkillTwo(Character target);
@@ -41,8 +39,8 @@ public abstract class Character : MonoBehaviour , IComparable
     protected void Awake()
     {
         render = GetComponent<MeshRenderer>();
+        current = 0;
         current = Shader.PropertyToID("_Current");
-        finishMove = Resources.Load<GameEvent>("ScriptableObject/Events/FinishMove");
         normal = render.material.color;
     }
 
@@ -97,7 +95,7 @@ public abstract class Character : MonoBehaviour , IComparable
 
         currentTile = destination;
         currentTile.Walkable = false;
-        finishMove.Raise();
+        BattleManager.instance.NextMove();
         yield return null;
     }
 
@@ -127,7 +125,7 @@ public abstract class Character : MonoBehaviour , IComparable
         currentTile = path[path.Count - 1];
         currentTile.Occupied = true;
         currentTile.Walkable = false;
-        finishMove.Raise();
+        BattleManager.instance.NextMove();
         yield return null;
     }
 

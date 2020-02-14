@@ -2,15 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider))]
-[RequireComponent(typeof(Rigidbody))]
 public abstract class Controller : MonoBehaviour
 {
     // TODO: Add method to read input
+    [SerializeField] public LayerMask layerMask;
     public abstract void ReadInput(InputData data);
-
-    protected Rigidbody rb;
-    protected Collider coll;
     protected bool newInput;
 
     // Animation Component
@@ -18,8 +14,6 @@ public abstract class Controller : MonoBehaviour
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
-        coll = GetComponent<Collider>();
         anim = GetComponent<Animator>();
     }
 }

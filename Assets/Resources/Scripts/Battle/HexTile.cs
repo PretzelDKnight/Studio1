@@ -161,8 +161,11 @@ public class HexTile : MonoBehaviour
             hovered = value;
             if (hovered)
             {
-                render.material.color = HexGrid.instance.whenHovered;
-                isStable = 1;
+                if (!selected)
+                {
+                    render.material.color = HexGrid.instance.whenHovered;
+                    isStable = 1;
+                }
             }
             else
             {
