@@ -5,9 +5,10 @@ using UnityEngine;
 public class Card : MonoBehaviour
 {
     Vector3 ogPos; // Centre position of the card
-    Vector3 selectPos; // Position on select
     Vector2 delay;
     bool hovered = false;
+    bool selected = false;
+    bool available = true;
     float time = 0;
 
     // Start is called before the first frame update
@@ -28,7 +29,10 @@ public class Card : MonoBehaviour
     {
         if (!hovered)
             transform.localPosition = Vector3.Lerp(ogPos + HandCards.instance.hoverPos, ogPos, time) + HandCards.instance.BreathePos(delay);
-        else
+        else if (hovered && available)
+            transform.localPosition = Vector3.Lerp(ogPos, ogPos + HandCards.instance.hoverPos, time) + HandCards.instance.BreathePos(delay);
+
+        if (selected)
             transform.localPosition = Vector3.Lerp(ogPos, ogPos + HandCards.instance.hoverPos, time) + HandCards.instance.BreathePos(delay);
     }
 
@@ -40,18 +44,43 @@ public class Card : MonoBehaviour
     public void OnMouseEnter()
     {
         hovered = true;
-        time = 0;
+        if (!selected)
+            time = 0;
     }
 
     public void OnMouseExit()
     {
         hovered = false;
-        time = 0;
+        if (!selected)
+            time = 0;
+    }
+
+    public void OnMouseDown()
+    {
+        Selected = true;
+        HandCards.instance.SetHand(this);
+    }
+
+    public bool Selected
+    {
+        get { return selected; }
+        set 
+        { selected = value; }
     }
 
     void Timer()
     {
         if (time <= 1)
             time += Time.deltaTime * HandCards.instance.hoverSpd;
+    }
+
+    public void ResetTimer()
+    {
+        time = 0;
+    }
+
+    public void SetAvailable()
+    {
+        available = false;
     }
 }

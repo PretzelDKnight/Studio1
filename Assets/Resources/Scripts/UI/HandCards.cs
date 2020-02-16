@@ -8,8 +8,7 @@ public class HandCards : MonoBehaviour
 {
     static public HandCards instance = null;
 
-    [SerializeField] Card cardPrefab;
-    [SerializeField] int numberOfCards = 0;
+    [SerializeField] Card[] cardPrefab;
     [SerializeField] float cardSpace = 0;
     [SerializeField] float cardDepth = 0;
     [SerializeField] Vector2 quiverAmount = Vector2.zero;
@@ -32,25 +31,19 @@ public class HandCards : MonoBehaviour
             Destroy(gameObject);
     }
 
-
     void Start()
     {
         generated = false;
-    }
-
-    void Update()
-    {
-
     }
 
     public void GenerateHand()
     {
         if (!generated)
         {
-            cards = new Card[numberOfCards];
-            for (int i = 0; i < numberOfCards; i++)
+            cards = new Card[cardPrefab.Length];
+            for (int i = 0; i < cardPrefab.Length; i++)
             {
-                cards[i] = Instantiate(cardPrefab);
+                cards[i] = Instantiate(cardPrefab[i]);
                 cards[i].transform.parent = this.transform;
                 cards[i].transform.localPosition = new Vector3(i * cardSpace, 0, i * cardDepth);
                 cards[i].transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
@@ -59,6 +52,7 @@ public class HandCards : MonoBehaviour
                 cards[i].transform.RotateAround(transform.localPosition + rotPivot, transform.forward, rotStart - i * rotDiff);
             }
             generated = true;
+            SetHandMove();
         }
     }
 
@@ -66,7 +60,7 @@ public class HandCards : MonoBehaviour
     {
         if (generated)
         {
-            for (int i = numberOfCards - 1; i >= 0; i--)
+            for (int i = cardPrefab.Length - 1; i >= 0; i--)
             {
                 Destroy(cards[i].gameObject);
             }
@@ -80,5 +74,40 @@ public class HandCards : MonoBehaviour
         temp.x = Mathf.Sin((delay.x + Time.realtimeSinceStartup) * quiverAmount.x);
         temp.y = Mathf.Sin((delay.y + Time.realtimeSinceStartup) * quiverAmount.y);
         return temp;
+    }
+
+    public void SetHand(Card caller)
+    {
+        if (caller == cards[0])
+            BattleManager.instance.Move();
+        else if (caller == cards[1])
+            BattleManager.instance.Attack();
+        //else if (caller == cards[2])
+        //    BattleManager.instance.Skill1();
+        //else if (caller == cards[3])
+        //    BattleManager.instance.Skill2();
+        else
+            Debug.Log("Uninitiated Card function!");
+
+        ResetHand(caller);
+    }
+
+    public void ResetHand(Card caller)
+    {
+        foreach (var card in cards)
+        {
+            if (caller != card)
+            {
+                if (card.Selected)
+                    card.ResetTimer();
+                card.Selected = false;
+            }
+        }
+    }
+
+    public void SetHandMove()
+    {
+        cards[0].Selected = true;
+        ResetHand(cards[0]);
     }
 }

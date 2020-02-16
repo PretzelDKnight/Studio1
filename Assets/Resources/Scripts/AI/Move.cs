@@ -4,55 +4,13 @@ using UnityEngine;
 
 public class Move : GOAPAction
 {
-    bool moved = false;
-
-    private void Start()
+    public override bool CheckProceduralPrecon(Character chara)
     {
-        AddEffect("kInRange", true);
+        return GOAP.MoveCheck(chara);
     }
 
-    public override bool CheckExecuted()
+    public override void Execute(Character chara)
     {
-        return moved;
-    }
-
-    public override bool CheckProceduralPrecon(DummyCharacter chara)
-    {
-        if (chara.energy > 0)
-            return true;
-        return false;
-    }
-
-    public override bool Execute(DummyCharacter chara)
-    {
-        transform.position += (target.transform.position - chara.transform.position) * chara.speed * Time.deltaTime;
-
-        float distance = Vector3.Distance(target.transform.position, chara.transform.position);
-
-        if (distance <= chara.range)
-        {
-            InRange = true;
-            return true;
-        }
-        else
-        {
-            InRange = false;
-            return false;
-        }
-    }
-
-    public override bool NeedsEnergy()
-    {
-        return true;
-    }
-
-    public override bool NeedsRange()
-    {
-        return false;
-    }
-
-    public override void Reset()
-    {
-        moved = false;
+        chara.Move(GOAP.ReturnTile());
     }
 }

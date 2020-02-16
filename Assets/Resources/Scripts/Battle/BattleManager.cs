@@ -51,8 +51,7 @@ public class BattleManager : MonoBehaviour
                 currentChar.character.Attack(targetChara);
                 break;
             case State.Move:
-                StartCoroutine(currentChar.character.MoveDownPath(Pathfinder.instance.FindPath(currentChar.character.GetCurrentTile(), targetTile)));
-                currentChar.character.energy.runTimeValue -= targetTile.energyCost;
+                currentChar.character.Move(targetTile);
                 break;
             case State.Skill1:
                 break;
@@ -66,24 +65,29 @@ public class BattleManager : MonoBehaviour
     // Attack function to change state of battle manager functions
     public void Attack()
     {
+        ResetEverything();
         state = State.Attack;
+        Pathfinder.instance.FindTilesWithinRange(currentChar.character);
     }
 
     // Skill 1 Function to change state of battle manager functions
     public void Skill1()
     {
+        ResetEverything();
         state = State.Skill1;
     }
 
     // Skill 2 Function to change state of battle manager functions
     public void Skill2()
     {
+        ResetEverything();
         state = State.Skill2;
     }
 
     // Move function to change state of battle manager functions
     public void Move()
     {
+        ResetEverything();
         state = State.Move;
         Pathfinder.instance.FindSelectableTiles(currentChar.character);
     }
@@ -124,6 +128,7 @@ public class BattleManager : MonoBehaviour
         HandCards.instance.GenerateHand();
         TurnCards.instance.GenerateStatCards();
         ResetEverything();
+        HandCards.instance.SetHandMove();
         Move();
     }
 
@@ -133,7 +138,10 @@ public class BattleManager : MonoBehaviour
         ResetEverything();
 
         if (currentChar.character.energy.runTimeValue != 0)
+        {
+            HandCards.instance.SetHandMove();
             Move();
+        }
         else
             Pass();
     }

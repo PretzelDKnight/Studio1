@@ -7,8 +7,8 @@ public class BaseStats : ScriptableObject
 {
     public int energy;
     public float health;
-    public float attackRange;
-    public float speed;
+    public int attackRange;
+    public int speed;
     public float statusResist;
     public float damageResist;
 }

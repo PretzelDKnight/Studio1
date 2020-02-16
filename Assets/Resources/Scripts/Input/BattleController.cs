@@ -43,12 +43,14 @@ public class BattleController : Controller
                             temp.SetSelected();
                             BattleManager.instance.RecievedInput();
                         }
+                        else if (temp.Attackable && BattleManager.ReturnState() == State.Attack)
+                        {
+                            BattleManager.targetChara = temp.ReturnChara();
+                            temp.SetSelected();
+                            BattleManager.instance.RecievedInput();
+                        }
                     }
                 }
-            }
-            else if (hit.transform.tag == "Enemy" && BattleManager.instance.currentChar.character.tag == "Ally" && BattleManager.ReturnState() == State.Attack)
-            {
-
             }
         }
     }

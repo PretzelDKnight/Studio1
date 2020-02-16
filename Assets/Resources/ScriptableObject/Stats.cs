@@ -5,8 +5,8 @@ using UnityEngine;
 [CreateAssetMenu]
 public class Stats : ScriptableObject
 {
-    public float attackRange;
-    public float speed;
+    public int attackRange;
+    public int speed;
     public float statusResist;
     public float damageResist;
 

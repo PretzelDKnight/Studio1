@@ -7,7 +7,9 @@ using System;
 public class GOAP : MonoBehaviour
 {
     public static GOAP instance = null;
-    
+    static HexTile ghostTile = null;
+    static Character ghostTarget = null;
+
     private void Awake()
     {
         if (instance == null)
@@ -15,170 +17,251 @@ public class GOAP : MonoBehaviour
         else
             Destroy(gameObject);
     }
-    public Queue<GOAPAction> plan(DummyCharacter character, HashSet<GOAPAction> availableActions, HashSet<KeyValuePair<string, object>> goal)
+
+    public Queue<GOAPAction> GOAPlan (Character source, HashSet<KeyValuePair<string, object>> goal)
     {
-        //A function that takes in a dummycharacter, and a list of its available actions along with its goal to then return the best plan to achieve the goal
+        List<Node> leaves = new List<Node>();
 
-
-        // Resets Actions
-        foreach (GOAPAction a in availableActions)
+        HashSet<GOAPAction> actions = new HashSet<GOAPAction>();
+        foreach (var action in source.actions)
         {
-            a.ResetAction();
-        }
-        
-        // Checks the usable actions based on their PreCons
-        HashSet<GOAPAction> usableActions = new HashSet<GOAPAction>();
-        foreach (GOAPAction a in availableActions)
-        {
-            if (a.CheckProceduralPrecon(character))
-                usableActions.Add(a);
+            actions.Add(action);
         }
 
-        
-        //Creates our tiles that result in a solution to the goal
-        List<Tile> tiles = new List<Tile>();
+        Node start = new Node(null, goal, null);
+        bool reachedGoal = GrowTree(start, leaves, actions, goal);
 
-        // Graph building
-        Tile start = new Tile(null, 0, null, null);
-        bool success = graphBuild(start, tiles, usableActions, goal);
-
-        if (!success)
+        if (!reachedGoal)
         {
-            Debug.Log("No viable plan!");
+            Debug.Log("No viable plan of action retrieved");
             return null;
         }
 
-        //Finding the cheapest tile
-        Tile cheapest = null;
-        foreach (Tile tile in tiles)
+        // Return action with highest priority but within managable energy cost
+        Node highestP = null;
+        int highest = 0;
+        foreach (var leaf in leaves)
         {
-            if (cheapest == null)
-                cheapest = tile;
+            if (highestP == null)
+                highestP = leaf;
             else
             {
-                if (tile.cost < cheapest.cost)
-                    cheapest = tile;
+                if (leaf.priority > highest && leaf.energy <= source.energy.runTimeValue)
+                {
+                    highestP = leaf;
+                    highest = leaf.priority;
+                }
             }
         }
 
-        //Backtracking along the parents, just like in A*
-        List<GOAPAction> resultList = new List<GOAPAction>();
-        Tile t = cheapest;
-        while (t != null)
-        {
-            if (t.action != null)
-            {
-                resultList.Insert(0, t.action);
-            }
-            t = t.parent;
-        }
-
-        //Returning the final plan
+        // Going through parents and adding to queue
         Queue<GOAPAction> queue = new Queue<GOAPAction>();
-        foreach (GOAPAction a in resultList)
+        Node temp = highestP;
+        while (temp != null)
         {
-            queue.Enqueue(a);
+            if (temp.action != null)
+                queue.Enqueue(temp.action);
+            temp = temp.parent;
         }
 
         return queue;
     }
 
-    bool graphBuild(Tile parent, List<Tile> tiles, HashSet<GOAPAction> usableActions, HashSet<KeyValuePair<string, object>> goal)
+    static List<HexTile> NextSelectableTiles(Character source)
     {
-        bool foundOne = false;
+        HexTile start = source.GetCurrentTile();
+        float energy = source.energy.runTimeValue - source.AttackEnergy();
+        List<HexTile> tempList = new List<HexTile>() { start };
 
-        foreach (GOAPAction action in usableActions)
-        {   
-            if (inState(action.ReturnPreCon(), parent.state))
+        while (tempList.Count > 0)
+        {
+            HexTile tile = GetLowest(tempList);
+
+            tempList.Remove(tile);
+
+            foreach (var item in tile.ReturnNeighbours())
             {
-                //Apply action to parent
-                HashSet<KeyValuePair<string, object>> currentState = populateState(parent.state, action.ReturnEffects());
-                Tile tile = new Tile(parent, parent.cost + action.energyCost, currentState, action);
-
-                if (goalInState(goal, currentState))
+                if (item.energyCost == 0)
                 {
-                    tiles.Add(tile);
-                    foundOne = true;
+                    item.energyCost = source.MoveEnergy() + tile.energyCost;
+                    if (item.energyCost <= energy && !item.Occupied)
+                    {
+                        tempList.Add(item);
+                    }
+                }
+            }
+        }
+
+        start.ResetTileValues();
+
+        return tempList;
+    }
+
+    static Character NearestTarget(Character source)
+    {
+        GameObject[] tempList = GameObject.FindGameObjectsWithTag("Ally");
+        GameObject target =  tempList[0];
+        float lowest = Vector3.Distance(source.transform.position ,tempList[0].transform.position);
+        foreach (var item in tempList)
+        {
+            float dist = Vector3.Distance(source.transform.position, item.transform.position);
+            if (lowest > dist)
+            {
+                lowest = dist;
+                target = item;
+            }
+        }
+        return target.GetComponent<Character>();
+    }
+
+    // GOAP function to generate tree of possible actions using recursion
+    static bool GrowTree(Node parent, List<Node> leaves, HashSet<GOAPAction> actions, HashSet<KeyValuePair<string, object>> goal)
+    {
+        bool pathFound = false;
+
+        foreach (var action in actions)
+        {
+            if (InState(action.ReturnPreCon(), goal))
+            {
+                HashSet<KeyValuePair<string, object>> currentState = PopulateState(parent.state, action.ReturnEffects());
+
+                Node node = new Node(parent, currentState, action);
+
+                if (GoalInState(goal, currentState))
+                {
+                    leaves.Add(node);
+                    pathFound = true;
                 }
                 else
                 {
-                    //Checking the remaining actions
-                    HashSet<GOAPAction> subset = actionSubset(usableActions, action);
-                    bool found = graphBuild(tile, tiles, subset, goal);
+                    HashSet<GOAPAction> subset = RemoveAction(actions, action);
+                    bool found = GrowTree(node, leaves, subset, goal);
                     if (found)
-                        foundOne = true;
+                        pathFound = true;
+                }
+            }
+        }
+        return pathFound;
+    }
+
+    // GOAP function to check for enemy within attack range
+    static public bool EnemyInRange(Character source)
+    {
+        bool check = false; ;
+        int range = source.stats.attackRange;
+        List<HexTile> tempList = new List<HexTile>();
+
+        if (ghostTile != null)
+            tempList.Add(ghostTile);
+        else
+            tempList.Add(source.GetCurrentTile());
+
+        while (tempList.Count > 0)
+        {
+            HexTile temp = GetLowest(tempList);
+
+            tempList.Remove(temp);
+
+            foreach (var item in temp.ReturnNeighbours())
+            {
+                if (item.energyCost == 0)
+                {
+                    item.energyCost = 1 + temp.energyCost;
+                    if (item.energyCost <= range)
+                    {
+                        tempList.Add(item);
+                        Character tempChara = item.ReturnTarget(source);
+                        if (tempChara != null)
+                        {
+                            ResetTiles(tempList);
+                            ghostTarget = tempChara;
+                            return true;
+                        }
+                    }
                 }
             }
         }
 
-        return foundOne;
+        ResetTiles(tempList);
+        return check;
     }
-    protected HashSet<GOAPAction> actionSubset(HashSet<GOAPAction> actions, GOAPAction removeMe)
+
+    // Function to set ghost tile for further Procedural condition checking for GOAP
+    static public bool MoveCheck(Character source)
     {
-        //Adds the action if it is not the action to be removed
-        HashSet<GOAPAction> subset = new HashSet<GOAPAction>();
-        foreach (GOAPAction a in actions)
+        List<HexTile> list = NextSelectableTiles(source);
+
+        foreach (var tile in list)
         {
-            if (!a.Equals(removeMe))
-                subset.Add(a);
+            if (EnemyInRange(source))
+            {
+                ghostTile = tile;
+                return true;
+            }
+        }
+
+        // if no tile is directly in attackable range
+        ghostTarget = NearestTarget(source);
+        HexTile temp = list[0];
+        float lowest = Vector3.Distance(list[0].transform.position, ghostTarget.transform.position);
+        
+        foreach (var tile in list)
+        {
+            float dist = Vector3.Distance(tile.transform.position, ghostTarget.transform.position);
+            if (lowest > dist)
+            {
+                lowest = dist;
+                temp = tile;
+            }
+        }
+        ghostTile = temp;
+
+        return true;
+    }
+
+    // Matches two Hashsets of KeyValue pairs and returns true if they all match
+    static bool InState(HashSet<KeyValuePair<string, object>> test, HashSet<KeyValuePair<string,object>> state)
+    {
+        foreach (var t in test)
+        {
+            foreach (var s in state)
+            {
+                if (!s.Equals(t))
+                    return false;
+            }
+        }
+        return true;
+    }
+
+    // Checks if atleast one goal is met
+    static bool GoalInState(HashSet<KeyValuePair<string, object>> test, HashSet<KeyValuePair<string, object>> goal)
+    {
+        foreach (var t in test)
+        {
+            foreach (var g in goal)
+            {
+                if (g.Equals(t))
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    static HashSet<GOAPAction> RemoveAction(HashSet<GOAPAction> actions, GOAPAction remove)
+    {
+        HashSet<GOAPAction> subset = new HashSet<GOAPAction>();
+        foreach (var action in actions)
+        {
+            if (!action.Equals(remove))
+                subset.Add(action);
         }
         return subset;
-
-        //We return the subset of actions
     }
 
-    protected bool goalInState(HashSet<KeyValuePair<string, object>> test, HashSet<KeyValuePair<string, object>> state)
+    static HashSet<KeyValuePair<string, object>> PopulateState(HashSet<KeyValuePair<string, object>> currentState, HashSet<KeyValuePair<string, object>> stateChange)
     {
-        //Checks if the goal is in the curr.state
-        
-        bool isMatch = false;
-        foreach (KeyValuePair<string, object> t in test)
-        {
-            foreach (KeyValuePair<string, object> s in state)
-            {
-                if (s.Equals(t))
-                {
-                    //If the curr.state is the same as in the test state, then we confirm the match
-
-                    isMatch = true;
-                    break;
-                }
-            }
-        }
-        return isMatch;
-    }
-
-    protected bool inState(HashSet<KeyValuePair<string, object>> test, HashSet<KeyValuePair<string, object>> state)
-    {
-        //To check the action precons with the parent
-
-
-        bool matchAll = true;
-        foreach (KeyValuePair<string, object> t in test)
-        {
-            //We set the match for each value to test as false
-
-            bool match = false;
-            foreach (KeyValuePair<string, object> s in state)
-            {
-                if (s.Equals(t))
-                {
-                    match = true;
-                    break;
-                }
-            }
-            if (!match)
-                matchAll = false;
-        }
-        return matchAll;
-    }
-    protected HashSet<KeyValuePair<string, object>> populateState(HashSet<KeyValuePair<string, object>> currentState, HashSet<KeyValuePair<string, object>> stateChange)
-    {
-        //Function  to apply the action to a state
-
-
         HashSet<KeyValuePair<string, object>> state = new HashSet<KeyValuePair<string, object>>();
-        // copy the KVPs over as new objects
+
         foreach (KeyValuePair<string, object> s in currentState)
         {
             state.Add(new KeyValuePair<string, object>(s.Key, s.Value));
@@ -186,7 +269,7 @@ public class GOAP : MonoBehaviour
 
         foreach (KeyValuePair<string, object> change in stateChange)
         {
-            // If in state update
+            // if the key exists in the current state, update the Value
             bool exists = false;
 
             foreach (KeyValuePair<string, object> s in state)
@@ -200,35 +283,83 @@ public class GOAP : MonoBehaviour
 
             if (exists)
             {
+                // Delegate function to return key where it equals the change state key
                 state.RemoveWhere((KeyValuePair<string, object> kvp) => { return kvp.Key.Equals(change.Key); });
                 KeyValuePair<string, object> updated = new KeyValuePair<string, object>(change.Key, change.Value);
                 state.Add(updated);
             }
+            // if it does not exist in the current state, add it
             else
             {
-                // If not in state, add
                 state.Add(new KeyValuePair<string, object>(change.Key, change.Value));
             }
         }
         return state;
     }
 
-}
-
-public class Tile
-{
-    public Tile parent; //Reference to its parent tile
-    public GOAPAction action; //Its action
-    public float cost; //Its cost
-    public HashSet<KeyValuePair<string, object>> state; // Its state
-
-    public Tile(Tile parent, float cost, HashSet<KeyValuePair<string,object>> state, GOAPAction action)
+    // Returns tile with the lowest cost
+    static HexTile GetLowest(List<HexTile> list)
     {
-        //Constructor for tile class
+        HexTile lowest = list[0];
+        foreach (var item in list)
+        {
+            if (item.energyCost < lowest.energyCost)
+                lowest = item;
+        }
 
-        this.parent = parent;
-        this.action = action;
-        this.cost = cost;
-        this.state = state;
+        return lowest;
+    }
+
+    // Resets tiles in a list
+    static void ResetTiles(List<HexTile> tiles)
+    {
+        foreach (var tile in tiles)
+        {
+            tile.ResetTileValues();
+        }
+    }
+
+    static public void ResetGOAP()
+    {
+        ghostTile = null;
+        ghostTarget = null;
+    }
+
+    static public HexTile ReturnTile()
+    {
+        return ghostTile;
+    }
+
+    static public Character ReturnTarget()
+    {
+        return ghostTarget;
+    }
+
+    // Node class for A* with GOAP
+    public class Node
+    {
+        public Node parent; //Reference to its parent tile
+        public GOAPAction action; //Its action
+        public int energy; //Its cost
+        public int priority; // Priority of the action
+        public HashSet<KeyValuePair<string, object>> state; // Its Precondition to retrieve children
+
+        public Node(Node parent, HashSet<KeyValuePair<string, object>> state, GOAPAction action)
+        {
+            this.parent = parent;
+            this.state = state;
+            this.action = action;
+
+            if (parent != null)
+            {
+                this.priority = action.priority + parent.priority;
+                this.energy = action.energyCost + parent.priority;
+            }
+            else
+            {
+                priority = 0;
+                energy = 0;
+            }
+        }
     }
 }
