@@ -18,7 +18,7 @@ public class GOAP : MonoBehaviour
             Destroy(gameObject);
     }
 
-    public Queue<GOAPAction> GOAPlan (Character source, HashSet<KeyValuePair<string, object>> goal)
+    static public Queue<GOAPAction> GOAPlan (Character source, HashSet<KeyValuePair<string, object>> goal)
     {
         List<Node> leaves = new List<Node>();
 
@@ -121,7 +121,7 @@ public class GOAP : MonoBehaviour
 
         foreach (var action in actions)
         {
-            if (InState(action.ReturnPreCon(), goal))
+            if (InState(action.ReturnPreCon(), parent.state))
             {
                 HashSet<KeyValuePair<string, object>> currentState = PopulateState(parent.state, action.ReturnEffects());
 
@@ -325,12 +325,12 @@ public class GOAP : MonoBehaviour
         ghostTarget = null;
     }
 
-    static public HexTile ReturnTile()
+    static public HexTile ReturnTile(Node node)
     {
         return ghostTile;
     }
 
-    static public Character ReturnTarget()
+    static public Character ReturnTarget(Node node)
     {
         return ghostTarget;
     }
@@ -342,6 +342,8 @@ public class GOAP : MonoBehaviour
         public GOAPAction action; //Its action
         public int energy; //Its cost
         public int priority; // Priority of the action
+        public HexTile targetTile = null;
+        public Character target = null;
         public HashSet<KeyValuePair<string, object>> state; // Its Precondition to retrieve children
 
         public Node(Node parent, HashSet<KeyValuePair<string, object>> state, GOAPAction action)

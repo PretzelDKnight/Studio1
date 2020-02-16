@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using System;
+using System.Collections.Generic;
 
 public enum State
 {
@@ -125,11 +127,19 @@ public class BattleManager : MonoBehaviour
     {
         currentChar.character.RefreshEnergy();
         currentChar.character.SetShown();
+        // TODO : Add in functionality to change card material depending on character
         HandCards.instance.GenerateHand();
         TurnCards.instance.GenerateStatCards();
         ResetEverything();
-        HandCards.instance.SetHandMove();
-        Move();
+        if (!currentChar.character.AI)
+        {
+            HandCards.instance.SetHandMove();
+            Move();
+        }
+        else
+        {
+            AIFunction();
+        }
     }
 
     // If the same character has energy left and is making a move after having done a move, an event raises this function
@@ -144,6 +154,26 @@ public class BattleManager : MonoBehaviour
         }
         else
             Pass();
+    }
+
+    public void AIFunction()
+    {
+        Queue<GOAPAction> queue = GOAP.GOAPlan(currentChar.character, ConvertGoals());
+        foreach (var action in queue)
+        {
+            queue.Dequeue().Execute(currentChar.character);
+        }
+    }
+
+    private HashSet<KeyValuePair<string, object>> ConvertGoals()
+    {
+        HashSet<KeyValuePair<string, object>> aIGoals = new HashSet<KeyValuePair<string, object>>();
+        foreach (var goal in currentChar.character.goals)
+        {
+            aIGoals.Add(goal);
+        }
+
+        return aIGoals;
     }
 
     // Resets the all targeting values to null and raises events

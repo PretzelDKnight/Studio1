@@ -12,6 +12,7 @@ public class BasicAttack : GOAPAction
 
     public override void Execute(Character chara)
     {
-        chara.Attack(GOAP.ReturnTarget());
+        //chara.Attack(GOAP.ReturnTarget());
+        Debug.Log("Attacking!");
     }
 }

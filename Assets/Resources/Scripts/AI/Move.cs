@@ -11,6 +11,7 @@ public class Move : GOAPAction
 
     public override void Execute(Character chara)
     {
-        chara.Move(GOAP.ReturnTile());
+        //chara.Move(GOAP.ReturnTile());
+        Debug.Log("Moving!");
     }
 }

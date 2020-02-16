@@ -19,10 +19,11 @@ public abstract class Character : MonoBehaviour , IComparable
     public FloatVariable health;
     public Stats stats;
 
+    public List<KeyValuePair<string, object>> goals;
     public GOAPAction[] actions;
 
     Status status = Status.Normal;
-    bool AI = false;
+    public bool AI = false;
     float time;
     bool targetable = false;
     bool hovered = false;
