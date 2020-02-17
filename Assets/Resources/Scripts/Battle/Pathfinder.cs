@@ -17,63 +17,6 @@ public class Pathfinder : MonoBehaviour
             Destroy(gameObject);
     }
     
-    // Finds the selectable tiles within energy range
-    public void FindSelectableTiles(Character source)
-    {
-        HexTile start = source.GetCurrentTile();
-        float energy = source.energy.runTimeValue;
-        List<HexTile> tempList = new List<HexTile>() { start };
-
-        while (tempList.Count > 0)
-        {
-            HexTile tile = GetLowestEnergyCost(tempList);
-
-            tempList.Remove(tile);
-
-            foreach (var item in tile.ReturnNeighbours())
-            {
-                if (item.energyCost == 0 && !item.Occupied)
-                {
-                    item.energyCost = 1 + tile.energyCost;
-                    if (item.energyCost <= energy)
-                    {
-                        tempList.Add(item);
-                        item.Walkable = true;
-                    }
-                }
-            }
-        }
-        start.ResetTileValues();
-    }
-
-    // Finds Attackable characters on the tiles within attackble range
-    public void FindTilesWithinRange(Character source)
-    {
-        HexTile start = source.GetCurrentTile();
-        float range = source.stats.attackRange; ;
-        List<HexTile> tempList = new List<HexTile>() { start };
-
-        while (tempList.Count > 0)
-        {
-            HexTile tile = GetLowestEnergyCost(tempList);
-
-            tempList.Remove(tile);
-
-            foreach (var item in tile.ReturnNeighbours())
-            {
-                if (item.energyCost == 0)
-                {
-                    item.energyCost = 1 + tile.energyCost;
-                    if (item.energyCost <= range)
-                    {
-                        tempList.Add(item);
-                        item.Attackable = true;
-                    }
-                }
-            }
-        }
-    }
-
     // A Star!!!
     public List<HexTile> FindPath(HexTile start, HexTile destination)
     {
@@ -147,19 +90,6 @@ public class Pathfinder : MonoBehaviour
         foreach (var item in list)
         {
             if (item.fCost < lowest.fCost)
-                lowest = item;
-        }
-
-        return lowest;
-    }
-
-    // Returns tile with the lowest energy cost
-    HexTile GetLowestEnergyCost(List<HexTile> list)
-    {
-        HexTile lowest = list[0];
-        foreach (var item in list)
-        {
-            if (item.energyCost < lowest.energyCost)
                 lowest = item;
         }
 

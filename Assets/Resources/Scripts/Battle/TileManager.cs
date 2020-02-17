@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class HexGrid : MonoBehaviour
+public class TileManager : MonoBehaviour
 {
-    public static HexGrid instance = null;
+    public static TileManager instance = null;
     public GameObject hexTile;
     public int x = 5;
     public int z = 5;
@@ -138,5 +138,75 @@ public class HexGrid : MonoBehaviour
     static public float LerpValue()
     {
         return lerpValue;
+    }
+
+    // Finds Attackable characters on the tiles within attackble range
+    public void FindTilesWithinRange(Character source)
+    {
+        HexTile start = source.GetCurrentTile();
+        float range = source.stats.attackRange; ;
+        List<HexTile> tempList = new List<HexTile>() { start };
+
+        while (tempList.Count > 0)
+        {
+            HexTile tile = GetLowestEnergyCost(tempList);
+
+            tempList.Remove(tile);
+
+            foreach (var item in tile.ReturnNeighbours())
+            {
+                if (item.energyCost == 0)
+                {
+                    item.energyCost = 1 + tile.energyCost;
+                    if (item.energyCost <= range)
+                    {
+                        tempList.Add(item);
+                        item.Attackable = true;
+                    }
+                }
+            }
+        }
+    }
+
+    // Finds the selectable tiles within energy range
+    public void FindSelectableTiles(Character source)
+    {
+        HexTile start = source.GetCurrentTile();
+        float energy = source.energy.runTimeValue;
+        List<HexTile> tempList = new List<HexTile>() { start };
+
+        while (tempList.Count > 0)
+        {
+            HexTile tile = GetLowestEnergyCost(tempList);
+
+            tempList.Remove(tile);
+
+            foreach (var item in tile.ReturnNeighbours())
+            {
+                if (item.energyCost == 0 && !item.Occupied)
+                {
+                    item.energyCost = 1 + tile.energyCost;
+                    if (item.energyCost <= energy)
+                    {
+                        tempList.Add(item);
+                        item.Walkable = true;
+                    }
+                }
+            }
+        }
+        start.ResetTileValues();
+    }
+
+    // Returns tile with the lowest energy cost
+    HexTile GetLowestEnergyCost(List<HexTile> list)
+    {
+        HexTile lowest = list[0];
+        foreach (var item in list)
+        {
+            if (item.energyCost < lowest.energyCost)
+                lowest = item;
+        }
+
+        return lowest;
     }
 }

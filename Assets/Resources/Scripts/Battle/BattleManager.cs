@@ -13,9 +13,10 @@ public enum State
 // SINGLETON CLASS!
 public class BattleManager : MonoBehaviour
 {
+    //=============================================================== Battle Manager Variables ===============================================================
     static public BattleManager instance = null;
 
-    public CharacterVariable currentChar;
+    public Character currentChar;
 
     [SerializeField] LayerMask layerMask;
     static bool battle = false;
@@ -31,7 +32,18 @@ public class BattleManager : MonoBehaviour
 
     public GameEvent resetTiles;
 
-    bool interaction = true;
+    //=============================================================== TurnQueue Variables ===============================================================
+
+    public List<Character> nemenemies;
+
+    public PartyVariable party;
+    public PartyVariable enemies;
+
+    static List<Character> allChara = new List<Character>();
+
+    static Queue<Character> turnOrder = new Queue<Character>();
+
+    //=============================================================== Battle Manager Functions ===============================================================
 
     private void Awake()
     {
@@ -50,10 +62,10 @@ public class BattleManager : MonoBehaviour
         switch (state)
         {
             case State.Attack:
-                currentChar.character.Attack(targetChara);
+                currentChar.Attack(targetChara);
                 break;
             case State.Move:
-                currentChar.character.Move(targetTile);
+                currentChar.Move(targetTile);
                 break;
             case State.Skill1:
                 break;
@@ -69,7 +81,7 @@ public class BattleManager : MonoBehaviour
     {
         ResetEverything();
         state = State.Attack;
-        Pathfinder.instance.FindTilesWithinRange(currentChar.character);
+        TileManager.instance.FindTilesWithinRange(currentChar);
     }
 
     // Skill 1 Function to change state of battle manager functions
@@ -91,14 +103,14 @@ public class BattleManager : MonoBehaviour
     {
         ResetEverything();
         state = State.Move;
-        Pathfinder.instance.FindSelectableTiles(currentChar.character);
+        TileManager.instance.FindSelectableTiles(currentChar);
     }
 
     // Pass to send the turn to the next character in queue
     public void Pass()
     {
-        currentChar.character.SetNotShown();
-        TurnManager.instance.EndTurn();
+        currentChar.SetNotShown();
+        EndTurn();
     }
 
     // Get set battle function
@@ -115,8 +127,8 @@ public class BattleManager : MonoBehaviour
         {
             Battle = true;
             busy = true;
-            HexGrid.instance.GenerateHexGrid();
-            TurnManager.instance.NewBattle();
+            TileManager.instance.GenerateHexGrid();
+            NewBattle();
         }
         else
             Debug.Log("Battle already running!");
@@ -125,13 +137,13 @@ public class BattleManager : MonoBehaviour
     // Is raised when a new character enters the Battle manager
     public void NewChara()
     {
-        currentChar.character.RefreshEnergy();
-        currentChar.character.SetShown();
+        currentChar.RefreshEnergy();
+        currentChar.SetShown();
         // TODO : Add in functionality to change card material depending on character
         HandCards.instance.GenerateHand();
         TurnCards.instance.GenerateStatCards();
         ResetEverything();
-        if (!currentChar.character.AI)
+        if (!currentChar.AI)
         {
             HandCards.instance.SetHandMove();
             Move();
@@ -147,7 +159,7 @@ public class BattleManager : MonoBehaviour
     {
         ResetEverything();
 
-        if (currentChar.character.energy.runTimeValue != 0)
+        if (currentChar.energy.runTimeValue != 0)
         {
             HandCards.instance.SetHandMove();
             Move();
@@ -158,17 +170,17 @@ public class BattleManager : MonoBehaviour
 
     public void AIFunction()
     {
-        Queue<Node> queue = GOAP.GOAPlan(currentChar.character, ConvertGoals());
+        Queue<Node> queue = GOAP.GOAPlan(currentChar, ConvertGoals());
         foreach (var node in queue)
         {
-            queue.Dequeue().action.Execute(currentChar.character, node.targetTile, node.target);
+            queue.Dequeue().action.Execute(currentChar, node.targetTile, node.target);
         }
     }
 
     private HashSet<KeyValuePair<string, object>> ConvertGoals()
     {
         HashSet<KeyValuePair<string, object>> aIGoals = new HashSet<KeyValuePair<string, object>>();
-        foreach (var goal in currentChar.character.goals)
+        foreach (var goal in currentChar.goals)
         {
             aIGoals.Add(goal);
         }
@@ -185,18 +197,6 @@ public class BattleManager : MonoBehaviour
         busy = false;
     }
 
-    // Sets interaction with battle manager to false when story or other events are raised in battle
-    public void SetInteractionFalse()
-    {
-        interaction = false;
-    }
-
-    // Sets interaction with battle manager back to true after said story
-    public void SetInteractionTrue()
-    {
-        interaction = true;
-    }
-
     static public State ReturnState()
     {
         return state;
@@ -205,5 +205,144 @@ public class BattleManager : MonoBehaviour
     public void EndBattle()
     {
         Battle = false;
+    }
+
+
+    //=============================================================== TurnQueue Functions ===============================================================
+
+    // Re-initializes turn queue and reorders characters 
+    void InitTurnQueue()
+    {
+        //HealthCheck();
+        allChara.Sort();
+
+        if (turnOrder.Count == 0)
+            foreach (Character unit in allChara)
+                turnOrder.Enqueue(unit);
+
+        StartTurn();
+    }
+
+    // Starts turn phase for the next character
+    void StartTurn()
+    {
+        currentChar = turnOrder.Dequeue();
+        NewChara();
+    }
+
+    // Ends the turn and re-initiates queue check
+    public void EndTurn()
+    {
+        InitTurnQueue();
+    }
+
+    // Checks health of relevant characters and checks if the party or enemies are wiped and calls battle to an end
+    void HealthCheck()
+    {
+        int allyDead = 0;
+        int enemyDead = 0;
+
+        foreach (var member in party.members)
+        {
+            if (member != null)
+            {
+                if (member.health.runTimeValue <= 0)
+                {
+                    allyDead++;
+                    if (allChara.Contains(member))
+                    {
+                        allChara.Remove(member);
+                    }
+                }
+                else
+                {
+                    if (!allChara.Contains(member))
+                    {
+                        allChara.Add(member);
+                    }
+                }
+            }
+            else
+            {
+                allyDead++;
+            }
+        }
+
+        foreach (var member in enemies.members)
+        {
+            if (member != null)
+            {
+                if (member.health.runTimeValue <= 0)
+                {
+                    enemyDead++;
+                    if (allChara.Contains(member))
+                    {
+                        allChara.Remove(member);
+                    }
+                }
+                else
+                {
+                    if (!allChara.Contains(member))
+                    {
+                        allChara.Add(member);
+                    }
+                }
+            }
+            else
+            {
+                enemyDead++;
+            }
+        }
+
+        if (allyDead == party.members.Length)
+        {
+            // Game Over Call
+        }
+
+        if (enemyDead == enemies.members.Length)
+        {
+            // Battle Win Call
+        }
+    }
+
+    // Starts new battle
+    public void NewBattle()
+    {
+        turnOrder.Clear();
+
+        allChara = new List<Character>();
+
+        foreach (var ally in party.members)
+        {
+            if (ally != null)
+            {
+                ally.MoveToNearestTile();
+                allChara.Add(ally);
+            }
+        }
+
+        // Need to find way to deal with Spawning enemies through scriptable objects
+        AssignEnemies(); // Temp Enemy assigner!!!
+
+        foreach (var enemy in enemies.members)
+        {
+            if (enemy != null)
+            {
+                enemy.MoveToNearestTile();
+                allChara.Add(enemy);
+            }
+        }
+
+        InitTurnQueue();
+    }
+
+    // Temp function!!
+    void AssignEnemies()
+    {
+        enemies.members = new Character[nemenemies.Count];
+        for (int i = 0; i < nemenemies.Count; i++)
+        {
+            enemies.members[i] = nemenemies[i];
+        }
     }
 }

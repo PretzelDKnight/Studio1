@@ -141,60 +141,6 @@ public abstract class Character : MonoBehaviour , IComparable
         yield return null;
     }
 
-    // Function for Vangaurd Attack
-    protected void VangaurdAttack(Character target)
-    {
-
-    }
-
-    // Function for Vangaurd Skill 1
-    protected void VangaurdSkillOne()
-    {
-
-    }
-
-    // Function for Vangaurd Skill 2
-    protected void VangaurdSkillTwo()
-    {
-
-    }
-
-    // Function for Gunner attack
-    protected void GunnerAttack()
-    {
-
-    }
-
-    // Function for Gunner skill 1
-    protected void GunnerSkillOne()
-    {
-
-    }
-
-    // Function for Gunner skill 2
-    protected void GunnerSkillTwo()
-    {
-
-    }
-
-    // Function for Arsonist attack
-    protected void ArsonistAttack()
-    {
-
-    }
-
-    // Function for Arsonist skill 1
-    protected void ArsonistSkillOne()
-    {
-
-    }
-
-    // Function for Arsonist skill 2
-    protected void ArsonistSkillTwo()
-    {
-
-    }
-
     // Compare function for IComparable, ordering by speed of the characters
     public int CompareTo(object obj)
     {
@@ -220,8 +166,7 @@ public abstract class Character : MonoBehaviour , IComparable
             {
                 if (lowest == null)
                     lowest = temp;
-
-                if (!temp.Occupied)
+                else if (!temp.Occupied)
                 {
                     if (Vector3.Distance(transform.position, temp.transform.position) < Vector3.Distance(transform.position, lowest.transform.position))
                         lowest = temp;

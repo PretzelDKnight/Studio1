@@ -86,6 +86,8 @@ public class HandCards : MonoBehaviour
         //    BattleManager.instance.Skill1();
         //else if (caller == cards[3])
         //    BattleManager.instance.Skill2();
+        else if (caller == cards[4])
+            BattleManager.instance.Pass();
         else
             Debug.Log("Uninitiated Card function!");
 

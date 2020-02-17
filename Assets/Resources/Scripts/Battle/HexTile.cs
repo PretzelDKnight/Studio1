@@ -43,19 +43,19 @@ public class HexTile : MonoBehaviour
     private void LateUpdate()
     {
         if (isStable != 0) 
-            isStable = HexGrid.LerpValue();
+            isStable = TileManager.LerpValue();
         PropertyToShader();
     }
 
     // Function to find neighbours of the current tile
     void FindNeighbours()
     {
-        List<Vector3> dir = HexGrid.instance.Directions(transform); 
+        List<Vector3> dir = TileManager.instance.Directions(transform); 
 
         for (int i = 0; i < dir.Count; i++)
         {
             RaycastHit hit;
-            if (Physics.Raycast(transform.position, dir[i], out hit, HexGrid.instance.layerMask))
+            if (Physics.Raycast(transform.position, dir[i], out hit, TileManager.instance.layerMask))
                 if (hit.collider.tag == "Tile")
                     neighbours.Add(hit.collider.gameObject.GetComponent<HexTile>());
         }
@@ -109,7 +109,7 @@ public class HexTile : MonoBehaviour
     public void ResetTileColor()
     {
         isStable = 0;
-        render.material.color = HexGrid.normal;
+        render.material.color = TileManager.normal;
     }
 
     // Get set for Walkable that changes shader property depending on value
@@ -121,12 +121,12 @@ public class HexTile : MonoBehaviour
             walkable = value;
             if (walkable)
             {
-                render.material.color = HexGrid.instance.whenWalkable;
+                render.material.color = TileManager.instance.whenWalkable;
                 isStable = 1;
             }
             else
             {
-                render.material.color = HexGrid.normal;
+                render.material.color = TileManager.normal;
                 isStable = 0;
             }
         }
@@ -141,12 +141,12 @@ public class HexTile : MonoBehaviour
             attackable = value;
             if (attackable)
             {
-                render.material.color = HexGrid.instance.whenAttackable;
+                render.material.color = TileManager.instance.whenAttackable;
                 isStable = 1;
             }
             else
             {
-                render.material.color = HexGrid.normal;
+                render.material.color = TileManager.normal;
                 isStable = 0;
             }
         }
@@ -164,7 +164,7 @@ public class HexTile : MonoBehaviour
             {
                 if (!selected)
                 {
-                    render.material.color = HexGrid.instance.whenHovered;
+                    render.material.color = TileManager.instance.whenHovered;
                     isStable = 1;
                 }
             }
@@ -173,14 +173,14 @@ public class HexTile : MonoBehaviour
                 if (!prev)
                 {
                     if (selected)
-                        render.material.color = HexGrid.instance.whenSelected;
+                        render.material.color = TileManager.instance.whenSelected;
                     else if (walkable)
-                        render.material.color = HexGrid.instance.whenWalkable;
+                        render.material.color = TileManager.instance.whenWalkable;
                     else if (attackable)
-                        render.material.color = HexGrid.instance.whenAttackable;
+                        render.material.color = TileManager.instance.whenAttackable;
                     else
                     {
-                        render.material.color = HexGrid.normal;
+                        render.material.color = TileManager.normal;
                         isStable = 0;
                     }
                 }
@@ -193,7 +193,7 @@ public class HexTile : MonoBehaviour
     {
         selected = true;
         isStable = 1;
-        render.material.color = HexGrid.instance.whenSelected;
+        render.material.color = TileManager.instance.whenSelected;
     }
 
     // Get set for Occupied 
