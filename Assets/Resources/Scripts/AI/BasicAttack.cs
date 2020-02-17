@@ -1,50 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class BasicAttack : GOAPAction
 {
-    bool attacked = false;
-
-    private void Start()
+    public override bool CheckAction(Character chara, out HexTile tile, out Character target)
     {
-        AddEffect("kAttack", true);
-        AddPrecon("kFindTarget", false);
+        tile = null;
+        return GOAP.EnemyInRange(chara, tile, out target);
     }
 
-    public override bool CheckExecuted()
-    {
-        return attacked;
-    }
-
-    public override bool CheckProceduralPrecon(DummyCharacter chara)
-    {
-        if (chara.energy >= energyCost && InRange)
-            return true;
-        return false;
-    }
-
-    public override bool Execute(DummyCharacter chara)
-    {
-        chara.BasicAttack(target);
-        chara.energy -= energyCost;
-        target.health -= chara.damage - target.armour;
-        attacked = true;
-        return true;
-    }
-
-    public override bool NeedsEnergy()
+    public override bool CheckProceduralPrecondition(Character chara)
     {
         return true;
     }
 
-    public override bool NeedsRange()
+    public override void Execute(Character chara, HexTile tile, Character target)
     {
-        return true;
-    }
-
-    public override void Reset()
-    {
-        attacked = false;
+        chara.Attack(target);
+        Debug.Log("Attacking!");
     }
 }

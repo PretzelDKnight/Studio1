@@ -47,35 +47,31 @@ public class Pathfinder : MonoBehaviour
     }
 
     // Finds Attackable characters on the tiles within attackble range
-    public void FindAttackableCharacters(Character source)
+    public void FindTilesWithinRange(Character source)
     {
         HexTile start = source.GetCurrentTile();
-        float range = source.stats.attackRange;
-        List<HexTile> temp = new List<HexTile>() { start };
-        int checkRange = 0;
+        float range = source.stats.attackRange; ;
+        List<HexTile> tempList = new List<HexTile>() { start };
 
-        while (checkRange >= range)
+        while (tempList.Count > 0)
         {
-            foreach (var tile in temp)
+            HexTile tile = GetLowestEnergyCost(tempList);
+
+            tempList.Remove(tile);
+
+            foreach (var item in tile.ReturnNeighbours())
             {
-                temp.Add(tile);
-                foreach (var item in tile.ReturnNeighbours())
+                if (item.energyCost == 0)
                 {
-                    if (item.Occupied)
+                    item.energyCost = 1 + tile.energyCost;
+                    if (item.energyCost <= range)
                     {
-                        Character targetable = item.ReturnTarget(source);
-                        if (targetable != null)
-                        {
-                            item.Attackable = true;
-                            temp.Add(item);
-                        }
+                        tempList.Add(item);
+                        item.Attackable = true;
                     }
                 }
             }
-            checkRange++;
         }
-
-        start.ResetTileValues();
     }
 
     // A Star!!!

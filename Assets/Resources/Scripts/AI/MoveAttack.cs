@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Move : GOAPAction
+public class MoveAttack : GOAPAction
 {
     public override bool CheckAction(Character chara, out HexTile tile, out Character target)
     {
-        return GOAP.MoveCheck(chara, out tile, out target);
+        return GOAP.MoveAttackCheck(chara, out tile, out target);
     }
 
     public override bool CheckProceduralPrecondition(Character chara)

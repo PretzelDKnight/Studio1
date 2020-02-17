@@ -13,12 +13,17 @@ public enum Status
 public abstract class Character : MonoBehaviour , IComparable
 {
     public BaseStats baseStats;
+    public CoolDowns baseCD;
+    public CoolDowns CD;
     public IntVariable energy;
     public FloatVariable health;
     public Stats stats;
 
+    public List<KeyValuePair<string, object>> goals;
+    public GOAPAction[] actions;
+
     Status status = Status.Normal;
-    bool AI = false;
+    public bool AI = false;
     float time;
     bool targetable = false;
     bool hovered = false;
@@ -32,9 +37,14 @@ public abstract class Character : MonoBehaviour , IComparable
     Renderer render;
     Color normal = Color.white;
 
+    public abstract void Move(HexTile tile);
     public abstract void Attack(Character target);
-    public abstract void SkillOne(Character target);
-    public abstract void SkillTwo(Character target);
+    public abstract void SkillOne(HexTile tile);
+    public abstract void SkillTwo(HexTile tile);
+    public abstract int MoveEnergy();
+    public abstract int AttackEnergy();
+    public abstract int Skill1Energy();
+    public abstract int Skill2Energy();
 
     protected void Awake()
     {
@@ -60,6 +70,8 @@ public abstract class Character : MonoBehaviour , IComparable
         health = ScriptableObject.CreateInstance<FloatVariable>();
         energy = ScriptableObject.CreateInstance<IntVariable>();
         stats = ScriptableObject.CreateInstance<Stats>();
+        CD = ScriptableObject.CreateInstance<CoolDowns>();
+        CD.Reset();
         health.Copy(baseStats.health);
         energy.Copy(baseStats.energy);
         stats.Copy(baseStats);
@@ -82,7 +94,7 @@ public abstract class Character : MonoBehaviour , IComparable
     }
 
     // Coroutine for smoothly moving character to a tile
-    public IEnumerator MoveToTile(Vector3 currentPos, HexTile destination)
+    protected IEnumerator MoveToTile(Vector3 currentPos, HexTile destination)
     {
         while (time < 1)
         {
@@ -100,7 +112,7 @@ public abstract class Character : MonoBehaviour , IComparable
     }
 
     // Coroutine for smoothly moving character down a list of tiles
-    public IEnumerator MoveDownPath(List<HexTile> path)
+    protected IEnumerator MoveDownPath(List<HexTile> path)
     {
         foreach(var tile in path)
         {

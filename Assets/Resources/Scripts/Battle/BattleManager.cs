@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using System;
+using System.Collections.Generic;
 
 public enum State
 {
@@ -51,8 +53,7 @@ public class BattleManager : MonoBehaviour
                 currentChar.character.Attack(targetChara);
                 break;
             case State.Move:
-                StartCoroutine(currentChar.character.MoveDownPath(Pathfinder.instance.FindPath(currentChar.character.GetCurrentTile(), targetTile)));
-                currentChar.character.energy.runTimeValue -= targetTile.energyCost;
+                currentChar.character.Move(targetTile);
                 break;
             case State.Skill1:
                 break;
@@ -66,24 +67,29 @@ public class BattleManager : MonoBehaviour
     // Attack function to change state of battle manager functions
     public void Attack()
     {
+        ResetEverything();
         state = State.Attack;
+        Pathfinder.instance.FindTilesWithinRange(currentChar.character);
     }
 
     // Skill 1 Function to change state of battle manager functions
     public void Skill1()
     {
+        ResetEverything();
         state = State.Skill1;
     }
 
     // Skill 2 Function to change state of battle manager functions
     public void Skill2()
     {
+        ResetEverything();
         state = State.Skill2;
     }
 
     // Move function to change state of battle manager functions
     public void Move()
     {
+        ResetEverything();
         state = State.Move;
         Pathfinder.instance.FindSelectableTiles(currentChar.character);
     }
@@ -121,10 +127,19 @@ public class BattleManager : MonoBehaviour
     {
         currentChar.character.RefreshEnergy();
         currentChar.character.SetShown();
+        // TODO : Add in functionality to change card material depending on character
         HandCards.instance.GenerateHand();
         TurnCards.instance.GenerateStatCards();
         ResetEverything();
-        Move();
+        if (!currentChar.character.AI)
+        {
+            HandCards.instance.SetHandMove();
+            Move();
+        }
+        else
+        {
+            AIFunction();
+        }
     }
 
     // If the same character has energy left and is making a move after having done a move, an event raises this function
@@ -133,9 +148,32 @@ public class BattleManager : MonoBehaviour
         ResetEverything();
 
         if (currentChar.character.energy.runTimeValue != 0)
+        {
+            HandCards.instance.SetHandMove();
             Move();
+        }
         else
             Pass();
+    }
+
+    public void AIFunction()
+    {
+        Queue<Node> queue = GOAP.GOAPlan(currentChar.character, ConvertGoals());
+        foreach (var node in queue)
+        {
+            queue.Dequeue().action.Execute(currentChar.character, node.targetTile, node.target);
+        }
+    }
+
+    private HashSet<KeyValuePair<string, object>> ConvertGoals()
+    {
+        HashSet<KeyValuePair<string, object>> aIGoals = new HashSet<KeyValuePair<string, object>>();
+        foreach (var goal in currentChar.character.goals)
+        {
+            aIGoals.Add(goal);
+        }
+
+        return aIGoals;
     }
 
     // Resets the all targeting values to null and raises events

@@ -10,19 +10,45 @@ public class Bodygaurd : Character
         Initialize();
     }
 
+    public override void Move(HexTile tile)
+    {
+        StartCoroutine(MoveDownPath(Pathfinder.instance.FindPath(GetCurrentTile(), tile)));
+        energy.runTimeValue -= tile.energyCost;
+    }
+
     public override void Attack(Character target)
     {
-        throw new System.NotImplementedException();
+        Debug.Log("I am attacking the " + target.tag + "!");
+        energy.runTimeValue -= AttackEnergy();
     }
 
-    public override void SkillOne(Character target)
+    public override void SkillOne(HexTile tile)
     {
-        throw new System.NotImplementedException();
+        Debug.Log("I am using Skill1!");
     }
 
-    public override void SkillTwo(Character target)
+    public override void SkillTwo(HexTile tile)
     {
-        throw new System.NotImplementedException();
+        Debug.Log("I am using Skill2!");
     }
 
+    public override int MoveEnergy()
+    {
+        return 2;
+    }
+
+    public override int AttackEnergy()
+    {
+        return 1;
+    }
+
+    public override int Skill1Energy()
+    {
+        return 3;
+    }
+
+    public override int Skill2Energy()
+    {
+        return 4;
+    }
 }

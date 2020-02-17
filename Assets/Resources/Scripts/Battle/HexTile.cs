@@ -158,6 +158,7 @@ public class HexTile : MonoBehaviour
         get { return hovered; }
         set
         {
+            bool prev = hovered;
             hovered = value;
             if (hovered)
             {
@@ -169,14 +170,19 @@ public class HexTile : MonoBehaviour
             }
             else
             {
-                if (selected)
-                    render.material.color = HexGrid.instance.whenSelected;
-                else if (walkable)
-                    render.material.color = HexGrid.instance.whenWalkable;
-                else
+                if (!prev)
                 {
-                    render.material.color = HexGrid.normal;
-                    isStable = 0;
+                    if (selected)
+                        render.material.color = HexGrid.instance.whenSelected;
+                    else if (walkable)
+                        render.material.color = HexGrid.instance.whenWalkable;
+                    else if (attackable)
+                        render.material.color = HexGrid.instance.whenAttackable;
+                    else
+                    {
+                        render.material.color = HexGrid.normal;
+                        isStable = 0;
+                    }
                 }
             }
         }
@@ -215,6 +221,15 @@ public class HexTile : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(transform.position, Vector3.up, out hit, 0.5f))
             if (hit.collider.tag != source.transform.tag)
+                return hit.collider.GetComponent<Character>();
+        return null;
+    }
+
+    // Returns Character above tile if there is any
+    public Character ReturnChara()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.up, out hit, 0.5f))
                 return hit.collider.GetComponent<Character>();
         return null;
     }

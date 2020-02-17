@@ -9,6 +9,9 @@ TagManager:
   - Enemy
   - Ally
   - StoryTrigger
+  - CameraPoint1
+  - CameraPoint2
+  - CameraPoint3
   layers:
   - Default
   - TransparentFX
