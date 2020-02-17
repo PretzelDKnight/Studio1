@@ -7,8 +7,6 @@ using System;
 public class GOAP : MonoBehaviour
 {
     public static GOAP instance = null;
-    static HexTile ghostTile = null;
-    static Character ghostTarget = null;
 
     private void Awake()
     {
@@ -18,7 +16,7 @@ public class GOAP : MonoBehaviour
             Destroy(gameObject);
     }
 
-    static public Queue<GOAPAction> GOAPlan (Character source, HashSet<KeyValuePair<string, object>> goal)
+    static public Queue<Node> GOAPlan (Character source, HashSet<KeyValuePair<string, object>> goal)
     {
         List<Node> leaves = new List<Node>();
 
@@ -42,30 +40,59 @@ public class GOAP : MonoBehaviour
         int highest = 0;
         foreach (var leaf in leaves)
         {
-            if (highestP == null)
-                highestP = leaf;
-            else
+            if (leaf.priority >= highest && leaf.energy <= source.energy.runTimeValue)
             {
-                if (leaf.priority > highest && leaf.energy <= source.energy.runTimeValue)
-                {
-                    highestP = leaf;
-                    highest = leaf.priority;
-                }
+
+                highestP = leaf;
+                highest = leaf.priority;
             }
         }
 
+        if (highestP == null)
+        {
+            Debug.Log("Plan created, but not to energy specification");
+            return null;
+        }
+
         // Going through parents and adding to queue
-        Queue<GOAPAction> queue = new Queue<GOAPAction>();
+        Queue<Node> queue = new Queue<Node>();
         Node temp = highestP;
         while (temp != null)
         {
+            queue.Enqueue(temp);
+            temp = temp.parent;
+        }
+        return queue;
+    }
+
+    //=============================================================================================== W I P ===============================================================================================
+    // Function to check if path is possible depending on Action checks
+    static bool CheckPlan(Character source, Node leaf)
+    {
+        Node temp = leaf;
+        HexTile tile;
+        Character target;
+
+        while (temp != null)
+        {
             if (temp.action != null)
-                queue.Enqueue(temp.action);
+            {
+                if (temp.action.CheckAction(source, out tile, out target))
+                {
+                    temp.target = target;
+                    temp.targetTile = tile;
+                }
+                else
+                {
+                    return false;
+                }
+            }
             temp = temp.parent;
         }
 
-        return queue;
+        return true;
     }
+    //=============================================================================================== W I P ===============================================================================================
 
     static List<HexTile> NextSelectableTiles(Character source)
     {
@@ -145,14 +172,13 @@ public class GOAP : MonoBehaviour
     }
 
     // GOAP function to check for enemy within attack range
-    static public bool EnemyInRange(Character source)
+    static public bool EnemyInRange(Character source, HexTile tile, out Character target)
     {
-        bool check = false; ;
         int range = source.stats.attackRange;
         List<HexTile> tempList = new List<HexTile>();
 
-        if (ghostTile != null)
-            tempList.Add(ghostTile);
+        if (tile != null)
+            tempList.Add(tile);
         else
             tempList.Add(source.GetCurrentTile());
 
@@ -174,7 +200,7 @@ public class GOAP : MonoBehaviour
                         if (tempChara != null)
                         {
                             ResetTiles(tempList);
-                            ghostTarget = tempChara;
+                            target = tempChara;
                             return true;
                         }
                     }
@@ -183,39 +209,48 @@ public class GOAP : MonoBehaviour
         }
 
         ResetTiles(tempList);
-        return check;
+        target = null;
+        return false;
     }
 
     // Function to set ghost tile for further Procedural condition checking for GOAP
-    static public bool MoveCheck(Character source)
+    static public bool MoveAttackCheck(Character source, out HexTile tile, out Character target)
     {
         List<HexTile> list = NextSelectableTiles(source);
+        target = null;
+        tile = null;
 
-        foreach (var tile in list)
+        foreach (var item in list)
         {
-            if (EnemyInRange(source))
+            if (EnemyInRange(source, item, out target))
             {
-                ghostTile = tile;
+                tile = item;
                 return true;
             }
         }
 
         // if no tile is directly in attackable range
-        ghostTarget = NearestTarget(source);
+        return false;
+    }
+
+    // Function to return closest tile to the target
+    static public bool MoveCheck(Character source, out HexTile tile, out Character target)
+    {
+        List<HexTile> list = NextSelectableTiles(source);
+        target = NearestTarget(source);
         HexTile temp = list[0];
-        float lowest = Vector3.Distance(list[0].transform.position, ghostTarget.transform.position);
-        
-        foreach (var tile in list)
+        float lowest = Vector3.Distance(list[0].transform.position, target.transform.position);
+
+        foreach (var item in list)
         {
-            float dist = Vector3.Distance(tile.transform.position, ghostTarget.transform.position);
+            float dist = Vector3.Distance(item.transform.position, target.transform.position);
             if (lowest > dist)
             {
                 lowest = dist;
-                temp = tile;
+                temp = item;
             }
         }
-        ghostTile = temp;
-
+        tile = temp;
         return true;
     }
 
@@ -247,6 +282,7 @@ public class GOAP : MonoBehaviour
         return false;
     }
 
+    // Removes a action from a Hashset of actions
     static HashSet<GOAPAction> RemoveAction(HashSet<GOAPAction> actions, GOAPAction remove)
     {
         HashSet<GOAPAction> subset = new HashSet<GOAPAction>();
@@ -258,6 +294,7 @@ public class GOAP : MonoBehaviour
         return subset;
     }
 
+    // Adds state changes to currentState and at the same time, adds a state if it doesnt exist
     static HashSet<KeyValuePair<string, object>> PopulateState(HashSet<KeyValuePair<string, object>> currentState, HashSet<KeyValuePair<string, object>> stateChange)
     {
         HashSet<KeyValuePair<string, object>> state = new HashSet<KeyValuePair<string, object>>();
@@ -316,52 +353,6 @@ public class GOAP : MonoBehaviour
         foreach (var tile in tiles)
         {
             tile.ResetTileValues();
-        }
-    }
-
-    static public void ResetGOAP()
-    {
-        ghostTile = null;
-        ghostTarget = null;
-    }
-
-    static public HexTile ReturnTile(Node node)
-    {
-        return ghostTile;
-    }
-
-    static public Character ReturnTarget(Node node)
-    {
-        return ghostTarget;
-    }
-
-    // Node class for A* with GOAP
-    public class Node
-    {
-        public Node parent; //Reference to its parent tile
-        public GOAPAction action; //Its action
-        public int energy; //Its cost
-        public int priority; // Priority of the action
-        public HexTile targetTile = null;
-        public Character target = null;
-        public HashSet<KeyValuePair<string, object>> state; // Its Precondition to retrieve children
-
-        public Node(Node parent, HashSet<KeyValuePair<string, object>> state, GOAPAction action)
-        {
-            this.parent = parent;
-            this.state = state;
-            this.action = action;
-
-            if (parent != null)
-            {
-                this.priority = action.priority + parent.priority;
-                this.energy = action.energyCost + parent.priority;
-            }
-            else
-            {
-                priority = 0;
-                energy = 0;
-            }
         }
     }
 }

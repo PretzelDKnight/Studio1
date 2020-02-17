@@ -158,10 +158,10 @@ public class BattleManager : MonoBehaviour
 
     public void AIFunction()
     {
-        Queue<GOAPAction> queue = GOAP.GOAPlan(currentChar.character, ConvertGoals());
-        foreach (var action in queue)
+        Queue<Node> queue = GOAP.GOAPlan(currentChar.character, ConvertGoals());
+        foreach (var node in queue)
         {
-            queue.Dequeue().Execute(currentChar.character);
+            queue.Dequeue().action.Execute(currentChar.character, node.targetTile, node.target);
         }
     }
 

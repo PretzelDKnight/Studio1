@@ -5,14 +5,20 @@ using System;
 
 public class BasicAttack : GOAPAction
 {
-    public override bool CheckProceduralPrecon(Character chara)
+    public override bool CheckAction(Character chara, out HexTile tile, out Character target)
     {
-        return GOAP.EnemyInRange(chara);
+        tile = null;
+        return GOAP.EnemyInRange(chara, tile, out target);
     }
 
-    public override void Execute(Character chara)
+    public override bool CheckProceduralPrecondition(Character chara)
     {
-        //chara.Attack(GOAP.ReturnTarget());
+        return true;
+    }
+
+    public override void Execute(Character chara, HexTile tile, Character target)
+    {
+        chara.Attack(target);
         Debug.Log("Attacking!");
     }
 }

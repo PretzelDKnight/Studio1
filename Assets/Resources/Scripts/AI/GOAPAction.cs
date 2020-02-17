@@ -11,8 +11,9 @@ public abstract class GOAPAction : ScriptableObject
     public int energyCost;
     public int priority;
     public bool InRange;
-    public abstract bool CheckProceduralPrecon(Character chara);
-    public abstract void Execute(Character chara);
+    public abstract bool CheckProceduralPrecondition(Character chara);
+    public abstract bool CheckAction(Character chara, out HexTile tile, out Character target);
+    public abstract void Execute(Character chara, HexTile tile, Character target);
     public HashSet<KeyValuePair<string, object>> ReturnPreCon() { return preCon; }
     public HashSet<KeyValuePair<string, object>> ReturnEffects() { return effects; }
 }

@@ -61,7 +61,7 @@ public class Pathfinder : MonoBehaviour
 
             foreach (var item in tile.ReturnNeighbours())
             {
-                if (item.energyCost == 0 && !item.Occupied)
+                if (item.energyCost == 0)
                 {
                     item.energyCost = 1 + tile.energyCost;
                     if (item.energyCost <= range)
