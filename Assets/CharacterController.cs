@@ -12,6 +12,9 @@ public class CharacterController : MonoBehaviour
     [HideInInspector] public bool interactionB = true;
     
     Rigidbody rb;
+
+    OverWorldCamera owCam;
+
     void Start()
     {
         rb = this.GetComponent<Rigidbody>();
@@ -19,6 +22,7 @@ public class CharacterController : MonoBehaviour
         forward.y = 0;
         forward = Vector3.Normalize(forward);
         right = Quaternion.Euler(new Vector3(0, 90, 0)) * forward;
+        owCam = Camera.main.gameObject.GetComponent<OverWorldCamera>();
     }
 
     // Update is called once per frame
@@ -42,6 +46,22 @@ public class CharacterController : MonoBehaviour
                 transform.position += rightMove;
                 transform.position += forwardMove;
             }
+        }
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "CameraPoint2")
+        {
+            owCam.ShiftCameraAngle(other.gameObject.tag);
+        }
+        else if(other.gameObject.tag == "CameraPoint3")
+        {
+            owCam.ShiftCameraAngle(other.gameObject.tag);
+        }
+        else if (other.gameObject.tag == "CameraPoint1")
+        {
+            owCam.ShiftCameraAngle(other.gameObject.tag);
         }
     }
 
