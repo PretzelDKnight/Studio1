@@ -34,19 +34,18 @@ public class CharacterController : MonoBehaviour
 
     public void Move()
     {
-        {
-            Vector3 direction = new Vector3(Input.GetAxis("HorizontalKey"), 0, Input.GetAxis("VerticalKey"));
-            Vector3 rightMove = right * moveSpeed * Time.deltaTime * Input.GetAxis("HorizontalKey");
-            Vector3 forwardMove = forward * moveSpeed * Time.deltaTime * Input.GetAxis("VerticalKey");
+        Vector3 direction = new Vector3(Input.GetAxis("HorizontalKey"), 0, Input.GetAxis("VerticalKey"));
+        Vector3 rightMove = right * moveSpeed * Time.deltaTime * Input.GetAxis("HorizontalKey");
+        Vector3 forwardMove = forward * moveSpeed * Time.deltaTime * Input.GetAxis("VerticalKey");
 
-            Vector3 unison = Vector3.Normalize(rightMove + forwardMove);
+        Vector3 unison = Vector3.Normalize(rightMove + forwardMove);
 
-            {
-                transform.forward = unison;
-                transform.position += rightMove;
-                transform.position += forwardMove;
-            }
-        }
+        rb.velocity = transform.forward;
+
+        transform.forward = unison;
+        rb.velocity += rightMove;
+        rb.velocity += forwardMove;
+
     }
 
     public void OnTriggerEnter(Collider other)
