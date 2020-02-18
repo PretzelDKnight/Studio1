@@ -171,9 +171,10 @@ public class BattleManager : MonoBehaviour
     public void AIFunction()
     {
         Queue<Node> queue = GOAP.GOAPlan(currentChar, ConvertGoals());
-        foreach (var node in queue)
+        for(int i = 0; i < queue.Count; i++)
         {
-            queue.Dequeue().action.Execute(currentChar, node.targetTile, node.target);
+            Node node = queue.Dequeue();
+            node.action.Execute(currentChar, node.targetTile, node.target);
         }
     }
 
@@ -182,7 +183,7 @@ public class BattleManager : MonoBehaviour
         HashSet<KeyValuePair<string, object>> aIGoals = new HashSet<KeyValuePair<string, object>>();
         foreach (var goal in currentChar.goals)
         {
-            aIGoals.Add(goal);
+            aIGoals.Add(goal.Convert());
         }
 
         return aIGoals;

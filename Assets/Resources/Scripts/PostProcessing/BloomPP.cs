@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 [ExecuteInEditMode, ImageEffectAllowedInSceneView]
-public class BloomEffect : MonoBehaviour
+public class BloomPP : MonoBehaviour
 {
     [Range(1, 16)] public int iterations = 1;
     [Range(0, 10)] public float threshold = 1;

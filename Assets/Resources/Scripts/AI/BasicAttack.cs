@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+[CreateAssetMenu]
 public class BasicAttack : GOAPAction
 {
     public override bool CheckAction(Character chara, out HexTile tile, out Character target)
@@ -18,7 +19,7 @@ public class BasicAttack : GOAPAction
 
     public override void Execute(Character chara, HexTile tile, Character target)
     {
-        chara.Attack(target);
+        //chara.Attack(target);
         Debug.Log("Attacking!");
     }
 }

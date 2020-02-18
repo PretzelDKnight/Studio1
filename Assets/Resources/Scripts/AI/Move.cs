@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu]
 public class Move : GOAPAction
 {
     public override bool CheckAction(Character chara, out HexTile tile, out Character target)
@@ -16,7 +17,7 @@ public class Move : GOAPAction
 
     public override void Execute(Character chara, HexTile tile, Character target)
     {
-        chara.Move(tile);
+        //chara.Move(tile);
         Debug.Log("Moving!");
     }
 }

@@ -19,7 +19,7 @@ public abstract class Character : MonoBehaviour , IComparable
     public FloatVariable health;
     public Stats stats;
 
-    public List<KeyValuePair<string, object>> goals;
+    public List<KVPair> goals;
     public GOAPAction[] actions;
 
     Status status = Status.Normal;

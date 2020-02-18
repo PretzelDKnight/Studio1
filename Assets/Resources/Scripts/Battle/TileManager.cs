@@ -13,10 +13,10 @@ public class TileManager : MonoBehaviour
 
     // Tile Color
     static public Color normal;
-    public Color whenSelected = Color.white;
-    public Color whenHovered = Color.white;
-    public Color whenWalkable = Color.white;
-    public Color whenAttackable = Color.white;
+    [ColorUsage(true, true)] public Color whenSelected = Color.white;
+    [ColorUsage(true, true)] public Color whenHovered = Color.white;
+    [ColorUsage(true, true)] public Color whenWalkable = Color.white;
+    [ColorUsage(true, true)] public Color whenAttackable = Color.white;
 
     static float hoverRate = 2;
     static float time = 0;
@@ -185,7 +185,7 @@ public class TileManager : MonoBehaviour
             {
                 if (item.energyCost == 0 && !item.Occupied)
                 {
-                    item.energyCost = 1 + tile.energyCost;
+                    item.energyCost = source.MoveEnergy() + tile.energyCost;
                     if (item.energyCost <= energy)
                     {
                         tempList.Add(item);
