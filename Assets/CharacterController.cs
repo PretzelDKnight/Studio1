@@ -8,6 +8,8 @@ public class CharacterController : MonoBehaviour
 
     Vector3 forward, right;
 
+    [HideInInspector] public bool able = true;
+
     [HideInInspector] public bool interactionS = true;
     [HideInInspector] public bool interactionB = true;
     
@@ -23,12 +25,14 @@ public class CharacterController : MonoBehaviour
         forward = Vector3.Normalize(forward);
         right = Quaternion.Euler(new Vector3(0, 90, 0)) * forward;
         owCam = Camera.main.gameObject.GetComponent<OverWorldCamera>();
+        able = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.anyKey && interactionS && interactionB)
+        Debug.Log(able);
+        if (Input.anyKey && interactionS && interactionB && able)
             Move();
     }
 

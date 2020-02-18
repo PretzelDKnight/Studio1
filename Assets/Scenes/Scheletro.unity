@@ -1509,7 +1509,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 413800290}
-  placement: []
   camOffset: {x: -1.76, y: 2.09, z: 3.98}
 --- !u!114 &413800294
 MonoBehaviour:
@@ -1524,6 +1523,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 100
+  able: 0
   interactionS: 1
   interactionB: 1
 --- !u!64 &413800295
@@ -4112,7 +4112,7 @@ GameObject:
   - component: {fileID: 963510812}
   - component: {fileID: 963510811}
   - component: {fileID: 963510815}
-  - component: {fileID: 963510816}
+  - component: {fileID: 963510817}
   m_Layer: 0
   m_Name: Menu
   m_TagString: Untagged
@@ -4208,7 +4208,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 19.720642, y: 27.845266, z: 29.678991}
   m_Center: {x: -14.222448, y: -20.01019, z: -12.873676}
---- !u!114 &963510816
+--- !u!114 &963510817
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4217,18 +4217,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 963510810}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0208366ea7abe74ba24975d6b83dcb2, type: 3}
+  m_Script: {fileID: 11500000, guid: 569c6b998c07f2e4db503f1095d01843, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  buttonE: {fileID: 1834264211}
-  ret: 1
-  menuBool: 0
-  menuCamPos: {x: 15, y: -9.26, z: 5}
-  camRotVector: {x: 33.88, y: 145.8, z: 1}
-  menuCamRot: {x: 0, y: 0, z: 0, w: 0}
-  barCamPos: {x: 0, y: 0, z: 0}
-  barCamRot: {x: 0, y: 0, z: 0, w: 0}
+  eButton: {fileID: 1834264211}
+  menuCamPos: {x: 1.30471, y: 2.085438, z: 2.79729}
+  menuCamRotVector: {x: 60.814, y: 110.627, z: -0.002}
 --- !u!1 &965955715
 GameObject:
   m_ObjectHideFlags: 0
@@ -4639,10 +4633,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 977614204}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc2d8c4b755172341be6697a1673cfad, type: 3}
+  m_Script: {fileID: 11500000, guid: 9c451870e2d9c7c4cad9d2e213e57e53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mode: 0
 --- !u!1 &978980453
 GameObject:
   m_ObjectHideFlags: 0
@@ -4912,7 +4905,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -7897,7 +7890,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 963510816}
+      - m_Target: {fileID: 963510817}
         m_MethodName: SetRet
         m_Mode: 1
         m_Arguments:
