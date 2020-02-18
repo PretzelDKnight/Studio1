@@ -2380,7 +2380,7 @@ GameObject:
   m_Layer: 0
   m_Name: GameObject (2)
   m_TagString: CameraPoint3
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -5581,7 +5581,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 5842546250390044296}
   placement:
-  - cameraRot: {x: 26.3, y: 72, z: 0}
+  - cameraRot: {x: 26.3, y: 50, z: 0}
     offsetZ: -5
   - cameraRot: {x: 0, y: 105, z: 0}
     offsetZ: 7
@@ -6744,7 +6744,7 @@ GameObject:
   m_Layer: 0
   m_Name: GameObject (1)
   m_TagString: CameraPoint2
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -7862,7 +7862,7 @@ GameObject:
   m_Layer: 0
   m_Name: GameObject
   m_TagString: CameraPoint1
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
