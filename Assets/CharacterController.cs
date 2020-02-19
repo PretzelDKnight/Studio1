@@ -28,10 +28,10 @@ public class CharacterController : MonoBehaviour
         able = true;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Input.anyKey && interactionS && interactionB && able)
+        if (Input.GetKey(KeyCode.W)|| Input.GetKey(KeyCode.S)|| Input.GetKey(KeyCode.A)|| Input.GetKey(KeyCode.D))
+            if(interactionS && interactionB && able)
             Move();
     }
 

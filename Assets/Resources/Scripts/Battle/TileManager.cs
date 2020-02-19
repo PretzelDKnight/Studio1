@@ -34,11 +34,6 @@ public class TileManager : MonoBehaviour
         normal = hexTile.GetComponent<MeshRenderer>().sharedMaterial.color;
     }
 
-    void Start()
-    {
-
-    }
-
     private void Update()
     {
         ShaderLerp();

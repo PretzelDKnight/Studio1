@@ -68,11 +68,11 @@ public class UseMenu : MonoBehaviour
         {
             eButton.SetActive(false);
 
-            //Change camera position to menu
+            //Change camera position to menu angle
             Camera.main.transform.position = menuCamPos;
             Camera.main.transform.rotation = menuCamRot;
             
-            //Check for menu functions and stuff
+            //Sets player movability and menu return boolean to false
             player.able = false;
             returnbool = false;
         }
@@ -80,9 +80,10 @@ public class UseMenu : MonoBehaviour
 
     public void SetRet()
     {
+        //Sets player movability and menu return boolean to true
         returnbool = true;
         player.able = true;
-
+        //Sets camera back to bar angle
         Camera.main.transform.position = barCamPos;
         Camera.main.transform.rotation = barCamRot;
     }
