@@ -1509,7 +1509,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 413800290}
-  camOffset: {x: -1.76, y: 2.09, z: 3.98}
 --- !u!114 &413800294
 MonoBehaviour:
   m_ObjectHideFlags: 0
