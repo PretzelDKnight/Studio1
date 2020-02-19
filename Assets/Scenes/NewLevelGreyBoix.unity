@@ -8168,7 +8168,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 366693002}
-  camPositions: []
   p0: {fileID: 76536330}
   p1: {fileID: 11046395}
   p2: {fileID: 370380009}
