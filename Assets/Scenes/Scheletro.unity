@@ -4220,8 +4220,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eButton: {fileID: 1834264211}
-  menuCamPos: {x: 1.30471, y: 2.085438, z: 2.79729}
-  menuCamRotVector: {x: 60.814, y: 110.627, z: -0.002}
+  menuCamPos: {x: 0.702, y: 1.777, z: 3.741}
+  menuCamRotVector: {x: 16.043, y: 148.341, z: 0.003}
 --- !u!1 &965955715
 GameObject:
   m_ObjectHideFlags: 0

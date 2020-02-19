@@ -12,6 +12,9 @@ public class UseMenu : MonoBehaviour
 
     bool returnbool;
 
+    Vector3 barCamPos;
+    Quaternion barCamRot;
+
     [SerializeField] Vector3 menuCamPos;
     [SerializeField] Vector3 menuCamRotVector;
 
@@ -19,14 +22,29 @@ public class UseMenu : MonoBehaviour
 
     private void Start()
     {
+        barCamPos = Camera.main.transform.position;
+        barCamRot = Camera.main.transform.rotation;        
+
         player = FindObjectOfType<CharacterController>();
+
         menuCamRot = Quaternion.Euler(menuCamRotVector);
+
+        Camera.main.transform.position = menuCamPos;
+        Camera.main.transform.rotation = menuCamRot;
+
         eButton.SetActive(false);
+
+        returnbool = false;
+        player.able = false;
     }
 
     private void Update()
     {
-        if (isMenu)
+        Debug.Log(returnbool);
+
+        if (isMenu && returnbool)
+            Menufunc();
+        else if (isMenu)
             Menufunc();
     }
 
@@ -48,19 +66,25 @@ public class UseMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            //Change camera position to menu
+            eButton.SetActive(false);
+
+            //Change camera position to menu angle
             Camera.main.transform.position = menuCamPos;
             Camera.main.transform.rotation = menuCamRot;
-            //Check for menu functions and stuff
+            
+            //Sets player movability and menu return boolean to false
             player.able = false;
             returnbool = false;
         }
-        else
-            player.able = true;
     }
 
     public void SetRet()
     {
+        //Sets player movability and menu return boolean to true
         returnbool = true;
+        player.able = true;
+        //Sets camera back to bar angle
+        Camera.main.transform.position = barCamPos;
+        Camera.main.transform.rotation = barCamRot;
     }
 }
