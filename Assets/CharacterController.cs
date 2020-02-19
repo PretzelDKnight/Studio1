@@ -30,9 +30,15 @@ public class CharacterController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.W)|| Input.GetKey(KeyCode.S)|| Input.GetKey(KeyCode.A)|| Input.GetKey(KeyCode.D))
-            if(interactionS && interactionB && able)
-            Move();
+        if (rb.velocity == Vector3.zero)
+            transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.eulerAngles.x, 0, transform.rotation.eulerAngles.z));
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        {
+            if (interactionS && interactionB && able)
+                Move();
+        }
+        else
+            rb.velocity = Vector3.zero;
     }
 
     public void Move()
@@ -50,7 +56,6 @@ public class CharacterController : MonoBehaviour
         transform.forward = unison;
         rb.velocity += rightMove;
         rb.velocity += forwardMove;
-
     }
     
     public void StoryEventStart()
