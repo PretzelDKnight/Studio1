@@ -8,6 +8,11 @@ public class BezierPlayer : MonoBehaviour
 
     [Range(0,1)] public float distance;
 
+    private void Start()
+    { 
+
+    }
+
     // Update is called once per frame
     void Update()
     {

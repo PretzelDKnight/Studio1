@@ -53,23 +53,7 @@ public class CharacterController : MonoBehaviour
         rb.velocity += forwardMove;
 
     }
-
-    public void OnTriggerEnter(Collider other)
-    {
-        if(other.gameObject.tag == "CameraPoint2")
-        {
-            owCam.ShiftCameraAngle(other.gameObject.tag);
-        }
-        else if(other.gameObject.tag == "CameraPoint3")
-        {
-            owCam.ShiftCameraAngle(other.gameObject.tag);
-        }
-        else if (other.gameObject.tag == "CameraPoint1")
-        {
-            owCam.ShiftCameraAngle(other.gameObject.tag);
-        }
-    }
-
+    
     public void StoryEventStart()
     {
         interactionS = false;
