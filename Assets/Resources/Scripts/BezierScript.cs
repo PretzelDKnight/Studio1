@@ -5,6 +5,8 @@ using UnityEngine;
 public class BezierScript : MonoBehaviour
 {
     public BezierPlayer player;
+
+    public List<Transform> camPositions;
     
     public Transform p0, p1, p2, p3;
 
