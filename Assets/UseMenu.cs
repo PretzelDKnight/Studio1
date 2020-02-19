@@ -71,6 +71,7 @@ public class UseMenu : MonoBehaviour
             //Change camera position to menu
             Camera.main.transform.position = menuCamPos;
             Camera.main.transform.rotation = menuCamRot;
+            
             //Check for menu functions and stuff
             player.able = false;
             returnbool = false;
