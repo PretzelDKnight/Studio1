@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UseMenu : MonoBehaviour
+public class MainMenuClass : MonoBehaviour
 {
     CharacterController player;
 
