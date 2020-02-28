@@ -2,39 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OverWorldCamera : MonoBehaviour, CameraInterface
+public class OverWorldCamera : MonoBehaviour
 {
     [SerializeField] GameObject player;
-    
-    [SerializeField] List<CameraPlacements> placement;
 
-    [HideInInspector] public Vector3 camOffset = new Vector3(-5.2f, 3.4f, -2f);
+    public Vector3 camOffset;
 
-    public void Update()
-    {
-        Camera.main.transform.position = player.transform.position + camOffset;        
-    }
+    public float scrollSpeed = 2f;
+    public float minHeight = 20f;
+    public float maxHeight = 120f;
 
-    public void ShiftCameraAngle(string battle)
-    {
-        Vector3 temp;
-        if(battle == "CameraPoint1")
-        {
-            temp = placement[0].cameraRot;
-            camOffset.z = placement[0].offsetZ;
-            Camera.main.transform.rotation = Quaternion.Euler(new Vector3(Camera.main.transform.rotation.x, temp.y, Camera.main.transform.rotation.z)); 
-        }
-        else if(battle == "CameraPoint2")
-        {
-            temp = placement[1].cameraRot;
-            camOffset.z = placement[1].offsetZ;
-            Camera.main.transform.rotation = Quaternion.Euler(new Vector3(Camera.main.transform.rotation.x, temp.y, Camera.main.transform.rotation.z));
-        }
-        else if(battle == "CameraPoint3")
-        {            
-            temp = placement[2].cameraRot;
-            camOffset.z = placement[2].offsetZ;
-            Camera.main.transform.rotation = Quaternion.Euler(new Vector3(Camera.main.transform.rotation.x, temp.y, Camera.main.transform.rotation.z));
-        }
+    public Vector2 limit;
+
+    //Ray ray;
+
+    private void Update()
+    {       
+        Vector3 pos = transform.position;
+
+        this.transform.position = player.transform.position + camOffset;
+
+        transform.LookAt(player.transform);
+
+        //Physics.RaycastAll(this.transform.position, player.transform.position, 1000, 9); #Will add function to fade objects in the way later
+
+        float scrollVar = Input.GetAxis("Mouse ScrollWheel");
+
+        pos.y = scrollVar * scrollSpeed * Time.deltaTime;
+
+        pos.y = Mathf.Clamp(pos.y, minHeight, maxHeight);
+        pos.x = Mathf.Clamp(pos.x, -limit.x, limit.x);
+        pos.z = Mathf.Clamp(pos.z, -limit.y, limit.y);
     }
 }

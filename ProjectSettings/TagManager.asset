@@ -12,6 +12,8 @@ TagManager:
   - CameraPoint1
   - CameraPoint2
   - CameraPoint3
+  - CameraPoint4
+  - CameraPoint5
   layers:
   - Default
   - TransparentFX

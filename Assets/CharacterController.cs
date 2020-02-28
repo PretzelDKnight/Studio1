@@ -8,6 +8,8 @@ public class CharacterController : MonoBehaviour
 
     Vector3 forward, right;
 
+    [HideInInspector] public bool able = true;
+
     [HideInInspector] public bool interactionS = true;
     [HideInInspector] public bool interactionB = true;
     
@@ -23,48 +25,39 @@ public class CharacterController : MonoBehaviour
         forward = Vector3.Normalize(forward);
         right = Quaternion.Euler(new Vector3(0, 90, 0)) * forward;
         owCam = Camera.main.gameObject.GetComponent<OverWorldCamera>();
+        able = true;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Input.anyKey && interactionS && interactionB)
-            Move();
+        if (rb.velocity == Vector3.zero)
+            transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.eulerAngles.x, 0, transform.rotation.eulerAngles.z));
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        {
+            if (interactionS && interactionB && able)
+                Move();
+        }
+        else
+            rb.velocity = Vector3.zero;
     }
 
     public void Move()
     {
-        {
-            Vector3 direction = new Vector3(Input.GetAxis("HorizontalKey"), 0, Input.GetAxis("VerticalKey"));
-            Vector3 rightMove = right * moveSpeed * Time.deltaTime * Input.GetAxis("HorizontalKey");
-            Vector3 forwardMove = forward * moveSpeed * Time.deltaTime * Input.GetAxis("VerticalKey");
+        rb.velocity = Vector3.zero;
 
-            Vector3 unison = Vector3.Normalize(rightMove + forwardMove);
+        Vector3 direction = new Vector3(Input.GetAxis("HorizontalKey"), 0, Input.GetAxis("VerticalKey"));
+        Vector3 rightMove = right * moveSpeed * Time.deltaTime * Input.GetAxis("HorizontalKey");
+        Vector3 forwardMove = forward * moveSpeed * Time.deltaTime * Input.GetAxis("VerticalKey");
 
-            {
-                transform.forward = unison;
-                transform.position += rightMove;
-                transform.position += forwardMove;
-            }
-        }
+        Vector3 unison = Vector3.Normalize(rightMove + forwardMove);
+
+        rb.velocity = transform.forward;
+
+        transform.forward = unison;
+        rb.velocity += rightMove;
+        rb.velocity += forwardMove;
     }
-
-    public void OnTriggerEnter(Collider other)
-    {
-        if(other.gameObject.tag == "CameraPoint2")
-        {
-            owCam.ShiftCameraAngle(other.gameObject.tag);
-        }
-        else if(other.gameObject.tag == "CameraPoint3")
-        {
-            owCam.ShiftCameraAngle(other.gameObject.tag);
-        }
-        else if (other.gameObject.tag == "CameraPoint1")
-        {
-            owCam.ShiftCameraAngle(other.gameObject.tag);
-        }
-    }
-
+    
     public void StoryEventStart()
     {
         interactionS = false;

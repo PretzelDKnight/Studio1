@@ -6,10 +6,5 @@ using UnityEngine;
 struct CameraPlacements
 {
     [SerializeField] public Vector3 cameraRot;
-    [SerializeField] public float offsetZ;
-}
-
-interface CameraInterface
-{
-    void Update();
+    [SerializeField] public Vector3 cameraPos;
 }
