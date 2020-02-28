@@ -17,4 +17,4 @@ MonoBehaviour:
     value: 1
   preCon: []
   energyCost: 2
-  priority: 0
+  priority: 1

@@ -27,7 +27,7 @@ public class GOAP : MonoBehaviour
         }
 
         Node start = new Node(null, goal, null);
-        bool reachedGoal = GrowTree(start, leaves, actions, goal);
+        bool reachedGoal = GrowGraph(start, leaves, actions, goal);
 
         if (!reachedGoal)
         {
@@ -37,12 +37,11 @@ public class GOAP : MonoBehaviour
 
         // Return action with highest priority but within managable energy cost
         Node highestP = null;
-        int highest = 0;
+        int highest = -1;
         foreach (var leaf in leaves)
         {
-            if (leaf.priority >= highest && leaf.energy <= source.energy.runTimeValue)
+            if (leaf.priority >= highest)
             {
-
                 highestP = leaf;
                 highest = leaf.priority;
             }
@@ -142,7 +141,7 @@ public class GOAP : MonoBehaviour
     }
 
     // GOAP function to generate tree of possible actions using recursion
-    static bool GrowTree(Node parent, List<Node> leaves, HashSet<GOAPAction> actions, HashSet<KeyValuePair<string, object>> goal)
+    static bool GrowGraph(Node parent, List<Node> leaves, HashSet<GOAPAction> actions, HashSet<KeyValuePair<string, object>> goal)
     {
         bool pathFound = false;
 
@@ -162,7 +161,7 @@ public class GOAP : MonoBehaviour
                 else
                 {
                     HashSet<GOAPAction> subset = RemoveAction(actions, action);
-                    bool found = GrowTree(node, leaves, subset, goal);
+                    bool found = GrowGraph(node, leaves, subset, goal);
                     if (found)
                         pathFound = true;
                 }
@@ -201,8 +200,11 @@ public class GOAP : MonoBehaviour
                         {
                             ResetTiles(tempList);
                             target = tempChara;
+                            Debug.Log("Found enemeh eheheheheheheheheheheh");
                             return true;
                         }
+                        else
+                            Debug.Log("Nuuuuuuuuuuu");
                     }
                 }
             }
@@ -323,6 +325,8 @@ public class GOAP : MonoBehaviour
                 // Delegate function to return key where it equals the change state key
                 state.RemoveWhere((KeyValuePair<string, object> kvp) => { return kvp.Key.Equals(change.Key); });
                 KeyValuePair<string, object> updated = new KeyValuePair<string, object>(change.Key, change.Value);
+                Debug.Log("Hey Im working!!");
+                Debug.Log(updated.ToString());
                 state.Add(updated);
             }
             // if it does not exist in the current state, add it
