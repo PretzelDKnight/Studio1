@@ -15,7 +15,7 @@ public class CharacterController : MonoBehaviour
     
     Rigidbody rb;
 
-    OverWorldCamera owCam;
+    CameraScript owCam;
 
     void Start()
     {
@@ -24,7 +24,7 @@ public class CharacterController : MonoBehaviour
         forward.y = 0;
         forward = Vector3.Normalize(forward);
         right = Quaternion.Euler(new Vector3(0, 90, 0)) * forward;
-        owCam = Camera.main.gameObject.GetComponent<OverWorldCamera>();
+        owCam = Camera.main.gameObject.GetComponent<CameraScript>();
         able = true;
     }
 
