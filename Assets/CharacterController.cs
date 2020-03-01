@@ -4,76 +4,67 @@ using UnityEngine;
 
 public class CharacterController : MonoBehaviour
 {
-    [SerializeField] float moveSpeed;
-
-    Vector3 forward, right;
-
     [HideInInspector] public bool able = true;
-
-    [HideInInspector] public bool interactionS = true;
-    [HideInInspector] public bool interactionB = true;
+    [HideInInspector] public bool storyInteract = true;
+    [HideInInspector] public bool battleInteract = true;
     
     Rigidbody rb;
 
-    CameraScript owCam;
+    public float moveDisPerSec = 1;
+
+    Vector3 destination;
 
     void Start()
     {
         rb = this.GetComponent<Rigidbody>();
-        forward = Camera.main.transform.forward;
-        forward.y = 0;
-        forward = Vector3.Normalize(forward);
-        right = Quaternion.Euler(new Vector3(0, 90, 0)) * forward;
-        owCam = Camera.main.gameObject.GetComponent<CameraScript>();
         able = true;
+        destination = transform.position;
     }
 
     void Update()
     {
-        if (rb.velocity == Vector3.zero)
-            transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.eulerAngles.x, 0, transform.rotation.eulerAngles.z));
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Input.GetMouseButtonDown(0))
         {
-            if (interactionS && interactionB && able)
-                Move();
+            if (Physics.Raycast(ray, out hit, 100) && hit.transform.gameObject.tag == "Enviro")
+            {
+                destination = hit.point;
+                Debug.LogError("Moving!");
+            }
         }
-        else
-            rb.velocity = Vector3.zero;
     }
 
-    public void Move()
+    private void FixedUpdate()
     {
-        rb.velocity = Vector3.zero;
+        float distanceToMove = Vector3.Distance(transform.position, destination);
+        if (distanceToMove > 0)
+        {
+            float moveDistance = Mathf.Clamp(moveDisPerSec * Time.fixedDeltaTime, 0, distanceToMove);
 
-        Vector3 direction = new Vector3(Input.GetAxis("HorizontalKey"), 0, Input.GetAxis("VerticalKey"));
-        Vector3 rightMove = right * moveSpeed * Time.deltaTime * Input.GetAxis("HorizontalKey");
-        Vector3 forwardMove = forward * moveSpeed * Time.deltaTime * Input.GetAxis("VerticalKey");
+            Vector3 move = (destination - transform.position).normalized * moveDistance;
 
-        Vector3 unison = Vector3.Normalize(rightMove + forwardMove);
-
-        rb.velocity = transform.forward;
-
-        transform.forward = unison;
-        rb.velocity += rightMove;
-        rb.velocity += forwardMove;
+            rb.AddForce(move);
+        }
     }
-    
+
     public void StoryEventStart()
     {
-        interactionS = false;
+        storyInteract = false;
     }
 
     public void StoryEventEnd()
     {
-        interactionS = true;
+        storyInteract = true;
     }
 
     public void BattleEventStart()
     {
-        interactionB = false;
+        battleInteract = false;
     }
     public void BattleEventEnd()
     {
-        interactionB = true;
+        battleInteract = true;
     }
 }
