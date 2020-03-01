@@ -138,12 +138,12 @@ public class BattleManager : MonoBehaviour
         currentChar.RefreshEnergy();
         currentChar.SetShown();
         // TODO : Add in functionality to change card material depending on character
-        HandCards.instance.GenerateHand();
-        TurnCards.instance.GenerateStatCards();
+        //HandCards.instance.GenerateHand();
+        //TurnCards.instance.GenerateStatCards();
         ResetEverything();
         if (!currentChar.AI)
         {
-            HandCards.instance.SetHandMove();
+            //HandCards.instance.SetHandMove();
             Move();
         }
         else
@@ -159,7 +159,7 @@ public class BattleManager : MonoBehaviour
 
         if (currentChar.energy.runTimeValue != 0)
         {
-            HandCards.instance.SetHandMove();
+            //HandCards.instance.SetHandMove();
             Move();
         }
         else
@@ -204,6 +204,8 @@ public class BattleManager : MonoBehaviour
     public void EndBattle()
     {
         Battle = false;
+        TileManager.instance.DestroyGrid();
+        turnOrder = new Queue<Character>();
     }
 
 

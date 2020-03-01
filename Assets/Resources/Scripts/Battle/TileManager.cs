@@ -24,6 +24,7 @@ public class TileManager : MonoBehaviour
     static bool change = false;
 
     [SerializeField] GameEvent resetTiles;
+    [SerializeField] GameEvent destroyTiles;
 
     public LayerMask layerMask;
 
@@ -210,5 +211,10 @@ public class TileManager : MonoBehaviour
     public void ResetTiles()
     {
         resetTiles.Raise();
+    }
+
+    public void DestroyGrid()
+    {
+        destroyTiles.Raise();
     }
 }

@@ -10,9 +10,9 @@ public class GameEvent : ScriptableObject
 
     public void Raise()
     {
-        foreach(var item in listeners)
+        for (int i = listeners.Count - 1; i >= 0; i--)
         {
-            item.OnEventRaised();
+            listeners[i].OnEventRaised();
         }
     }
 
