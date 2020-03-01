@@ -1459,10 +1459,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab1f4c055f97d464e890e9d108f3098a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  members:
-  - {fileID: 261781430}
-  - {fileID: 1298287348}
-  - {fileID: 1641254044}
+  members: []
   AI: 0
 --- !u!4 &768385167
 Transform:
@@ -2887,10 +2884,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab1f4c055f97d464e890e9d108f3098a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  members:
-  - {fileID: 539420239}
-  - {fileID: 1338792603}
-  - {fileID: 987743467}
+  members: []
   AI: 1
 --- !u!4 &1896111516
 Transform:

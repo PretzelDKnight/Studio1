@@ -10,6 +10,8 @@ public class Party : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        RetrieveChildren();
+
         if (AI)
             Convert();
     }
@@ -62,5 +64,8 @@ public class Party : MonoBehaviour
         }
     }
 
-
+    void RetrieveChildren()
+    {
+        members = GetComponentsInChildren<Character>();
+    }
 }
