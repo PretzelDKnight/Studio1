@@ -34,8 +34,8 @@ public class BattleManager : MonoBehaviour
 
     public List<Character> nemenemies;
 
-    public PartyVariable party;
-    public PartyVariable enemies;
+    public Party allies;
+    public Party enemies;
 
     static List<Character> allChara = new List<Character>();
 
@@ -243,7 +243,7 @@ public class BattleManager : MonoBehaviour
         int allyDead = 0;
         int enemyDead = 0;
 
-        foreach (var member in party.members)
+        foreach (var member in allies.Members())
         {
             if (member != null)
             {
@@ -269,7 +269,7 @@ public class BattleManager : MonoBehaviour
             }
         }
 
-        foreach (var member in enemies.members)
+        foreach (var member in enemies.Members())
         {
             if (member != null)
             {
@@ -295,12 +295,12 @@ public class BattleManager : MonoBehaviour
             }
         }
 
-        if (allyDead == party.members.Length)
+        if (allyDead == allies.Members().Length)
         {
             // Game Over Call
         }
 
-        if (enemyDead == enemies.members.Length)
+        if (enemyDead == enemies.Members().Length)
         {
             // Battle Win Call
         }
@@ -313,7 +313,9 @@ public class BattleManager : MonoBehaviour
 
         allChara = new List<Character>();
 
-        foreach (var ally in party.members)
+        allies = Player.instance.allies;
+
+        foreach (var ally in allies.Members())
         {
             if (ally != null)
             {
@@ -323,9 +325,8 @@ public class BattleManager : MonoBehaviour
         }
 
         // Need to find way to deal with Spawning enemies through scriptable objects
-        AssignEnemies(); // Temp Enemy assigner!!!
 
-        foreach (var enemy in enemies.members)
+        foreach (var enemy in enemies.Members())
         {
             if (enemy != null)
             {
@@ -335,15 +336,5 @@ public class BattleManager : MonoBehaviour
         }
 
         InitTurnQueue();
-    }
-
-    // Temp function!!
-    void AssignEnemies()
-    {
-        enemies.members = new Character[nemenemies.Count];
-        for (int i = 0; i < nemenemies.Count; i++)
-        {
-            enemies.members[i] = nemenemies[i];
-        }
     }
 }
