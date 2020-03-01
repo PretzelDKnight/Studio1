@@ -18,6 +18,6 @@ public class MoveAttack : GOAPAction
     public override void Execute(Character chara, HexTile tile, Character target)
     {
         //chara.Move(tile);
-        Debug.Log("Moving!");
+        Debug.Log("Moving in position");
     }
 }

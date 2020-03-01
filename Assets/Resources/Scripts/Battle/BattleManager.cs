@@ -30,8 +30,6 @@ public class BattleManager : MonoBehaviour
     [SerializeField] public Color whenSelected = Color.white;
     [SerializeField] public Color whenNormal = Color.white;
 
-    public GameEvent resetTiles;
-
     //=============================================================== TurnQueue Variables ===============================================================
 
     public List<Character> nemenemies;
@@ -194,7 +192,7 @@ public class BattleManager : MonoBehaviour
     {
         targetChara = null;
         targetTile = null;
-        resetTiles.Raise();
+        TileManager.instance.ResetTiles();
         busy = false;
     }
 

@@ -479,6 +479,8 @@ MonoBehaviour:
   goals:
   - key: kAttack
     value: 0
+  - key: kMove
+    value: 0
   actions:
   - {fileID: 11400000, guid: 99692bd2641f99647b580db356af4921, type: 2}
   - {fileID: 11400000, guid: 3140622650d7d184c9d884a9268e8fa3, type: 2}
@@ -1011,6 +1013,8 @@ MonoBehaviour:
   goals:
   - key: kAttack
     value: 0
+  - key: kMove
+    value: 0
   actions:
   - {fileID: 11400000, guid: 99692bd2641f99647b580db356af4921, type: 2}
   - {fileID: 11400000, guid: 3140622650d7d184c9d884a9268e8fa3, type: 2}
@@ -1158,6 +1162,7 @@ MonoBehaviour:
   whenHovered: {r: 1.254902, g: 1.9137255, b: 3.8431373, a: 1}
   whenWalkable: {r: 0.8554357, g: 1.7019607, b: 0.8554357, a: 1}
   whenAttackable: {r: 3.6235294, g: 1.1764706, b: 1.1764706, a: 1}
+  resetTiles: {fileID: 11400000, guid: 5c531422141398b49a2cb1b3bffc0a77, type: 2}
   layerMask:
     serializedVersion: 2
     m_Bits: 256
@@ -1357,6 +1362,8 @@ MonoBehaviour:
   stats: {fileID: 0}
   goals:
   - key: kAttack
+    value: 0
+  - key: kMove
     value: 0
   actions:
   - {fileID: 11400000, guid: 99692bd2641f99647b580db356af4921, type: 2}

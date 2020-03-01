@@ -23,6 +23,8 @@ public class TileManager : MonoBehaviour
     static float lerpValue = 0;
     static bool change = false;
 
+    [SerializeField] GameEvent resetTiles;
+
     public LayerMask layerMask;
 
     private void Awake()
@@ -203,5 +205,10 @@ public class TileManager : MonoBehaviour
         }
 
         return lowest;
+    }
+
+    public void ResetTiles()
+    {
+        resetTiles.Raise();
     }
 }

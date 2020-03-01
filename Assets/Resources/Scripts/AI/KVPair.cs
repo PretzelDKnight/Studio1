@@ -10,6 +10,8 @@ public struct KVPair
 
     public KeyValuePair<string, object> Convert()
     {
+        if (key == "")
+            value = true;
         return new KeyValuePair<string, object>(key, value);
     }
 }

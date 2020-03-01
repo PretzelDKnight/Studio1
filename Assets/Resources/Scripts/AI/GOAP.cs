@@ -16,7 +16,7 @@ public class GOAP : MonoBehaviour
             Destroy(gameObject);
     }
 
-    static public Queue<Node> GOAPlan (Character source, HashSet<KeyValuePair<string, object>> goal)
+    static public Queue<Node> GOAPlan (Character source, HashSet<KeyValuePair<string, object>> goals)
     {
         List<Node> leaves = new List<Node>();
 
@@ -26,8 +26,16 @@ public class GOAP : MonoBehaviour
             actions.Add(action);
         }
 
-        Node start = new Node(null, goal, null);
-        bool reachedGoal = GrowGraph(start, leaves, actions, goal);
+        bool reachedGoal = false;
+
+        foreach (var goal in goals)
+        {
+            Node start = new Node(null, goal, null);
+            reachedGoal = GrowGraph(start, leaves, actions);
+
+            if (reachedGoal)
+                break;
+        }
 
         if (!reachedGoal)
         {
@@ -95,6 +103,7 @@ public class GOAP : MonoBehaviour
 
     static List<HexTile> NextSelectableTiles(Character source)
     {
+        TileManager.instance.ResetTiles();
         HexTile start = source.GetCurrentTile();
         float energy = source.energy.runTimeValue - source.AttackEnergy();
         List<HexTile> tempList = new List<HexTile>() { start };
@@ -141,19 +150,19 @@ public class GOAP : MonoBehaviour
     }
 
     // GOAP function to generate tree of possible actions using recursion
-    static bool GrowGraph(Node parent, List<Node> leaves, HashSet<GOAPAction> actions, HashSet<KeyValuePair<string, object>> goal)
+    static bool GrowGraph(Node parent, List<Node> leaves, HashSet<GOAPAction> actions)
     {
         bool pathFound = false;
 
         foreach (var action in actions)
         {
-            if (InState(action.ReturnPreCon(), parent.state))
+            if (InState(action.ReturnEffects(), parent.state))
             {
-                HashSet<KeyValuePair<string, object>> currentState = PopulateState(parent.state, action.ReturnEffects());
+                HashSet<KeyValuePair<string, object>> currentState = PopulateState(parent.state, action.ReturnEffects(), action.ReturnPreCon());
 
                 Node node = new Node(parent, currentState, action);
 
-                if (GoalInState(goal, currentState))
+                if (GoalFound(currentState))
                 {
                     leaves.Add(node);
                     pathFound = true;
@@ -161,7 +170,7 @@ public class GOAP : MonoBehaviour
                 else
                 {
                     HashSet<GOAPAction> subset = RemoveAction(actions, action);
-                    bool found = GrowGraph(node, leaves, subset, goal);
+                    bool found = GrowGraph(node, leaves, subset);
                     if (found)
                         pathFound = true;
                 }
@@ -173,6 +182,7 @@ public class GOAP : MonoBehaviour
     // GOAP function to check for enemy within attack range
     static public bool EnemyInRange(Character source, HexTile tile, out Character target)
     {
+        TileManager.instance.ResetTiles();
         int range = source.stats.attackRange;
         List<HexTile> tempList = new List<HexTile>();
 
@@ -198,7 +208,6 @@ public class GOAP : MonoBehaviour
                         Character tempChara = item.ReturnTarget(source);
                         if (tempChara != null)
                         {
-                            ResetTiles(tempList);
                             target = tempChara;
                             Debug.Log("Found enemeh eheheheheheheheheheheh");
                             return true;
@@ -210,7 +219,6 @@ public class GOAP : MonoBehaviour
             }
         }
 
-        ResetTiles(tempList);
         target = null;
         return false;
     }
@@ -218,6 +226,7 @@ public class GOAP : MonoBehaviour
     // Function to set ghost tile for further Procedural condition checking for GOAP
     static public bool MoveAttackCheck(Character source, out HexTile tile, out Character target)
     {
+        TileManager.instance.ResetTiles();
         List<HexTile> list = NextSelectableTiles(source);
         target = null;
         tile = null;
@@ -257,31 +266,28 @@ public class GOAP : MonoBehaviour
     }
 
     // Matches two Hashsets of KeyValue pairs and returns true if they all match
-    static bool InState(HashSet<KeyValuePair<string, object>> test, HashSet<KeyValuePair<string,object>> state)
+    static bool InState(KeyValuePair<string, object> test, HashSet<KeyValuePair<string, object>> state)
     {
-        foreach (var t in test)
+        foreach (var item in state)
         {
-            foreach (var s in state)
-            {
-                if (!s.Equals(t))
-                    return false;
-            }
+            if (item.Key.Equals(test.Key))
+                return true;
         }
-        return true;
+        
+        return false;
     }
 
-    // Checks if atleast one goal is met
-    static bool GoalInState(HashSet<KeyValuePair<string, object>> test, HashSet<KeyValuePair<string, object>> goal)
+    static bool GoalFound(HashSet<KeyValuePair<string,object>> currentState)
     {
-        foreach (var t in test)
+        bool goal = true;
+
+        foreach (var item in currentState)
         {
-            foreach (var g in goal)
-            {
-                if (g.Equals(t))
-                    return true;
-            }
+            if ((bool)item.Value == false)
+                goal = false;
         }
-        return false;
+
+        return goal;
     }
 
     // Removes a action from a Hashset of actions
@@ -297,7 +303,7 @@ public class GOAP : MonoBehaviour
     }
 
     // Adds state changes to currentState and at the same time, adds a state if it doesnt exist
-    static HashSet<KeyValuePair<string, object>> PopulateState(HashSet<KeyValuePair<string, object>> currentState, HashSet<KeyValuePair<string, object>> stateChange)
+    static HashSet<KeyValuePair<string, object>> PopulateState(HashSet<KeyValuePair<string, object>> currentState, KeyValuePair<string, object> effect, KeyValuePair<string, object> preCon)
     {
         HashSet<KeyValuePair<string, object>> state = new HashSet<KeyValuePair<string, object>>();
 
@@ -306,35 +312,16 @@ public class GOAP : MonoBehaviour
             state.Add(new KeyValuePair<string, object>(s.Key, s.Value));
         }
 
-        foreach (KeyValuePair<string, object> change in stateChange)
-        {
-            // if the key exists in the current state, update the Value
-            bool exists = false;
+        // Delegate function to return key where it equals the effect state key
+        state.RemoveWhere((KeyValuePair<string, object> kvp) => { return kvp.Key.Equals(effect.Key); });
+        KeyValuePair<string, object> updated = new KeyValuePair<string, object>(effect.Key, effect.Value);
+        //Debug.Log("Hey Im working!!");
+        //Debug.Log(updated.Key.ToString());
 
-            foreach (KeyValuePair<string, object> s in state)
-            {
-                if (s.Key.Equals(change.Key))
-                {
-                    exists = true;
-                    break;
-                }
-            }
+        // Adding preCon for next currentState
+        state.Add(updated);
+        state.Add(preCon);
 
-            if (exists)
-            {
-                // Delegate function to return key where it equals the change state key
-                state.RemoveWhere((KeyValuePair<string, object> kvp) => { return kvp.Key.Equals(change.Key); });
-                KeyValuePair<string, object> updated = new KeyValuePair<string, object>(change.Key, change.Value);
-                Debug.Log("Hey Im working!!");
-                Debug.Log(updated.ToString());
-                state.Add(updated);
-            }
-            // if it does not exist in the current state, add it
-            else
-            {
-                state.Add(new KeyValuePair<string, object>(change.Key, change.Value));
-            }
-        }
         return state;
     }
 

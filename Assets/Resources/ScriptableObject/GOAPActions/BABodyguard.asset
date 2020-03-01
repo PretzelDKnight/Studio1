@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: BABodyguard
   m_EditorClassIdentifier: 
   effects:
-  - key: kAttack
+    key: kAttack
     value: 1
   preCon:
-  - key: kInRange
+    key: kInRange
     value: 0
   energyCost: 1
   priority: 1

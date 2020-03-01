@@ -30,4 +30,22 @@ public class Node
             energy = 0;
         }
     }
+
+    public Node(Node parent, KeyValuePair<string, object> goal, GOAPAction action)
+    {
+        this.parent = parent;
+        this.state = new HashSet<KeyValuePair<string, object>>() { goal };
+        this.action = action;
+
+        if (parent != null)
+        {
+            this.priority = action.priority + parent.priority;
+            this.energy = action.energyCost + parent.priority;
+        }
+        else
+        {
+            priority = 0;
+            energy = 0;
+        }
+    }
 }

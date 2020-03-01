@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: MoveBodyGuard
   m_EditorClassIdentifier: 
   effects:
-  - key: kInRange
+    key: kMove
     value: 1
-  preCon: []
+  preCon:
+    key: 
+    value: 1
   energyCost: 2
   priority: 0
