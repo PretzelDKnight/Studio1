@@ -5,10 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Scheletro.unity
     guid: 25e364d06fe4d4b3db40113c900280a3
   - enabled: 1
+    path: Assets/Scenes/Game.unity
+    guid: 8587a4cc642ff4870a38b416300dcd88
+  - enabled: 0
     path: Assets/Scenes/NewLevelGreyBoix.unity
     guid: 1b651789d740d174a9961979904f923c
   m_configObjects: {}
