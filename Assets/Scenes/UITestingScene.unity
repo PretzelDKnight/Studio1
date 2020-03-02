@@ -353,6 +353,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21b3735cf64612843bb76494940fda44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  protagonist: {fileID: 0}
   allies: {fileID: 0}
 --- !u!1 &157332998
 GameObject:
@@ -1508,6 +1509,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21b3735cf64612843bb76494940fda44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  protagonist: {fileID: 261781430}
   allies: {fileID: 768385166}
 --- !u!108 &800552043
 Light:
@@ -2915,6 +2917,7 @@ GameObject:
   - component: {fileID: 1935345197}
   - component: {fileID: 1935345196}
   - component: {fileID: 1935345199}
+  - component: {fileID: 1935345200}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3005,6 +3008,20 @@ MonoBehaviour:
   intensity: 1.5
   bloomShader: {fileID: 4800000, guid: 4dfea7ba96220cd4ca6ebbcb66a0da31, type: 3}
   debug: 0
+--- !u!114 &1935345200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1935345195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3eecbceb8d522da4283555106a358ee8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  current: {fileID: 261781430}
+  camOffset: {x: 10, y: 10, z: -10}
 --- !u!1 &1997577970
 GameObject:
   m_ObjectHideFlags: 0

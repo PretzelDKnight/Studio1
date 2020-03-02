@@ -137,6 +137,7 @@ public class BattleManager : MonoBehaviour
     {
         currentChar.RefreshEnergy();
         currentChar.SetShown();
+        StartCoroutine(CameraScript.instance.ChangeCurrent(currentChar));
         // TODO : Add in functionality to change card material depending on character
         //HandCards.instance.GenerateHand();
         //TurnCards.instance.GenerateStatCards();
@@ -206,6 +207,7 @@ public class BattleManager : MonoBehaviour
         Battle = false;
         TileManager.instance.DestroyGrid();
         turnOrder = new Queue<Character>();
+        StartCoroutine(CameraScript.instance.ChangeCurrent(Player.instance.protagonist));
     }
 
 

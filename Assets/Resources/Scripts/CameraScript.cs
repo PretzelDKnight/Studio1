@@ -4,14 +4,57 @@ using UnityEngine;
 
 public class CameraScript : MonoBehaviour
 {
-    [SerializeField] GameObject player;
+    static public CameraScript instance = null;
+
+    [SerializeField] Character current;
 
     public Vector3 camOffset;
 
-    private void Update()
-    {       
-        this.transform.position = player.transform.position + camOffset;
+    static bool busy = false;
 
-        transform.LookAt(player.transform);        
+    void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
+    }
+
+    private void Start()
+    {
+        current = Player.instance.protagonist;
+    }
+
+    private void Update()
+    {
+        if (!busy)
+            CamPos();
+    }
+
+    void CamPos()
+    {
+        transform.position = current.transform.position + camOffset;
+
+        transform.LookAt(current.transform);
+    }
+
+    public IEnumerator ChangeCurrent(Character next)
+    {
+        float time = 0;
+        busy = true;
+        Vector3 currentPos = transform.position;
+        Vector3 destPos = next.transform.position + camOffset;
+        yield return null;
+
+        while (time <= 1)
+        {
+            transform.position = Vector3.Lerp(currentPos, destPos, time);
+            time += Time.deltaTime;
+
+            yield return null;
+        }
+
+        current = next;
+        busy = false;
     }
 }

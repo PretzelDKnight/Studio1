@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
 {
     public static Player instance = null;
 
+    public Character protagonist;
     public Party allies;
 
     // Save specific variables
