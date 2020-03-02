@@ -5,8 +5,6 @@ using UnityEngine;
 public class CharacterController : MonoBehaviour
 {
     [HideInInspector] public bool able = true;
-    [HideInInspector] public bool storyInteract = true;
-    [HideInInspector] public bool battleInteract = true;
     
     Rigidbody rb;
 
@@ -35,10 +33,10 @@ public class CharacterController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            if (Physics.Raycast(ray, out hit, 100) && hit.transform.gameObject.layer == layer)
+            if (Physics.Raycast(ray, out hit, 100, layer))
             {
                 destination = hit.point;
-                Debug.Log("Moving!");
+                Debug.Log("I am Moving!");
             }
         }
     }
@@ -48,11 +46,12 @@ public class CharacterController : MonoBehaviour
         float distanceToMove = Vector3.Distance(transform.position, destination);
         if (distanceToMove > 0)
         {
-            float moveDistance = Mathf.Clamp(moveDisPerSec * Time.fixedDeltaTime, 0, distanceToMove);
+            //Clamping distance to the distance to move
+            float clampedMoveDist = Mathf.Clamp(moveDisPerSec * Time.fixedDeltaTime, 0, distanceToMove);
 
-            Vector3 move = (destination - transform.position).normalized * moveDistance;
+            Vector3 moveForce = (destination - transform.position).normalized * clampedMoveDist;
 
-            rb.AddForce(move);
+            rb.AddForce(moveForce);
         }
     }
 }
