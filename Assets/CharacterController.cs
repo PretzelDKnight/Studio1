@@ -24,6 +24,12 @@ public class CharacterController : MonoBehaviour
 
     void Update()
     {
+        if (!BattleManager.Battle)
+            GetNewLocation();
+    }
+
+    void GetNewLocation()
+    {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -32,7 +38,7 @@ public class CharacterController : MonoBehaviour
             if (Physics.Raycast(ray, out hit, 100) && hit.transform.gameObject.layer == layer)
             {
                 destination = hit.point;
-                Debug.LogError("Moving!");
+                Debug.Log("Moving!");
             }
         }
     }
