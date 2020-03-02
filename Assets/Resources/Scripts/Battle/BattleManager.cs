@@ -132,27 +132,6 @@ public class BattleManager : MonoBehaviour
             Debug.Log("Battle already running!");
     }
 
-    // Is raised when a new character enters the Battle manager
-    public void NewChara()
-    {
-        currentChar.RefreshEnergy();
-        currentChar.SetShown();
-        StartCoroutine(CameraScript.instance.ChangeCurrent(currentChar));
-        // TODO : Add in functionality to change card material depending on character
-        //HandCards.instance.GenerateHand();
-        //TurnCards.instance.GenerateStatCards();
-        ResetEverything();
-        if (!currentChar.AI)
-        {
-            //HandCards.instance.SetHandMove();
-            Move();
-        }
-        else
-        {
-            AIFunction();
-        }
-    }
-
     // If the same character has energy left and is making a move after having done a move, an event raises this function
     public void NextMove()
     {
@@ -230,7 +209,23 @@ public class BattleManager : MonoBehaviour
     void StartTurn()
     {
         currentChar = turnOrder.Dequeue();
-        NewChara();
+        currentChar.RefreshEnergy();
+        currentChar.SetShown();
+        StartCoroutine(CameraScript.instance.ChangeCurrent(currentChar));
+        // TODO : Add in functionality to change card material depending on character
+        //HandCards.instance.GenerateHand();
+        //TurnCards.instance.GenerateStatCards();
+        ResetEverything();
+
+        if (!currentChar.AI)
+        {
+            //HandCards.instance.SetHandMove();
+            Move();
+        }
+        else
+        {
+            AIFunction();
+        }
     }
 
     // Ends the turn and re-initiates queue check

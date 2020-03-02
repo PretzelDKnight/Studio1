@@ -24,7 +24,6 @@ public abstract class Character : MonoBehaviour , IComparable
 
     Status status = Status.Normal;
     public bool AI = false;
-    float time;
     bool targetable = false;
     bool hovered = false;
     bool selected = false;
@@ -87,18 +86,17 @@ public abstract class Character : MonoBehaviour , IComparable
     public void MoveToNearestTile()
     {
         HexTile destination = ReturnNearestUnoccupiedTile();
-        destination.Occupied = true;
-        Vector3 currentPos = transform.position;
-        time = 0;
-        StartCoroutine(MoveToTile(currentPos, destination));
+        StartCoroutine(MoveToTile(destination));
     }
 
     // Coroutine for smoothly moving character to a tile
-    protected IEnumerator MoveToTile(Vector3 currentPos, HexTile destination)
+    protected IEnumerator MoveToTile(HexTile destination)
     {
+        Vector3 currentPos = transform.position;
+        float time = 0;
         while (time < 1)
         {
-            transform.position = Vector3.Lerp(currentPos, destination.ReturnTargetPosition(currentPos), time);
+            transform.position = Vector3.Lerp(currentPos, destination.ReturnTargetPosition(currentPos), time * time);
             time += Time.deltaTime * stats.speed;
             yield return null;
         }
@@ -114,6 +112,7 @@ public abstract class Character : MonoBehaviour , IComparable
     // Coroutine for smoothly moving character down a list of tiles
     protected IEnumerator MoveDownPath(List<HexTile> path)
     {
+        float time = 0;
         foreach(var tile in path)
         {
             if (tile != currentTile)
@@ -173,6 +172,9 @@ public abstract class Character : MonoBehaviour , IComparable
                 }
             }
         }
+
+        if (lowest != null)
+            lowest.Occupied = true;
         return lowest;
     }
 

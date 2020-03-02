@@ -153,7 +153,7 @@ public class TileManager : MonoBehaviour
 
             foreach (var item in tile.ReturnNeighbours())
             {
-                if (item.energyCost == 0)
+                if (!item.Attackable)
                 {
                     item.energyCost = 1 + tile.energyCost;
                     if (item.energyCost <= range)
@@ -181,7 +181,7 @@ public class TileManager : MonoBehaviour
 
             foreach (var item in tile.ReturnNeighbours())
             {
-                if (item.energyCost == 0 && !item.Occupied)
+                if (!item.Walkable && !item.Occupied)
                 {
                     item.energyCost = source.MoveEnergy() + tile.energyCost;
                     if (item.energyCost <= energy)
