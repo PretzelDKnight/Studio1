@@ -9,6 +9,7 @@ public class CameraScript : MonoBehaviour
     [SerializeField] Character current;
 
     public Vector3 camOffset;
+    public float speed = 1;
 
     static bool busy = false;
 
@@ -44,12 +45,11 @@ public class CameraScript : MonoBehaviour
         busy = true;
         Vector3 currentPos = transform.position;
         Vector3 destPos = next.transform.position + camOffset;
-        yield return null;
 
         while (time <= 1)
         {
             transform.position = Vector3.Lerp(currentPos, destPos, time);
-            time += Time.deltaTime;
+            time += Time.deltaTime * speed;
 
             yield return null;
         }
