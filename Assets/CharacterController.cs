@@ -11,6 +11,7 @@ public class CharacterController : MonoBehaviour
     Rigidbody rb;
 
     public float moveDisPerSec = 1;
+    public LayerMask layer;
 
     Vector3 destination;
 
@@ -28,7 +29,7 @@ public class CharacterController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            if (Physics.Raycast(ray, out hit, 100) && hit.transform.gameObject.tag == "Enviro")
+            if (Physics.Raycast(ray, out hit, 100) && hit.transform.gameObject.layer == layer)
             {
                 destination = hit.point;
                 Debug.LogError("Moving!");
@@ -47,24 +48,5 @@ public class CharacterController : MonoBehaviour
 
             rb.AddForce(move);
         }
-    }
-
-    public void StoryEventStart()
-    {
-        storyInteract = false;
-    }
-
-    public void StoryEventEnd()
-    {
-        storyInteract = true;
-    }
-
-    public void BattleEventStart()
-    {
-        battleInteract = false;
-    }
-    public void BattleEventEnd()
-    {
-        battleInteract = true;
     }
 }

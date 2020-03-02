@@ -93,10 +93,12 @@ public abstract class Character : MonoBehaviour , IComparable
     protected IEnumerator MoveToTile(HexTile destination)
     {
         Vector3 currentPos = transform.position;
+        Vector3 destPos = destination.ReturnTargetPosition(transform.position);
         float time = 0;
+
         while (time < 1)
         {
-            transform.position = Vector3.Lerp(currentPos, destination.ReturnTargetPosition(currentPos), time * time);
+            transform.position = Vector3.Lerp(currentPos, destPos, time);
             time += Time.deltaTime * stats.speed;
             yield return null;
         }
@@ -118,6 +120,7 @@ public abstract class Character : MonoBehaviour , IComparable
             if (tile != currentTile)
             {
                 Vector3 currentPos = transform.position;
+                Vector3 destPos = tile.ReturnTargetPosition(currentPos);
                 while (time < 1)
                 {
                     transform.position = Vector3.Lerp(currentPos, tile.ReturnTargetPosition(currentPos), time);
