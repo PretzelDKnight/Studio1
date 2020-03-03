@@ -5,53 +5,71 @@ using UnityEngine;
 public class CharacterController : MonoBehaviour
 {
     [HideInInspector] public bool able = true;
-    
+
     Rigidbody rb;
 
-    public float moveDisPerSec = 1;
+    float remainDist;
+    public float slowingRadius;
+    public float moveSpeed;
     public LayerMask layer;
 
     Vector3 destination;
+    Vector3 moveVector;
 
     void Start()
     {
         rb = this.GetComponent<Rigidbody>();
         able = true;
-        destination = transform.position;
     }
 
     void Update()
     {
+        remainDist = Vector3.Distance(destination, transform.position);
+
         if (!BattleManager.Battle)
-            GetNewLocation();
+            Move();
     }
 
-    void GetNewLocation()
+    void Move()
     {
         RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (Input.GetMouseButtonDown(0))
         {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, 100, layer))
             {
+                rb.velocity = Vector3.zero;
                 destination = hit.point;
-                Debug.Log("I am Moving!");
+                Arrive();
             }
         }
     }
 
-    private void FixedUpdate()
+    public void Arrive()
     {
-        float distanceToMove = Vector3.Distance(transform.position, destination);
-        if (distanceToMove > 0)
+        Vector3 desiredVelocity = destination - transform.position; //Desired velocity calculation
+        desiredVelocity.y = 0;        
+
+        float distance = desiredVelocity.magnitude;
+
+        float decelerationFactor = distance / 5;
+
+        float speed = moveSpeed * decelerationFactor;
+
+        Vector3 moveVector = desiredVelocity.normalized * Time.deltaTime * speed; //Calculating the steering vector
+
+        rb.AddForce(moveVector);
+        transform.LookAt(destination);
+
+        //Clamping the velocity by remaining distance
+        if (distance < remainDist)
         {
-            //Clamping distance to the distance to move
-            float clampedMoveDist = Mathf.Clamp(moveDisPerSec * Time.fixedDeltaTime, 0, distanceToMove);
-
-            Vector3 moveForce = (destination - transform.position).normalized * clampedMoveDist;
-
-            rb.AddForce(moveForce);
+            desiredVelocity = Vector3.ClampMagnitude(desiredVelocity * distance, moveSpeed);
         }
+
+        Vector3 rotation = transform.rotation.eulerAngles;
+        rotation.x = 0;
+        transform.rotation = Quaternion.Euler(rotation);
     }
 }
