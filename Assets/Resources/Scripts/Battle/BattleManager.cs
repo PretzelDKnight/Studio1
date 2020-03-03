@@ -56,21 +56,24 @@ public class BattleManager : MonoBehaviour
     // Executes the function depending on state of the battle manager
     public void RecievedInput()
     {
-        busy = true;
-        switch (state)
+        if (!currentChar.AI)
         {
-            case State.Attack:
-                currentChar.Attack(targetChara);
-                break;
-            case State.Move:
-                currentChar.Move(targetTile);
-                break;
-            case State.Skill1:
-                break;
-            case State.Skill2:
-                break;
-            default:
-                break;
+            busy = true;
+            switch (state)
+            {
+                case State.Attack:
+                    currentChar.Attack(targetChara);
+                    break;
+                case State.Move:
+                    currentChar.Move(targetTile);
+                    break;
+                case State.Skill1:
+                    break;
+                case State.Skill2:
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -185,6 +188,7 @@ public class BattleManager : MonoBehaviour
     {
         Battle = false;
         TileManager.instance.DestroyGrid();
+        TurnCards.instance.DestroyStatCards();
         turnOrder = new Queue<Character>();
         StartCoroutine(CameraScript.instance.ChangeCurrent(Player.instance.protagonist));
     }
@@ -214,7 +218,7 @@ public class BattleManager : MonoBehaviour
         StartCoroutine(CameraScript.instance.ChangeCurrent(currentChar));
         // TODO : Add in functionality to change card material depending on character
         //HandCards.instance.GenerateHand();
-        //TurnCards.instance.GenerateStatCards();
+        TurnCards.instance.GenerateStatCards();
         ResetEverything();
 
         if (!currentChar.AI)

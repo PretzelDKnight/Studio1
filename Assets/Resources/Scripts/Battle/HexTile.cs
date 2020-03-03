@@ -15,7 +15,6 @@ public class HexTile : MonoBehaviour
     bool hovered = false;
     bool attackable = false;
     HexTile parent;
-    Vector3 position;
 
     // Mesh and Shader variables
     Renderer render;
@@ -32,7 +31,6 @@ public class HexTile : MonoBehaviour
 
         CheckAbove();
         FindNeighbours();
-        position = transform.position;
     }
 
     private void Update()
@@ -212,7 +210,7 @@ public class HexTile : MonoBehaviour
     // Returns estimated position of the character above said tile
     public Vector3 ReturnTargetPosition(Vector3 charaPos)
     {
-        return new Vector3(position.x, charaPos.y, position.z);
+        return new Vector3(transform.position.x, charaPos.y, transform.position.z);
     }
 
     // Returns the enemy relative to the character being passed as parameter if they exist above the said tile
