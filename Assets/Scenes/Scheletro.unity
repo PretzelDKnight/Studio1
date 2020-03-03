@@ -1508,12 +1508,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eecbceb8d522da4283555106a358ee8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 413800290}
+  current: {fileID: 0}
   camOffset: {x: 0, y: 0, z: 0}
-  scrollSpeed: 2
-  minHeight: 20
-  maxHeight: 120
-  limit: {x: 0, y: 0}
+  speed: 1
 --- !u!114 &413800294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1526,10 +1523,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0e3ae2243c4e234eac201ec83eabc46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 100
   able: 0
-  interactionS: 1
-  interactionB: 1
+  storyInteract: 1
+  battleInteract: 1
+  moveDisPerSec: 1
+  layer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!64 &413800295
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2337,7 +2337,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 584901792}
   m_LocalRotation: {x: -0.30300605, y: -0.18554664, z: 0.06027164, w: 0.9328061}
-  m_LocalPosition: {x: -1.6383233, y: -2.7423248, z: -5.085592}
+  m_LocalPosition: {x: -3.39, y: -0.26, z: -1.66}
   m_LocalScale: {x: 0.18055, y: 2.9770002, z: 1.7682453}
   m_Children: []
   m_Father: {fileID: 1707553301}
@@ -4303,8 +4303,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 965955715}
-  m_LocalRotation: {x: 0.30300605, y: 0.18554664, z: -0.06027164, w: 0.9328061}
-  m_LocalPosition: {x: 6.9, y: 32.2, z: 1.9}
+  m_LocalRotation: {x: 0.29993808, y: 0.13425492, z: -0.042679578, w: 0.9434995}
+  m_LocalPosition: {x: 102.7, y: 16.9, z: -28.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -7340,7 +7340,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1707553300}
   m_LocalRotation: {x: 0.25025612, y: -0.55768746, z: 0.1811552, w: 0.77041507}
-  m_LocalPosition: {x: 15.5, y: 14.7, z: 22.6}
+  m_LocalPosition: {x: 108.5, y: 1.6, z: -8.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 613343215}
