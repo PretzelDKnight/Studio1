@@ -29,6 +29,8 @@ public abstract class Character : MonoBehaviour , IComparable
     bool selected = false;
     float current = 0;
 
+    public bool Busy = false;
+
     public static float checkTileRange = 3f;
 
     HexTile currentTile = null;
@@ -86,12 +88,14 @@ public abstract class Character : MonoBehaviour , IComparable
     public void MoveToNearestTile()
     {
         HexTile destination = ReturnNearestUnoccupiedTile();
+        currentTile = destination;
         StartCoroutine(MoveToTile(destination));
     }
 
     // Coroutine for smoothly moving character to a tile
     protected IEnumerator MoveToTile(HexTile destination)
     {
+        Busy = true;
         Vector3 currentPos = transform.position;
         Vector3 destPos = destination.ReturnTargetPosition(currentPos);
         float time = 0;
@@ -106,15 +110,17 @@ public abstract class Character : MonoBehaviour , IComparable
 
         transform.position = destination.ReturnTargetPosition(transform.position);
 
-        currentTile = destination;
+        //currentTile = destination;
         currentTile.Walkable = false;
         BattleManager.instance.NextMove();
+        Busy = false;
         yield return null;
     }
 
     // Coroutine for smoothly moving character down a list of tiles
     protected IEnumerator MoveDownPath(List<HexTile> path)
     {
+        Busy = true;
         float time = 0;
         foreach(var tile in path)
         {
@@ -141,6 +147,7 @@ public abstract class Character : MonoBehaviour , IComparable
         currentTile.Occupied = true;
         currentTile.Walkable = false;
         BattleManager.instance.NextMove();
+        Busy = false;
         yield return null;
     }
 

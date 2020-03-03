@@ -111,7 +111,7 @@ public class BattleManager : MonoBehaviour
     public void Pass()
     {
         currentChar.SetNotShown();
-        EndTurn();
+        InitTurnQueue();
     }
 
     // Get set battle function
@@ -130,6 +130,7 @@ public class BattleManager : MonoBehaviour
             busy = true;
             TileManager.instance.GenerateHexGrid();
             NewBattle();
+            InitTurnQueue();
         }
         else
             Debug.Log("Battle already running!");
@@ -206,12 +207,7 @@ public class BattleManager : MonoBehaviour
             foreach (Character unit in allChara)
                 turnOrder.Enqueue(unit);
 
-        StartTurn();
-    }
 
-    // Starts turn phase for the next character
-    void StartTurn()
-    {
         currentChar = turnOrder.Dequeue();
         currentChar.RefreshEnergy();
         currentChar.SetShown();
@@ -219,7 +215,6 @@ public class BattleManager : MonoBehaviour
         // TODO : Add in functionality to change card material depending on character
         //HandCards.instance.GenerateHand();
         TurnCards.instance.GenerateStatCards();
-        ResetEverything();
 
         if (!currentChar.AI)
         {
@@ -230,12 +225,6 @@ public class BattleManager : MonoBehaviour
         {
             AIFunction();
         }
-    }
-
-    // Ends the turn and re-initiates queue check
-    public void EndTurn()
-    {
-        InitTurnQueue();
     }
 
     // Checks health of relevant characters and checks if the party or enemies are wiped and calls battle to an end
@@ -335,7 +324,5 @@ public class BattleManager : MonoBehaviour
                 allChara.Add(enemy);
             }
         }
-
-        InitTurnQueue();
     }
 }
