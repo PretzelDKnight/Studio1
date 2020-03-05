@@ -20,15 +20,17 @@ public class HexTile : MonoBehaviour
     Renderer render;
     float isStable;
 
+    private void Awake()
+    {
+        render = transform.GetComponent<MeshRenderer>();
+    }
 
     private void Start()
     {
         // 0 for False, 1 for True
-        render = transform.GetComponent<MeshRenderer>();
-
         isStable = Shader.PropertyToID("_IsStable");
         walkable = false;
-
+        ResetTileValues();
         CheckAbove();
         FindNeighbours();
     }

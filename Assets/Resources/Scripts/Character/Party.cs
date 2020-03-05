@@ -16,12 +16,6 @@ public class Party : MonoBehaviour
             Convert();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public Character[] Members()
     {
         return members;
