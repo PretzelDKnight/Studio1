@@ -37,6 +37,7 @@ public class CharacterController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            
             if (Physics.Raycast(ray, out hit, 100, layer))
             {
                 rb.velocity = Vector3.zero;
@@ -61,12 +62,6 @@ public class CharacterController : MonoBehaviour
 
         rb.AddForce(moveVector);
         transform.LookAt(destination);
-
-        //Clamping the velocity by remaining distance
-        if (distance < remainDist)
-        {
-            desiredVelocity = Vector3.ClampMagnitude(desiredVelocity * distance, moveSpeed);
-        }
 
         Vector3 rotation = transform.rotation.eulerAngles;
         rotation.x = 0;

@@ -169,9 +169,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   able: 1
-  storyInteract: 1
-  battleInteract: 1
-  moveDisPerSec: 50
+  slowingRadius: 10
+  moveSpeed: 7500
   layer:
     serializedVersion: 2
     m_Bits: 512
