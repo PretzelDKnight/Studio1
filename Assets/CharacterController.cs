@@ -8,13 +8,15 @@ public class CharacterController : MonoBehaviour
 
     Rigidbody rb;
 
-    float remainDist;
-    public float slowingRadius;
-    public float moveSpeed;
+    public float maxVelocity = 5f;
+    public float maxAcceleration = 10f;
+
+    public float targetRadius = 0.005f;     // The radius from the target that means we are close enough and have arrived
+    public float timeToTarget = 0.1f;       // The time in which we want to achieve the targetSpeed
+    public float slowingRadius = 1f;        // Radius for slowing zone
     public LayerMask layer;
 
     Vector3 destination;
-    Vector3 moveVector;
 
     void Start()
     {
@@ -24,8 +26,6 @@ public class CharacterController : MonoBehaviour
 
     void Update()
     {
-        remainDist = Vector3.Distance(destination, transform.position);
-
         if (!BattleManager.Battle)
             Move();
     }
@@ -50,17 +50,54 @@ public class CharacterController : MonoBehaviour
     public void Arrive()
     {
         Vector3 desiredVelocity = destination - transform.position; //Desired velocity calculation
+
         desiredVelocity.y = 0;
 
         float distance = desiredVelocity.magnitude;
 
-        float decelerationFactor = distance / 5;
+        //___________________________________________________________________________________________________________________
+        //|#OLD CODE--------------------------------------------------------------------------------------------------------|
+        //|float decelerationFactor = distance / 5;                                                                         |
+        //|                                                                                                                 |
+        //|float speed = moveSpeed * decelerationFactor;                                                                    |
+        //|                                                                                                                 |
+        //|Vector3 moveVector = desiredVelocity.normalized * Time.deltaTime * speed; //Calculating the steering vector      |
+        //|_________________________________________________________________________________________________________________|
 
-        float speed = moveSpeed * decelerationFactor;
+        if (distance < slowingRadius)
+        {
+            rb.velocity = Vector3.zero;
+        }
 
-        Vector3 moveVector = desiredVelocity.normalized * Time.deltaTime * speed; //Calculating the steering vector
+        /* Calculate the target speed, full speed at slowRadius distance and 0 speed at 0 distance */
+        float targetSpeed;
+        if (distance > slowingRadius)
+        {
+            targetSpeed = maxVelocity;
+        }
+        else
+        {
+            targetSpeed = maxVelocity * (distance / slowingRadius);
+        }
 
-        rb.AddForce(moveVector);
+        /* Give desiredVelocity the correct speed */
+        desiredVelocity.Normalize();
+        desiredVelocity *= targetSpeed;
+
+        /* Calculate the linear acceleration we want */
+        Vector3 acceleration = desiredVelocity - rb.velocity;
+
+        /* Rather than accelerate the character to the correct speed in 1 second, accelerate so we reach the desired speed in timeToTarget seconds */
+        acceleration *= 1 / timeToTarget;
+
+        /* Make sure we are accelerating at max acceleration */
+        if (acceleration.magnitude > maxAcceleration)
+        {
+            acceleration.Normalize();
+            acceleration *= maxAcceleration;
+        }
+
+        rb.AddForce(acceleration);
 
         transform.LookAt(destination);
 
