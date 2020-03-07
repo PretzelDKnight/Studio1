@@ -87,7 +87,7 @@ public class CharacterController : MonoBehaviour
         /* Calculate the linear acceleration we want */
         Vector3 acceleration = desiredVelocity - rb.velocity;
 
-        /* Rather than accelerate the character to the correct speed in 1 second, accelerate so we reach the desired speed in timeToTarget seconds, as if we were to accelerate for the whole timeToTarget */
+        /* Rather than accelerate the character to the correct speed in 1 second, accelerate so we reach the desired speed in timeToTarget seconds, as if we were to accelerate for the whole timeToTarget seconds */
         acceleration *= 1 / timeToTarget;
 
         /* Make sure we are accelerating at max acceleration */
