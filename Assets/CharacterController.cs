@@ -6,10 +6,7 @@ public class CharacterController : MonoBehaviour
 
     Rigidbody rb;
 
-    float remainDist;
-    public float slowingRadius;
     public float moveSpeed;
-    public float rotSpeed;
 
     bool moving;
 
@@ -23,13 +20,11 @@ public class CharacterController : MonoBehaviour
 
     void Update()
     {
-        remainDist = Vector3.Distance(destination, transform.position);
-
         if (!BattleManager.Battle)
         {
             if (Input.GetMouseButtonDown(0))
-            {
-                SetDestination();
+            {                
+                    SetDestination();
             }
             if (moving)
                 Move();
@@ -41,7 +36,7 @@ public class CharacterController : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 1000, LayerMask.GetMask("Enviro")))
+        if (Physics.Raycast(ray, out hit, 100, LayerMask.GetMask("Enviro")))
         {
             destination = hit.point;
             moving = true;
