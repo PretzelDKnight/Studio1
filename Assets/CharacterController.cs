@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CharacterController : MonoBehaviour
 {
@@ -11,10 +9,14 @@ public class CharacterController : MonoBehaviour
     float remainDist;
     public float slowingRadius;
     public float moveSpeed;
+    public float rotSpeed;
     public LayerMask layer;
 
+    bool moving;
+
     Vector3 destination;
-    Vector3 moveVector;
+    Vector3 lookAtTarget;
+    Quaternion playerRot;
 
     void Start()
     {
@@ -27,44 +29,37 @@ public class CharacterController : MonoBehaviour
         remainDist = Vector3.Distance(destination, transform.position);
 
         if (!BattleManager.Battle)
-            Move();
-    }
-
-    void Move()
-    {
-        RaycastHit hit;
-
-        if (Input.GetMouseButtonDown(0))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            
-            if (Physics.Raycast(ray, out hit, 100, layer))
-            {
-                rb.velocity = Vector3.zero;
-                destination = hit.point;
-                Arrive();
+            if (Input.GetMouseButtonDown(0))
+            {                
+                    SetDestination();
             }
+            if (moving)
+                Move();
         }
     }
 
-    public void Arrive()
+    void SetDestination()
     {
-        Vector3 desiredVelocity = destination - transform.position; //Desired velocity calculation
-        desiredVelocity.y = 0;        
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
 
-        float distance = desiredVelocity.magnitude;
+        if (Physics.Raycast(ray, out hit, 100, layer))
+        {
+            destination = hit.point;
+            lookAtTarget = new Vector3(destination.x - transform.position.x, transform.position.y, destination.z - transform.position.z);
+            playerRot = Quaternion.LookRotation(lookAtTarget);
+            moving = true;
+        }
+    }
 
-        float decelerationFactor = distance / 5;
+    public void Move()
+    {
+        transform.rotation = Quaternion.Slerp(transform.rotation, playerRot, rotSpeed * Time.deltaTime);
 
-        float speed = moveSpeed * decelerationFactor;
+        transform.position = Vector3.MoveTowards(transform.position, destination, moveSpeed * Time.deltaTime);
 
-        Vector3 moveVector = desiredVelocity.normalized * Time.deltaTime * speed; //Calculating the steering vector
-
-        rb.AddForce(moveVector);
-        transform.LookAt(destination);
-
-        Vector3 rotation = transform.rotation.eulerAngles;
-        rotation.x = 0;
-        transform.rotation = Quaternion.Euler(rotation);
+        if (transform.position == destination)
+            moving = false;
     }
 }
