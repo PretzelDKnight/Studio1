@@ -10,10 +10,10 @@ public class CharacterController : MonoBehaviour
 
     public float maxVelocity = 5f;
     public float maxAcceleration = 10f;
-
     public float targetRadius = 0.005f;     // The radius from the target that means we are close enough and have arrived
     public float timeToTarget = 0.1f;       // The time in which we want to achieve the targetSpeed
     public float slowingRadius = 1f;        // Radius for slowing zone
+
     public LayerMask layer;
 
     Vector3 destination;
@@ -87,7 +87,7 @@ public class CharacterController : MonoBehaviour
         /* Calculate the linear acceleration we want */
         Vector3 acceleration = desiredVelocity - rb.velocity;
 
-        /* Rather than accelerate the character to the correct speed in 1 second, accelerate so we reach the desired speed in timeToTarget seconds */
+        /* Rather than accelerate the character to the correct speed in 1 second, accelerate so we reach the desired speed in timeToTarget seconds, as if we were to accelerate for the whole timeToTarget */
         acceleration *= 1 / timeToTarget;
 
         /* Make sure we are accelerating at max acceleration */
