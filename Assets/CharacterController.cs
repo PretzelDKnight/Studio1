@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class CharacterController : MonoBehaviour
 {
@@ -6,11 +8,13 @@ public class CharacterController : MonoBehaviour
 
     Rigidbody rb;
 
+    float remainDist;
+    public float slowingRadius;
     public float moveSpeed;
-
-    bool moving;
+    public LayerMask layer;
 
     Vector3 destination;
+    Vector3 moveVector;
 
     void Start()
     {
@@ -20,34 +24,48 @@ public class CharacterController : MonoBehaviour
 
     void Update()
     {
+        remainDist = Vector3.Distance(destination, transform.position);
+
         if (!BattleManager.Battle)
-        {
-            if (Input.GetMouseButtonDown(0))
-            {                
-                    SetDestination();
-            }
-            if (moving)
-                Move();
-        }
+            Move();
     }
 
-    void SetDestination()
+    void Move()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 100, LayerMask.GetMask("Enviro")))
+        if (Input.GetMouseButtonDown(0))
         {
-            destination = hit.point;
-            moving = true;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit, 100, layer))
+            {
+                rb.velocity = Vector3.zero;
+                destination = hit.point;
+                Arrive();
+            }
         }
     }
 
-    public void Move()
+    public void Arrive()
     {
-        transform.position = Vector3.MoveTowards(transform.position, destination, moveSpeed * Time.deltaTime);
+        Vector3 desiredVelocity = destination - transform.position; //Desired velocity calculation
+        desiredVelocity.y = 0;
 
-        if (transform.position == destination)
-            moving = false;
+        float distance = desiredVelocity.magnitude;
+
+        float decelerationFactor = distance / 5;
+
+        float speed = moveSpeed * decelerationFactor;
+
+        Vector3 moveVector = desiredVelocity.normalized * Time.deltaTime * speed; //Calculating the steering vector
+
+        rb.AddForce(moveVector);
+
+        transform.LookAt(destination);
+
+        Vector3 rotation = transform.rotation.eulerAngles;
+        rotation.x = 0;
+        transform.rotation = Quaternion.Euler(rotation);
     }
 }
