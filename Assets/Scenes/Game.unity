@@ -170,10 +170,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   able: 1
   slowingRadius: 10
-  moveSpeed: 7500
-  layer:
-    serializedVersion: 2
-    m_Bits: 512
+  moveSpeed: 50
+  rotSpeed: 10
 --- !u!54 &367613929
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -21755,6 +21753,7 @@ GameObject:
   - component: {fileID: 7743291150593712838}
   - component: {fileID: 2548740289287050398}
   - component: {fileID: 5629426303889308738}
+  - component: {fileID: 1903259798525101404}
   m_Layer: 9
   m_Name: Box008
   m_TagString: Untagged
@@ -21762,6 +21761,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!64 &1903259798525101404
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1903259798525101403}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 1226723149311242300, guid: 7c41e74e7c8204200830cd84bb3d9f6e, type: 3}
 --- !u!23 &1904069828948480872
 MeshRenderer:
   m_ObjectHideFlags: 0

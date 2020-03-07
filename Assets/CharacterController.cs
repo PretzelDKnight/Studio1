@@ -10,13 +10,10 @@ public class CharacterController : MonoBehaviour
     public float slowingRadius;
     public float moveSpeed;
     public float rotSpeed;
-    public LayerMask layer;
 
     bool moving;
 
     Vector3 destination;
-    Vector3 lookAtTarget;
-    Quaternion playerRot;
 
     void Start()
     {
@@ -31,8 +28,8 @@ public class CharacterController : MonoBehaviour
         if (!BattleManager.Battle)
         {
             if (Input.GetMouseButtonDown(0))
-            {                
-                    SetDestination();
+            {
+                SetDestination();
             }
             if (moving)
                 Move();
@@ -44,19 +41,15 @@ public class CharacterController : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 100, layer))
+        if (Physics.Raycast(ray, out hit, 1000, LayerMask.GetMask("Enviro")))
         {
             destination = hit.point;
-            lookAtTarget = new Vector3(destination.x - transform.position.x, transform.position.y, destination.z - transform.position.z);
-            playerRot = Quaternion.LookRotation(lookAtTarget);
             moving = true;
         }
     }
 
     public void Move()
     {
-        transform.rotation = Quaternion.Slerp(transform.rotation, playerRot, rotSpeed * Time.deltaTime);
-
         transform.position = Vector3.MoveTowards(transform.position, destination, moveSpeed * Time.deltaTime);
 
         if (transform.position == destination)
