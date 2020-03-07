@@ -22,6 +22,7 @@ public class CharacterController : MonoBehaviour
     {
         rb = this.GetComponent<Rigidbody>();
         able = true;
+        destination = transform.position;
     }
 
     void Update()
@@ -45,6 +46,8 @@ public class CharacterController : MonoBehaviour
                 Arrive();
             }
         }
+        else
+            Arrive();
     }
 
     public void Arrive()
@@ -55,15 +58,6 @@ public class CharacterController : MonoBehaviour
 
         float distance = desiredVelocity.magnitude;
 
-        //___________________________________________________________________________________________________________________
-        //|#OLD CODE--------------------------------------------------------------------------------------------------------|
-        //|float decelerationFactor = distance / 5;                                                                         |
-        //|                                                                                                                 |
-        //|float speed = moveSpeed * decelerationFactor;                                                                    |
-        //|                                                                                                                 |
-        //|Vector3 moveVector = desiredVelocity.normalized * Time.deltaTime * speed; //Calculating the steering vector      |
-        //|_________________________________________________________________________________________________________________|
-
         if (distance < slowingRadius)
         {
             rb.velocity = Vector3.zero;
@@ -73,10 +67,12 @@ public class CharacterController : MonoBehaviour
         float targetSpeed;
         if (distance > slowingRadius)
         {
+            Debug.Log("Full speed!");
             targetSpeed = maxVelocity;
         }
         else
         {
+            Debug.Log("Slowing down!");
             targetSpeed = maxVelocity * (distance / slowingRadius);
         }
 
@@ -96,6 +92,7 @@ public class CharacterController : MonoBehaviour
             acceleration.Normalize();
             acceleration *= maxAcceleration;
         }
+        
 
         rb.AddForce(acceleration);
 
