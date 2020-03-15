@@ -81,7 +81,7 @@ public class HandCards : MonoBehaviour
         if (caller == cards[0])
             BattleManager.instance.Move();
         else if (caller == cards[1])
-            BattleManager.instance.Attack();
+            BattleManager.instance.currentChar.Attack(BattleManager.instance.currentChar);
         //else if (caller == cards[2])
         //    BattleManager.instance.Skill1();
         //else if (caller == cards[3])
