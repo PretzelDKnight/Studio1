@@ -153,7 +153,7 @@ public class BattleManager : MonoBehaviour
     public void AIFunction()
     {
         Queue<Node> queue = GOAP.GOAPlan(currentChar, ConvertGoals());
-        for(int i = 0; i < queue.Count; i++)
+        for (int i = 0; i < queue.Count; i++)
         {
             Node node = queue.Dequeue();
             node.action.Execute(currentChar, node.targetTile, node.target);
@@ -324,5 +324,10 @@ public class BattleManager : MonoBehaviour
                 allChara.Add(enemy);
             }
         }
+    }
+
+    public void SetState(State x)
+    {
+        state = x;
     }
 }
