@@ -11,10 +11,6 @@ public class Vanguard : Character
     }
     public override void Move(HexTile tile)
     {
-        BattleManager.instance.ResetEverything();
-        BattleManager.instance.SetState(State.Move);
-        TileManager.instance.FindSelectableTiles(BattleManager.instance.currentChar);
-
         StartCoroutine(MoveDownPath(Pathfinder.instance.FindPath(GetCurrentTile(), tile)));
         energy.runTimeValue -= tile.energyCost;
     }

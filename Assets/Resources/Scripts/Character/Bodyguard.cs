@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Protagonist : Character
+public class Bodyguard : Character
 {
     // Start is called before the first frame update
     void Start()
