@@ -9,7 +9,6 @@ public class Gunner : Character
     {
         Initialize();
     }
-
     public override void Move(HexTile tile)
     {
         BattleManager.instance.ResetEverything();
@@ -24,30 +23,18 @@ public class Gunner : Character
     {
         Debug.Log("I am attacking the " + target.tag + "!");
         energy.runTimeValue -= AttackEnergy();
-
-        BattleManager.instance.ResetEverything();
-        BattleManager.instance.SetState(State.Attack);
-        TileManager.instance.FindTilesWithinRange(target);
     }
 
     public override void SkillOne(HexTile tile)
     {
         Debug.Log("I am using Skill1!");
         energy.runTimeValue -= Skill1Energy();
-
-        BattleManager.instance.ResetEverything();
-        BattleManager.instance.SetState(State.Skill1);
-        //TileManager.instance.FindTilesWithinRange(target);
     }
 
     public override void SkillTwo(HexTile tile)
     {
         Debug.Log("I am using Skill2!");
         energy.runTimeValue -= Skill2Energy();
-
-        BattleManager.instance.ResetEverything();
-        BattleManager.instance.SetState(State.Skill2);
-        //TileManager.instance.FindTilesWithinRange(target);
     }
 
     public override int MoveEnergy()

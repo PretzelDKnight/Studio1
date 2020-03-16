@@ -12,6 +12,10 @@ public class Bodygaurd : Character
 
     public override void Move(HexTile tile)
     {
+        BattleManager.instance.ResetEverything();
+        BattleManager.instance.SetState(State.Move);
+        TileManager.instance.FindSelectableTiles(BattleManager.instance.currentChar);
+
         StartCoroutine(MoveDownPath(Pathfinder.instance.FindPath(GetCurrentTile(), tile)));
         energy.runTimeValue -= tile.energyCost;
     }
@@ -25,11 +29,13 @@ public class Bodygaurd : Character
     public override void SkillOne(HexTile tile)
     {
         Debug.Log("I am using Skill1!");
+        energy.runTimeValue -= Skill1Energy();
     }
 
     public override void SkillTwo(HexTile tile)
     {
         Debug.Log("I am using Skill2!");
+        energy.runTimeValue -= Skill2Energy();
     }
 
     public override int MoveEnergy()

@@ -15,6 +15,8 @@ MonoBehaviour:
   energy: 4
   health: 10
   attackRange: 1
+  skill1Range: 2
+  skill2range: 3
   speed: 2
   statusResist: 4
   damageResist: 5
