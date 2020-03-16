@@ -68,8 +68,10 @@ public class BattleManager : MonoBehaviour
                     currentChar.Move(targetTile);
                     break;
                 case State.Skill1:
+                    currentChar.SkillOne(targetTile);
                     break;
                 case State.Skill2:
+                    currentChar.SkillTwo(targetTile);
                     break;
                 default:
                     break;
