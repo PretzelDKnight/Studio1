@@ -84,7 +84,7 @@ public class BattleManager : MonoBehaviour
     {
         ResetEverything();
         state = State.Attack;
-        TileManager.instance.FindTilesWithinRange(currentChar , currentChar.stats.attackRange);
+        TileManager.instance.FindTilesWithinRange(currentChar, currentChar.stats.attackRange);
     }
 
     // Skill 1 Function to change state of battle manager functions

@@ -19,6 +19,9 @@ public class Bodyguard : Character
     public override void Attack(Character target)
     {
         Debug.Log("I am attacking the " + target.tag + "!");
+
+        target.health.runTimeValue -= 1;
+
         energy.runTimeValue -= AttackEnergy();
     }
 
