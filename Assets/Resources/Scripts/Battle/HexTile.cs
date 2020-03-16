@@ -16,6 +16,8 @@ public class HexTile : MonoBehaviour
     bool attackable = false;
     HexTile parent;
 
+    public Character occupant;
+
     // Mesh and Shader variables
     Renderer render;
     float isStable;
@@ -38,6 +40,8 @@ public class HexTile : MonoBehaviour
     private void Update()
     {
         Hovered = false;
+        if (!occupied)
+            occupant = null;
     }
 
     private void LateUpdate()

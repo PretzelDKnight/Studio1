@@ -89,6 +89,7 @@ public abstract class Character : MonoBehaviour , IComparable
     {
         HexTile destination = ReturnNearestUnoccupiedTile();
         currentTile = destination;
+        currentTile.occupant = this;
         StartCoroutine(MoveToTile(destination));
     }
 
@@ -146,6 +147,7 @@ public abstract class Character : MonoBehaviour , IComparable
         currentTile = path[path.Count - 1];
         currentTile.Occupied = true;
         currentTile.Walkable = false;
+        currentTile.occupant = this;
         BattleManager.instance.NextMove();
         Busy = false;
         yield return null;
