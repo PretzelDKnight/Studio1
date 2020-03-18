@@ -37,12 +37,15 @@ public class BattleController : Controller
                             temp.SetSelected();
                             BattleManager.instance.RecievedInput();
                         }
-                        else if (temp.Attackable && BattleManager.ReturnState() == State.Attack)
+                        else if (BattleManager.ReturnState() == State.Attack)
                         {
-                            BattleManager.targetTile = temp;
-                            BattleManager.targetChara = temp.occupant;
-                            temp.SetSelected();
-                            BattleManager.instance.RecievedInput();
+                            if (temp.Attackable)
+                            {
+                                BattleManager.targetTile = temp;
+                                BattleManager.targetChara = temp.occupant;
+                                temp.SetSelected();
+                                BattleManager.instance.RecievedInput();
+                            }
                         }
                     }
                 }

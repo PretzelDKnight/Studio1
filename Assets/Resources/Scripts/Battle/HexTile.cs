@@ -139,7 +139,7 @@ public class HexTile : MonoBehaviour
     // Get set for Attackable that changes shader property depending on value
     public bool Attackable
     {
-        get { return walkable; }
+        get { return attackable; }
         set
         {
             attackable = value;
