@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b95666c702b8b394d82b85b64490a525, type: 3}
   m_Name: ArsonistBaseStats
   m_EditorClassIdentifier: 
-  energy: 0
-  health: 0
-  attackRange: 0
-  skill1Range: 0
-  skill2range: 0
+  energy: 20
+  health: 100
+  attackRange: 4
+  skill1Range: 4
+  skill2range: 4
   speed: 0
   statusResist: 0
   damageResist: 0
