@@ -8,6 +8,8 @@ public class HexTile : MonoBehaviour
     public float fCost = 0;
     public int energyCost = 0;
 
+    public int tileID;
+
     List<HexTile> neighbours = new List<HexTile>();
     bool occupied = false;
     bool walkable = false;

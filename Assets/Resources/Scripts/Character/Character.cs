@@ -266,4 +266,9 @@ public abstract class Character : MonoBehaviour , IComparable
     {
         render.material.SetFloat("_Current", current);
     }
+
+    public void SkillPush(HexTile tile)
+    {
+        StartCoroutine(MoveToTile(tile));
+    }
 }

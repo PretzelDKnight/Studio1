@@ -44,6 +44,7 @@ public class TileManager : MonoBehaviour
     // Generates Hexagon Grid (Can only produce grids of even size as it is generated from the centre of the gameObject)
     public void GenerateHexGrid()
     {
+        int ID = 0;
         tileList = new List<HexTile>();
         float unitLength;
         if (useAsInnerCircleRadius)
@@ -60,6 +61,8 @@ public class TileManager : MonoBehaviour
                 Vector2 hexpos = HexOffset(i, j);
                 Vector3 pos = new Vector3(hexpos.x + transform.position.x, transform.position.y, hexpos.y + transform.position.z);
                 tileList.Add(Instantiate(hexTile, pos, Quaternion.identity).GetComponent<HexTile>());
+                tileList[ID].tileID = ID;
+                ID++;
             }
         }
     }
@@ -223,5 +226,18 @@ public class TileManager : MonoBehaviour
             tileList[i].DestroyMeself();
             tileList.RemoveAt(i);
         }
+    }
+
+    public HexTile ReturnID(int passedID)
+    {
+        HexTile result = new HexTile();
+
+        for (int i = 0; i < tileList.Count; i++)
+        {
+            if (tileList[i].tileID == passedID)
+                result = tileList[i];
+        }        
+
+        return result;
     }
 }

@@ -39,6 +39,10 @@ public class Vanguard : Character
         target.health.runTimeValue -= 4;
 
         //#Code to push back enemy
+        {
+            HexTile tileToPushTo = TileManager.instance.ReturnID(target.GetCurrentTile().tileID - 1);
+            target.SkillPush(tileToPushTo);
+        }
 
         Debug.Log("The enemy's health is now: " + target.health.runTimeValue);
 
