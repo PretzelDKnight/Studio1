@@ -62,7 +62,7 @@ public class BattleManager : MonoBehaviour
             switch (state)
             {
                 case State.Attack:
-                    currentChar.Attack(targetChara);
+                    currentChar.Attack(targetTile);
                     break;
                 case State.Move:
                     currentChar.Move(targetTile);

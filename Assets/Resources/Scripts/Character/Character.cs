@@ -39,7 +39,7 @@ public abstract class Character : MonoBehaviour , IComparable
     Color normal = Color.white;
 
     public abstract void Move(HexTile tile);
-    public abstract void Attack(Character target);
+    public abstract void Attack(HexTile tile);
     public abstract void SkillOne(HexTile tile);
     public abstract void SkillTwo(HexTile tile);
     public abstract int MoveEnergy();

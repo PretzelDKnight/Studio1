@@ -40,7 +40,7 @@ public class BattleController : Controller
                         else if (temp.Attackable && BattleManager.ReturnState() == State.Attack)
                         {
                             BattleManager.targetTile = temp;
-                            BattleManager.targetChara = temp.ReturnChara();
+                            BattleManager.targetChara = temp.occupant;
                             temp.SetSelected();
                             BattleManager.instance.RecievedInput();
                         }

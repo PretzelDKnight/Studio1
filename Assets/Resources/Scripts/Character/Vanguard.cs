@@ -15,9 +15,10 @@ public class Vanguard : Character
         energy.runTimeValue -= tile.energyCost;
     }
 
-    public override void Attack(Character target)
+    public override void Attack(HexTile tile)
     {
-        Debug.Log("I am attacking the " + target.tag + "!");
+        Debug.Log("I am attacking the " + tile.occupant.tag + "!");
+
         energy.runTimeValue -= AttackEnergy();
     }
 

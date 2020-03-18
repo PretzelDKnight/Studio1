@@ -16,11 +16,9 @@ public class Bodyguard : Character
         energy.runTimeValue -= tile.energyCost;
     }
 
-    public override void Attack(Character target)
+    public override void Attack(HexTile tile)
     {
-        Debug.Log("I am attacking the " + target.tag + "!");
-
-        target.health.runTimeValue -= 1;
+        Debug.Log("I am attacking the " + tile.occupant.tag + "!");
 
         energy.runTimeValue -= AttackEnergy();
     }
