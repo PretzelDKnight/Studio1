@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b95666c702b8b394d82b85b64490a525, type: 3}
   m_Name: BodyguardBase
   m_EditorClassIdentifier: 
-  energy: 6
+  energy: 16
   health: 10
   attackRange: 1
   skill1Range: 2

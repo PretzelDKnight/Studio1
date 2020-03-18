@@ -334,4 +334,10 @@ public class BattleManager : MonoBehaviour
     {
         state = x;
     }
+
+    public void Update()
+    {
+        if(currentChar)
+            Debug.Log("Current character's energy is: " + currentChar.energy.runTimeValue);
+    }
 }
