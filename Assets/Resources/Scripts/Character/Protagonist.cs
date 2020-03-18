@@ -18,7 +18,6 @@ public class Protagonist : Character
 
     public override void Attack(HexTile tile)
     {
-
         Character target = tile.occupant;
 
         Debug.Log("I am attacking the " + target.tag + "!");

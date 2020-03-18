@@ -21,12 +21,27 @@ public class Vanguard : Character
 
         Debug.Log("I am attacking the " + target.tag + "!");
 
+        target.health.runTimeValue -= 20;
+
+        Debug.Log("The enemy's health is now: " + target.health.runTimeValue);
+
         energy.runTimeValue -= AttackEnergy();
     }
 
     public override void SkillOne(HexTile tile)
     {
+        Character target = tile.occupant;
+
         Debug.Log("I am using Skill1!");
+
+        Debug.Log("I am attacking the " + target.tag + "!");
+
+        target.health.runTimeValue -= 4;
+
+        //#Code to push back enemy
+
+        Debug.Log("The enemy's health is now: " + target.health.runTimeValue);
+
         energy.runTimeValue -= Skill1Energy();
     }
 
