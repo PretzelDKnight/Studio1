@@ -21,6 +21,10 @@ public class Gunner : Character
 
         Debug.Log("I am attacking the " + target.tag + "!");
 
+        target.health.runTimeValue -= 25;
+
+        Debug.Log("The enemy's health is now: " + target.health.runTimeValue);
+
         energy.runTimeValue -= AttackEnergy();
     }
 
