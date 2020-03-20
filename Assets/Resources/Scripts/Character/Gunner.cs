@@ -27,7 +27,9 @@ public class Gunner : Character
 
         energy.runTimeValue -= AttackEnergy();
     }
-
+    
+    //In progress..
+    //--------------------------------------------
     public override void SkillOne(HexTile tile)
     {
         Debug.Log("I am using Skill1!");
@@ -39,6 +41,7 @@ public class Gunner : Character
         Debug.Log("I am using Skill2!");
         energy.runTimeValue -= Skill2Energy();
     }
+    //--------------------------------------------
 
     public override int MoveEnergy()
     {

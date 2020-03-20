@@ -49,11 +49,14 @@ public class Vanguard : Character
         energy.runTimeValue -= Skill1Energy();
     }
 
+    //In progress..
+    //--------------------------------------------
     public override void SkillTwo(HexTile tile)
     {
         Debug.Log("I am using Skill2!");
         energy.runTimeValue -= Skill2Energy();
     }
+    //--------------------------------------------
 
     public override int MoveEnergy()
     {
