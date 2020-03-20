@@ -34,23 +34,6 @@ public class Arsonist : Character
         Debug.Log("I am using Skill1!");
 
         List<HexTile> affectedTiles = tile.ReturnNeighbours();
-        affectedTiles.Add(tile);
-
-        //#Loop to add tiles in range of area of effect, currently only runs twice but can be made dynamic depending on range
-        //---------------------------------------------------
-        for (int i = 0; i < affectedTiles.Count; i++)
-        {
-            List<HexTile> temp = affectedTiles[i].ReturnNeighbours();
-            for (int j = 0; j < affectedTiles.Count; j++)
-            {
-                for (int k = 0; k < temp.Count; k++)
-                {
-                    if (temp[k].tileID != affectedTiles[j].tileID)
-                        affectedTiles.Add(temp[k]);
-                }
-            }
-        }
-        //---------------------------------------------------
 
         List<Character> affectedCharacters = new List<Character>();
 
@@ -61,15 +44,17 @@ public class Arsonist : Character
             affectedCharacters.Add(affectedTiles[i].occupant);
         }
         //---------------------------------------------------
+        
+        tile.occupant.health.runTimeValue -= 25;
 
         //#Loop to damage affected characters
         //---------------------------------------------------
         for (int i = 0; i < affectedCharacters.Count; i++)
         {
-            affectedCharacters[i].health.runTimeValue -= 25;
+            affectedCharacters[i].health.runTimeValue -= 10;
         }
         //---------------------------------------------------
-
+        
         energy.runTimeValue -= Skill1Energy();
     }
 
@@ -78,23 +63,6 @@ public class Arsonist : Character
         Debug.Log("I am using Skill2!");
 
         List<HexTile> affectedTiles = tile.ReturnNeighbours();
-        affectedTiles.Add(tile);
-
-        //#Loop to add tiles in range of area of effect, currently only runs twice but can be made dynamic depending on range
-        //---------------------------------------------------
-        for (int i = 0; i < affectedTiles.Count; i++)
-        {
-            List<HexTile> temp = affectedTiles[i].ReturnNeighbours();
-            for (int j = 0; j < affectedTiles.Count; j++)
-            {
-                for (int k = 0; k < temp.Count; k++)
-                {
-                    if (temp[k].tileID != affectedTiles[j].tileID)
-                        affectedTiles.Add(temp[k]);
-                }
-            }
-        }
-        //---------------------------------------------------
 
         List<Character> affectedCharacters = new List<Character>();
 
