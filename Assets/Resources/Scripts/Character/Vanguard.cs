@@ -40,7 +40,7 @@ public class Vanguard : Character
 
         //#Code to push back enemy
         {
-            HexTile tileToPushTo = TileManager.instance.ReturnID(target.GetCurrentTile().tileID - 1);
+            HexTile tileToPushTo = TileManager.instance.ReturnID(target.GetCurrentTile().tileID - 1); //Will fix this line later
             target.SkillPush(tileToPushTo);
         }
 
