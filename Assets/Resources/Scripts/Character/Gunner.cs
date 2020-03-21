@@ -5,6 +5,9 @@ using UnityEngine;
 public class Gunner : Character
 {
     // Start is called before the first frame update
+
+    public float dropoffval;
+
     void Start()
     {
         Initialize();
@@ -27,15 +30,18 @@ public class Gunner : Character
 
         energy.runTimeValue -= AttackEnergy();
     }
-    
-    //In progress..
-    //--------------------------------------------
+        
     public override void SkillOne(HexTile tile)
     {
         Debug.Log("I am using Skill1!");
+
+        BattleManager.targetChara.health.runTimeValue -= 30; //Math for dmg drop-off will be done soon
+
         energy.runTimeValue -= Skill1Energy();
     }
 
+    //In progress..
+    //--------------------------------------------
     public override void SkillTwo(HexTile tile)
     {
         Debug.Log("I am using Skill2!");

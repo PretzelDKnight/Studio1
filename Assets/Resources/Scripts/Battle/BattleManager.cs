@@ -92,7 +92,8 @@ public class BattleManager : MonoBehaviour
     {
         ResetEverything();
         state = State.Skill1;
-        TileManager.instance.FindTilesWithinRange(currentChar, currentChar.stats.skill1range);
+        if (currentChar.GetType() != typeof(Gunner))
+            TileManager.instance.FindTilesWithinRange(currentChar, currentChar.stats.skill1range);
     }
 
     // Skill 2 Function to change state of battle manager functions
@@ -100,7 +101,8 @@ public class BattleManager : MonoBehaviour
     {
         ResetEverything();
         state = State.Skill2;
-        TileManager.instance.FindTilesWithinRange(currentChar, currentChar.stats.skill2range);
+        if (currentChar.GetType() != typeof(Gunner))
+            TileManager.instance.FindTilesWithinRange(currentChar, currentChar.stats.skill2range);
     }
 
     // Move function to change state of battle manager functions

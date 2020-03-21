@@ -142,7 +142,7 @@ public class TileManager : MonoBehaviour
     }
 
     // Finds Attackable characters on the tiles within attackble range
-    public void FindTilesWithinRange(Character source , int Range)
+    public void FindTilesWithinRange(Character source, int Range)
     {
         HexTile start = source.GetCurrentTile();
         float range = Range; ;
@@ -236,7 +236,7 @@ public class TileManager : MonoBehaviour
         {
             if (tileList[i].tileID == passedID)
                 result = tileList[i];
-        }        
+        }
 
         return result;
     }
