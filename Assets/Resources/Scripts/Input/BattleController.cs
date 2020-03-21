@@ -37,15 +37,67 @@ public class BattleController : Controller
                             temp.SetSelected();
                             BattleManager.instance.RecievedInput();
                         }
-                        else if (temp.Attackable && BattleManager.ReturnState() == State.Attack)
+                        else if (BattleManager.ReturnState() == State.Attack)
                         {
-                            BattleManager.targetChara = temp.ReturnChara();
-                            temp.SetSelected();
-                            BattleManager.instance.RecievedInput();
+                            if (temp.Attackable)
+                            {
+                                BattleManager.targetTile = temp;
+                                BattleManager.targetChara = temp.occupant;
+                                temp.SetSelected();
+                                BattleManager.instance.RecievedInput();
+                            }
+                            else if(BattleManager.instance.currentChar.GetType() == typeof(Gunner) && temp.Hovered && temp.Occupied && BattleManager.ReturnState() == State.Skill1)
+                            {
+                                FindTilesInSight(BattleManager.instance.currentChar, temp);
+                                BattleManager.targetTile = temp;
+                                BattleManager.targetChara = temp.occupant;
+                                temp.SetSelected();
+                                BattleManager.instance.RecievedInput();
+                            }
+                            else if (BattleManager.instance.currentChar.GetType() == typeof(Gunner) && temp.Hovered && temp.Occupied && BattleManager.ReturnState() == State.Skill2)
+                            {
+                                FindTilesInSight(BattleManager.instance.currentChar, temp);
+                                BattleManager.targetTile = temp;
+                                BattleManager.targetChara = temp.occupant;
+                                temp.SetSelected();
+                                BattleManager.instance.RecievedInput();
+                            }
                         }
                     }
                 }
             }
         }
+    }
+
+    public void FindTilesInSight(Character source, HexTile tile)
+    {
+        bool temp = false;
+
+        RaycastHit[] hit;
+
+        float distToSelectedTile = Vector3.Distance(source.GetCurrentTile().transform.position, tile.transform.position);     
+        
+
+
+        hit = Physics.RaycastAll(source.GetCurrentTile().transform.position, tile.transform.position, distToSelectedTile, TileManager.instance.layerMask);
+
+        //This code loops through all the tiles in a straight line until it finds an enemy in sight and sets them to attackable
+        //--------------------------------------------
+        for (int i = 0; i < hit.Length; i++)
+        {
+            if (hit[i].collider.gameObject.GetComponent<HexTile>().occupant != null && temp == false)
+            {
+                hit[i].collider.gameObject.GetComponent<HexTile>().Attackable = true;
+                temp = true;
+            }
+            else if (temp == true)
+                break;
+        }
+        //--------------------------------------------
+    }
+    
+    public void CalcDropOff(Gunner source, float dist)
+    {
+        source.dropoffval = dist / 2;
     }
 }

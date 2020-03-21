@@ -8,6 +8,8 @@ public class HexTile : MonoBehaviour
     public float fCost = 0;
     public int energyCost = 0;
 
+    public int tileID;
+
     List<HexTile> neighbours = new List<HexTile>();
     bool occupied = false;
     bool walkable = false;
@@ -15,29 +17,33 @@ public class HexTile : MonoBehaviour
     bool hovered = false;
     bool attackable = false;
     HexTile parent;
-    Vector3 position;
+
+    public Character occupant;
 
     // Mesh and Shader variables
     Renderer render;
     float isStable;
 
+    private void Awake()
+    {
+        render = transform.GetComponent<MeshRenderer>();
+    }
 
     private void Start()
     {
         // 0 for False, 1 for True
-        render = transform.GetComponent<MeshRenderer>();
-
         isStable = Shader.PropertyToID("_IsStable");
         walkable = false;
-
+        ResetTileValues();
         CheckAbove();
         FindNeighbours();
-        position = transform.position;
     }
 
     private void Update()
     {
         Hovered = false;
+        if (!occupied)
+            occupant = null;
     }
 
     private void LateUpdate()
@@ -135,7 +141,7 @@ public class HexTile : MonoBehaviour
     // Get set for Attackable that changes shader property depending on value
     public bool Attackable
     {
-        get { return walkable; }
+        get { return attackable; }
         set
         {
             attackable = value;
@@ -212,7 +218,7 @@ public class HexTile : MonoBehaviour
     // Returns estimated position of the character above said tile
     public Vector3 ReturnTargetPosition(Vector3 charaPos)
     {
-        return new Vector3(position.x, charaPos.y, position.z);
+        return new Vector3(transform.position.x, charaPos.y, transform.position.z);
     }
 
     // Returns the enemy relative to the character being passed as parameter if they exist above the said tile

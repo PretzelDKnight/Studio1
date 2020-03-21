@@ -2316,6 +2316,7 @@ GameObject:
   - component: {fileID: 366693001}
   - component: {fileID: 366693002}
   - component: {fileID: 366693003}
+  - component: {fileID: 366693004}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -2409,10 +2410,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0e3ae2243c4e234eac201ec83eabc46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 250
   able: 1
-  interactionS: 1
-  interactionB: 1
+  storyInteract: 1
+  battleInteract: 1
+  moveDisPerSec: 1
+  layer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!54 &366693001
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2456,6 +2460,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f06face7481462c4fb6ec39f35523abe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &366693004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 366692995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ec1ab6c15d26394e9cdb75c0033d296, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseStats: {fileID: 0}
+  baseCD: {fileID: 0}
+  CD: {fileID: 0}
+  energy: {fileID: 0}
+  health: {fileID: 0}
+  stats: {fileID: 0}
+  goals: []
+  actions: []
+  AI: 0
 --- !u!1 &370380006
 GameObject:
   m_ObjectHideFlags: 0
@@ -8626,12 +8651,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eecbceb8d522da4283555106a358ee8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 366692995}
+  current: {fileID: 366693004}
   camOffset: {x: 0, y: 25, z: -12.5}
-  scrollSpeed: 2
-  minHeight: 20
-  maxHeight: 120
-  limit: {x: 0, y: 0}
+  speed: 1
 --- !u!114 &1511623505
 MonoBehaviour:
   m_ObjectHideFlags: 0

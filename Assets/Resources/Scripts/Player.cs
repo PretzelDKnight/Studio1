@@ -26,11 +26,6 @@ public class Player : MonoBehaviour
 
     }
 
-    void Update()
-    {
-        
-    }
-
     // Function to load player from save
     void LoadPlayer()
     {

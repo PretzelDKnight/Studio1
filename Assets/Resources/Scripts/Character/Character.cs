@@ -29,6 +29,8 @@ public abstract class Character : MonoBehaviour , IComparable
     bool selected = false;
     float current = 0;
 
+    public bool Busy = false;
+
     public static float checkTileRange = 3f;
 
     HexTile currentTile = null;
@@ -37,7 +39,7 @@ public abstract class Character : MonoBehaviour , IComparable
     Color normal = Color.white;
 
     public abstract void Move(HexTile tile);
-    public abstract void Attack(Character target);
+    public abstract void Attack(HexTile tile);
     public abstract void SkillOne(HexTile tile);
     public abstract void SkillTwo(HexTile tile);
     public abstract int MoveEnergy();
@@ -86,34 +88,40 @@ public abstract class Character : MonoBehaviour , IComparable
     public void MoveToNearestTile()
     {
         HexTile destination = ReturnNearestUnoccupiedTile();
+        currentTile = destination;
+        currentTile.occupant = this;
         StartCoroutine(MoveToTile(destination));
     }
 
     // Coroutine for smoothly moving character to a tile
     protected IEnumerator MoveToTile(HexTile destination)
     {
+        Busy = true;
         Vector3 currentPos = transform.position;
-        Vector3 destPos = destination.ReturnTargetPosition(transform.position);
+        Vector3 destPos = destination.ReturnTargetPosition(currentPos);
         float time = 0;
 
         while (time < 1)
         {
             transform.position = Vector3.Lerp(currentPos, destPos, time);
+            //transform.position = Vector3.Lerp(currentPos, destination.ReturnTargetPosition(currentPos), time);
             time += Time.deltaTime * stats.speed;
             yield return null;
         }
 
         transform.position = destination.ReturnTargetPosition(transform.position);
 
-        currentTile = destination;
+        //currentTile = destination;
         currentTile.Walkable = false;
         BattleManager.instance.NextMove();
+        Busy = false;
         yield return null;
     }
 
     // Coroutine for smoothly moving character down a list of tiles
     protected IEnumerator MoveDownPath(List<HexTile> path)
     {
+        Busy = true;
         float time = 0;
         foreach(var tile in path)
         {
@@ -139,7 +147,9 @@ public abstract class Character : MonoBehaviour , IComparable
         currentTile = path[path.Count - 1];
         currentTile.Occupied = true;
         currentTile.Walkable = false;
+        currentTile.occupant = this;
         BattleManager.instance.NextMove();
+        Busy = false;
         yield return null;
     }
 
@@ -255,5 +265,10 @@ public abstract class Character : MonoBehaviour , IComparable
     void PropertyToShader()
     {
         render.material.SetFloat("_Current", current);
+    }
+
+    public void SkillPush(HexTile tile)
+    {
+        StartCoroutine(MoveToTile(tile));
     }
 }

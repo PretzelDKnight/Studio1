@@ -23,8 +23,7 @@ public class TileManager : MonoBehaviour
     static float lerpValue = 0;
     static bool change = false;
 
-    [SerializeField] GameEvent resetTiles;
-    [SerializeField] GameEvent destroyTiles;
+    List<HexTile> tileList;
 
     public LayerMask layerMask;
 
@@ -45,6 +44,8 @@ public class TileManager : MonoBehaviour
     // Generates Hexagon Grid (Can only produce grids of even size as it is generated from the centre of the gameObject)
     public void GenerateHexGrid()
     {
+        int ID = 0;
+        tileList = new List<HexTile>();
         float unitLength;
         if (useAsInnerCircleRadius)
             unitLength = (radius / (Mathf.Sqrt(3) / 2));
@@ -59,7 +60,9 @@ public class TileManager : MonoBehaviour
             {
                 Vector2 hexpos = HexOffset(i, j);
                 Vector3 pos = new Vector3(hexpos.x + transform.position.x, transform.position.y, hexpos.y + transform.position.z);
-                Instantiate(hexTile, pos, Quaternion.identity);
+                tileList.Add(Instantiate(hexTile, pos, Quaternion.identity).GetComponent<HexTile>());
+                tileList[ID].tileID = ID;
+                ID++;
             }
         }
     }
@@ -139,10 +142,10 @@ public class TileManager : MonoBehaviour
     }
 
     // Finds Attackable characters on the tiles within attackble range
-    public void FindTilesWithinRange(Character source)
+    public void FindTilesWithinRange(Character source, int Range)
     {
         HexTile start = source.GetCurrentTile();
-        float range = source.stats.attackRange; ;
+        float range = Range; ;
         List<HexTile> tempList = new List<HexTile>() { start };
 
         while (tempList.Count > 0)
@@ -210,11 +213,31 @@ public class TileManager : MonoBehaviour
 
     public void ResetTiles()
     {
-        resetTiles.Raise();
+        for (int i = tileList.Count - 1; i >= 0; i--)
+        {
+            tileList[i].ResetTileValues();
+        }
     }
 
     public void DestroyGrid()
     {
-        destroyTiles.Raise();
+        for (int i = tileList.Count - 1; i >= 0; i--)
+        {
+            tileList[i].DestroyMeself();
+            tileList.RemoveAt(i);
+        }
+    }
+
+    public HexTile ReturnID(int passedID)
+    {
+        HexTile result = new HexTile();
+
+        for (int i = 0; i < tileList.Count; i++)
+        {
+            if (tileList[i].tileID == passedID)
+                result = tileList[i];
+        }
+
+        return result;
     }
 }

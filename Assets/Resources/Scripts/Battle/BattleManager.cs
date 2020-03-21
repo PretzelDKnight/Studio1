@@ -56,21 +56,26 @@ public class BattleManager : MonoBehaviour
     // Executes the function depending on state of the battle manager
     public void RecievedInput()
     {
-        busy = true;
-        switch (state)
+        if (!currentChar.AI)
         {
-            case State.Attack:
-                currentChar.Attack(targetChara);
-                break;
-            case State.Move:
-                currentChar.Move(targetTile);
-                break;
-            case State.Skill1:
-                break;
-            case State.Skill2:
-                break;
-            default:
-                break;
+            busy = true;
+            switch (state)
+            {
+                case State.Attack:
+                    currentChar.Attack(targetTile);
+                    break;
+                case State.Move:
+                    currentChar.Move(targetTile);
+                    break;
+                case State.Skill1:
+                    currentChar.SkillOne(targetTile);
+                    break;
+                case State.Skill2:
+                    currentChar.SkillTwo(targetTile);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -79,7 +84,7 @@ public class BattleManager : MonoBehaviour
     {
         ResetEverything();
         state = State.Attack;
-        TileManager.instance.FindTilesWithinRange(currentChar);
+        TileManager.instance.FindTilesWithinRange(currentChar, currentChar.stats.attackRange);
     }
 
     // Skill 1 Function to change state of battle manager functions
@@ -87,6 +92,8 @@ public class BattleManager : MonoBehaviour
     {
         ResetEverything();
         state = State.Skill1;
+        if (currentChar.GetType() != typeof(Gunner))
+            TileManager.instance.FindTilesWithinRange(currentChar, currentChar.stats.skill1range);
     }
 
     // Skill 2 Function to change state of battle manager functions
@@ -94,6 +101,8 @@ public class BattleManager : MonoBehaviour
     {
         ResetEverything();
         state = State.Skill2;
+        if (currentChar.GetType() != typeof(Gunner))
+            TileManager.instance.FindTilesWithinRange(currentChar, currentChar.stats.skill2range);
     }
 
     // Move function to change state of battle manager functions
@@ -108,7 +117,7 @@ public class BattleManager : MonoBehaviour
     public void Pass()
     {
         currentChar.SetNotShown();
-        EndTurn();
+        InitTurnQueue();
     }
 
     // Get set battle function
@@ -127,6 +136,7 @@ public class BattleManager : MonoBehaviour
             busy = true;
             TileManager.instance.GenerateHexGrid();
             NewBattle();
+            InitTurnQueue();
         }
         else
             Debug.Log("Battle already running!");
@@ -149,7 +159,7 @@ public class BattleManager : MonoBehaviour
     public void AIFunction()
     {
         Queue<Node> queue = GOAP.GOAPlan(currentChar, ConvertGoals());
-        for(int i = 0; i < queue.Count; i++)
+        for (int i = 0; i < queue.Count; i++)
         {
             Node node = queue.Dequeue();
             node.action.Execute(currentChar, node.targetTile, node.target);
@@ -185,6 +195,7 @@ public class BattleManager : MonoBehaviour
     {
         Battle = false;
         TileManager.instance.DestroyGrid();
+        TurnCards.instance.DestroyStatCards();
         turnOrder = new Queue<Character>();
         StartCoroutine(CameraScript.instance.ChangeCurrent(Player.instance.protagonist));
     }
@@ -202,20 +213,14 @@ public class BattleManager : MonoBehaviour
             foreach (Character unit in allChara)
                 turnOrder.Enqueue(unit);
 
-        StartTurn();
-    }
 
-    // Starts turn phase for the next character
-    void StartTurn()
-    {
         currentChar = turnOrder.Dequeue();
         currentChar.RefreshEnergy();
         currentChar.SetShown();
         StartCoroutine(CameraScript.instance.ChangeCurrent(currentChar));
         // TODO : Add in functionality to change card material depending on character
         //HandCards.instance.GenerateHand();
-        //TurnCards.instance.GenerateStatCards();
-        ResetEverything();
+        TurnCards.instance.GenerateStatCards();
 
         if (!currentChar.AI)
         {
@@ -226,12 +231,6 @@ public class BattleManager : MonoBehaviour
         {
             AIFunction();
         }
-    }
-
-    // Ends the turn and re-initiates queue check
-    public void EndTurn()
-    {
-        InitTurnQueue();
     }
 
     // Checks health of relevant characters and checks if the party or enemies are wiped and calls battle to an end
@@ -331,7 +330,16 @@ public class BattleManager : MonoBehaviour
                 allChara.Add(enemy);
             }
         }
+    }
 
-        InitTurnQueue();
+    public void SetState(State x)
+    {
+        state = x;
+    }
+
+    public void Update()
+    {
+        if(currentChar)
+            Debug.Log("Current character's energy is: " + currentChar.energy.runTimeValue);
     }
 }
