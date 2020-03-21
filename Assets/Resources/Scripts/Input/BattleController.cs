@@ -75,9 +75,7 @@ public class BattleController : Controller
 
         RaycastHit[] hit;
 
-        float distToSelectedTile = Vector3.Distance(source.GetCurrentTile().transform.position, tile.transform.position);     
-        
-
+        float distToSelectedTile = Vector3.Distance(source.GetCurrentTile().transform.position, tile.transform.position);
 
         hit = Physics.RaycastAll(source.GetCurrentTile().transform.position, tile.transform.position, distToSelectedTile, TileManager.instance.layerMask);
 

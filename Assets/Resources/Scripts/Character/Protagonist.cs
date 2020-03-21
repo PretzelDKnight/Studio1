@@ -27,6 +27,8 @@ public class Protagonist : Character
         Debug.Log("The enemy's health is now: " + target.health.runTimeValue);
 
         energy.runTimeValue -= AttackEnergy();
+
+        BattleManager.instance.NextMove();
     }
 
     public override void SkillOne(HexTile tile)
@@ -42,6 +44,8 @@ public class Protagonist : Character
         Debug.Log("The enemy's health is now: " + target.health.runTimeValue);
 
         energy.runTimeValue -= Skill1Energy();
+
+        BattleManager.instance.NextMove();
     }
 
     public override void SkillTwo(HexTile tile)
@@ -51,6 +55,8 @@ public class Protagonist : Character
         this.health.runTimeValue += 20;
 
         energy.runTimeValue -= Skill2Energy();
+
+        BattleManager.instance.NextMove();
     }
 
     public override int MoveEnergy()

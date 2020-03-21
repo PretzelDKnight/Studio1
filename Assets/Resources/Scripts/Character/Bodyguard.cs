@@ -27,18 +27,24 @@ public class Bodyguard : Character
         Debug.Log("The enemy's health is now: " + target.health.runTimeValue);
 
         energy.runTimeValue -= AttackEnergy();
+
+        BattleManager.instance.NextMove();
     }
 
     public override void SkillOne(HexTile tile)
     {
         Debug.Log("I am using Skill1!");
         energy.runTimeValue -= Skill1Energy();
+
+        BattleManager.instance.NextMove();
     }
 
     public override void SkillTwo(HexTile tile)
     {
         Debug.Log("I am using Skill2!");
         energy.runTimeValue -= Skill2Energy();
+
+        BattleManager.instance.NextMove();
     }
 
     public override int MoveEnergy()
