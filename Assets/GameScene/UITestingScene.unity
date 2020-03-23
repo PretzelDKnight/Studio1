@@ -533,20 +533,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 261781425}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ec1ab6c15d26394e9cdb75c0033d296, type: 3}
+  m_Script: {fileID: 11500000, guid: 8d2cbc1b859d80545bbb7acf04742973, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseStats: {fileID: 11400000, guid: b4290d0fe41e54e4db888ba4706aba3d, type: 2}
+  baseStats: {fileID: 11400000, guid: f341060a76c3f5946b1b973074ba1ec3, type: 2}
   baseCD: {fileID: 0}
   CD: {fileID: 0}
   energy: {fileID: 0}
   health: {fileID: 0}
   stats: {fileID: 0}
   goals: []
-  actions:
-  - {fileID: 11400000, guid: 99692bd2641f99647b580db356af4921, type: 2}
-  - {fileID: 11400000, guid: 3140622650d7d184c9d884a9268e8fa3, type: 2}
-  - {fileID: 11400000, guid: 8288762388bdb194aa1099cad1f19e3a, type: 2}
+  actions: []
   AI: 0
   Busy: 0
 --- !u!1 &450666436
@@ -1294,7 +1291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21b3735cf64612843bb76494940fda44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  protagonist: {fileID: 261781430}
+  protagonist: {fileID: 0}
   allies: {fileID: 768385166}
 --- !u!108 &800552043
 Light:
