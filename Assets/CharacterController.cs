@@ -8,24 +8,25 @@ public class CharacterController : MonoBehaviour
 
     Rigidbody rb;
 
-    float remainDist;
-    public float slowingRadius;
-    public float moveSpeed;
+    public float maxVelocity = 5f;
+    public float maxAcceleration = 10f;
+    public float targetRadius = 0.005f;     // The radius from the target that means we are close enough and have arrived
+    public float timeToTarget = 0.1f;       // The time in which we want to achieve the targetSpeed
+    public float slowingRadius = 1f;        // Radius for slowing zone
+
     public LayerMask layer;
 
     Vector3 destination;
-    Vector3 moveVector;
 
     void Start()
     {
         rb = this.GetComponent<Rigidbody>();
         able = true;
+        destination = transform.position;
     }
 
     void Update()
     {
-        remainDist = Vector3.Distance(destination, transform.position);
-
         if (!BattleManager.Battle)
             Move();
     }
@@ -37,6 +38,7 @@ public class CharacterController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
             if (Physics.Raycast(ray, out hit, 100, layer))
             {
                 rb.velocity = Vector3.zero;
@@ -44,29 +46,57 @@ public class CharacterController : MonoBehaviour
                 Arrive();
             }
         }
+        else
+            Arrive();
     }
 
     public void Arrive()
     {
         Vector3 desiredVelocity = destination - transform.position; //Desired velocity calculation
-        desiredVelocity.y = 0;        
+
+        desiredVelocity.y = 0;
 
         float distance = desiredVelocity.magnitude;
 
-        float decelerationFactor = distance / 5;
-
-        float speed = moveSpeed * decelerationFactor;
-
-        Vector3 moveVector = desiredVelocity.normalized * Time.deltaTime * speed; //Calculating the steering vector
-
-        rb.AddForce(moveVector);
-        transform.LookAt(destination);
-
-        //Clamping the velocity by remaining distance
-        if (distance < remainDist)
+        if (distance < slowingRadius)
         {
-            desiredVelocity = Vector3.ClampMagnitude(desiredVelocity * distance, moveSpeed);
+            rb.velocity = Vector3.zero;
         }
+
+        /* Calculate the target speed, full speed at slowRadius distance and 0 speed at 0 distance */
+        float targetSpeed;
+        if (distance > slowingRadius)
+        {
+            Debug.Log("Full speed!");
+            targetSpeed = maxVelocity;
+        }
+        else
+        {
+            Debug.Log("Slowing down!");
+            targetSpeed = maxVelocity * (distance / slowingRadius);
+        }
+
+        /* Give desiredVelocity the correct speed */
+        desiredVelocity.Normalize();
+        desiredVelocity *= targetSpeed;
+
+        /* Calculate the linear acceleration we want */
+        Vector3 acceleration = desiredVelocity - rb.velocity;
+
+        /* Rather than accelerate the character to the correct speed in 1 second, accelerate so we reach the desired speed in timeToTarget seconds, as if we were to accelerate for the whole timeToTarget seconds */
+        acceleration *= 1 / timeToTarget;
+
+        /* Make sure we are accelerating at max acceleration */
+        if (acceleration.magnitude > maxAcceleration)
+        {
+            acceleration.Normalize();
+            acceleration *= maxAcceleration;
+        }
+        
+
+        rb.AddForce(acceleration);
+
+        transform.LookAt(destination);
 
         Vector3 rotation = transform.rotation.eulerAngles;
         rotation.x = 0;

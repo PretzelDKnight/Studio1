@@ -62,14 +62,16 @@ public class BattleManager : MonoBehaviour
             switch (state)
             {
                 case State.Attack:
-                    currentChar.Attack(targetChara);
+                    currentChar.Attack(targetTile);
                     break;
                 case State.Move:
                     currentChar.Move(targetTile);
                     break;
                 case State.Skill1:
+                    currentChar.SkillOne(targetTile);
                     break;
                 case State.Skill2:
+                    currentChar.SkillTwo(targetTile);
                     break;
                 default:
                     break;
@@ -82,7 +84,7 @@ public class BattleManager : MonoBehaviour
     {
         ResetEverything();
         state = State.Attack;
-        TileManager.instance.FindTilesWithinRange(currentChar);
+        TileManager.instance.FindTilesWithinRange(currentChar, currentChar.stats.attackRange);
     }
 
     // Skill 1 Function to change state of battle manager functions
@@ -90,6 +92,8 @@ public class BattleManager : MonoBehaviour
     {
         ResetEverything();
         state = State.Skill1;
+        if (currentChar.GetType() != typeof(Gunner))
+            TileManager.instance.FindTilesWithinRange(currentChar, currentChar.stats.skill1range);
     }
 
     // Skill 2 Function to change state of battle manager functions
@@ -97,6 +101,8 @@ public class BattleManager : MonoBehaviour
     {
         ResetEverything();
         state = State.Skill2;
+        if (currentChar.GetType() != typeof(Gunner))
+            TileManager.instance.FindTilesWithinRange(currentChar, currentChar.stats.skill2range);
     }
 
     // Move function to change state of battle manager functions
@@ -153,7 +159,7 @@ public class BattleManager : MonoBehaviour
     public void AIFunction()
     {
         Queue<Node> queue = GOAP.GOAPlan(currentChar, ConvertGoals());
-        for(int i = 0; i < queue.Count; i++)
+        for (int i = 0; i < queue.Count; i++)
         {
             Node node = queue.Dequeue();
             node.action.Execute(currentChar, node.targetTile, node.target);
@@ -324,5 +330,16 @@ public class BattleManager : MonoBehaviour
                 allChara.Add(enemy);
             }
         }
+    }
+
+    public void SetState(State x)
+    {
+        state = x;
+    }
+
+    public void Update()
+    {
+        if(currentChar)
+            Debug.Log("Current character's energy is: " + currentChar.energy.runTimeValue);
     }
 }

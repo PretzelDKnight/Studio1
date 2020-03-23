@@ -39,7 +39,7 @@ public abstract class Character : MonoBehaviour , IComparable
     Color normal = Color.white;
 
     public abstract void Move(HexTile tile);
-    public abstract void Attack(Character target);
+    public abstract void Attack(HexTile tile);
     public abstract void SkillOne(HexTile tile);
     public abstract void SkillTwo(HexTile tile);
     public abstract int MoveEnergy();
@@ -89,6 +89,7 @@ public abstract class Character : MonoBehaviour , IComparable
     {
         HexTile destination = ReturnNearestUnoccupiedTile();
         currentTile = destination;
+        currentTile.occupant = this;
         StartCoroutine(MoveToTile(destination));
     }
 
@@ -146,6 +147,7 @@ public abstract class Character : MonoBehaviour , IComparable
         currentTile = path[path.Count - 1];
         currentTile.Occupied = true;
         currentTile.Walkable = false;
+        currentTile.occupant = this;
         BattleManager.instance.NextMove();
         Busy = false;
         yield return null;
@@ -263,5 +265,10 @@ public abstract class Character : MonoBehaviour , IComparable
     void PropertyToShader()
     {
         render.material.SetFloat("_Current", current);
+    }
+
+    public void SkillPush(HexTile tile)
+    {
+        StartCoroutine(MoveToTile(tile));
     }
 }

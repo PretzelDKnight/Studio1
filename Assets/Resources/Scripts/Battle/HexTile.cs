@@ -8,6 +8,8 @@ public class HexTile : MonoBehaviour
     public float fCost = 0;
     public int energyCost = 0;
 
+    public int tileID;
+
     List<HexTile> neighbours = new List<HexTile>();
     bool occupied = false;
     bool walkable = false;
@@ -15,6 +17,8 @@ public class HexTile : MonoBehaviour
     bool hovered = false;
     bool attackable = false;
     HexTile parent;
+
+    public Character occupant;
 
     // Mesh and Shader variables
     Renderer render;
@@ -38,6 +42,8 @@ public class HexTile : MonoBehaviour
     private void Update()
     {
         Hovered = false;
+        if (!occupied)
+            occupant = null;
     }
 
     private void LateUpdate()
@@ -135,7 +141,7 @@ public class HexTile : MonoBehaviour
     // Get set for Attackable that changes shader property depending on value
     public bool Attackable
     {
-        get { return walkable; }
+        get { return attackable; }
         set
         {
             attackable = value;
