@@ -167,11 +167,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   able: 1
-  maxVelocity: 100
-  maxAcceleration: 1000
-  targetRadius: 20
+  maxVelocity: 10
+  maxAcceleration: 50
+  targetRadius: 0.75
   timeToTarget: 0.25
-  slowingRadius: 20
+  slowingRadius: 0.75
   layer:
     serializedVersion: 2
     m_Bits: 512

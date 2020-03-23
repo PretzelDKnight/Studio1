@@ -10,7 +10,6 @@ public class CharacterController : MonoBehaviour
 
     public float maxVelocity = 5f;
     public float maxAcceleration = 10f;
-    public float targetRadius = 0.005f;     // The radius from the target that means we are close enough and have arrived
     public float timeToTarget = 0.1f;       // The time in which we want to achieve the targetSpeed
     public float slowingRadius = 1f;        // Radius for slowing zone
 
