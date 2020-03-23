@@ -703,6 +703,7 @@ GameObject:
   - component: {fileID: 261781427}
   - component: {fileID: 261781426}
   - component: {fileID: 261781430}
+  - component: {fileID: 261781431}
   m_Layer: 11
   m_Name: Player
   m_TagString: Player
@@ -791,7 +792,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 261781425}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3ec1ab6c15d26394e9cdb75c0033d296, type: 3}
   m_Name: 
@@ -807,6 +808,28 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 99692bd2641f99647b580db356af4921, type: 2}
   - {fileID: 11400000, guid: 3140622650d7d184c9d884a9268e8fa3, type: 2}
   - {fileID: 11400000, guid: 8288762388bdb194aa1099cad1f19e3a, type: 2}
+  AI: 0
+  Busy: 0
+--- !u!114 &261781431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 261781425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d2cbc1b859d80545bbb7acf04742973, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseStats: {fileID: 11400000, guid: f341060a76c3f5946b1b973074ba1ec3, type: 2}
+  baseCD: {fileID: 0}
+  CD: {fileID: 0}
+  energy: {fileID: 0}
+  health: {fileID: 0}
+  stats: {fileID: 0}
+  goals: []
+  actions: []
   AI: 0
   Busy: 0
 --- !u!1 &375900949
@@ -2101,6 +2124,7 @@ GameObject:
   - component: {fileID: 1298287350}
   - component: {fileID: 1298287349}
   - component: {fileID: 1298287348}
+  - component: {fileID: 1298287353}
   m_Layer: 11
   m_Name: Player (1)
   m_TagString: Player
@@ -2115,7 +2139,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1298287347}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3ec1ab6c15d26394e9cdb75c0033d296, type: 3}
   m_Name: 
@@ -2207,6 +2231,28 @@ Transform:
   m_Father: {fileID: 768385167}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1298287353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1298287347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fe483b9f2ad39343b622a24d942c3c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseStats: {fileID: 11400000, guid: 757c1afca4e3a8c479fff0d43921fad1, type: 2}
+  baseCD: {fileID: 0}
+  CD: {fileID: 0}
+  energy: {fileID: 0}
+  health: {fileID: 0}
+  stats: {fileID: 0}
+  goals: []
+  actions: []
+  AI: 0
+  Busy: 0
 --- !u!1 &1338792602
 GameObject:
   m_ObjectHideFlags: 0
@@ -2789,6 +2835,7 @@ GameObject:
   - component: {fileID: 1641254046}
   - component: {fileID: 1641254045}
   - component: {fileID: 1641254044}
+  - component: {fileID: 1641254049}
   m_Layer: 11
   m_Name: Player (2)
   m_TagString: Player
@@ -2803,7 +2850,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1641254043}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3ec1ab6c15d26394e9cdb75c0033d296, type: 3}
   m_Name: 
@@ -2895,6 +2942,28 @@ Transform:
   m_Father: {fileID: 768385167}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1641254049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1641254043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc6821c600f419d41aaee628411e97db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseStats: {fileID: 11400000, guid: 97950895c19a4c9459d08e44087e1fe4, type: 2}
+  baseCD: {fileID: 0}
+  CD: {fileID: 0}
+  energy: {fileID: 0}
+  health: {fileID: 0}
+  stats: {fileID: 0}
+  goals: []
+  actions: []
+  AI: 0
+  Busy: 0
 --- !u!1 &1826645742
 GameObject:
   m_ObjectHideFlags: 0

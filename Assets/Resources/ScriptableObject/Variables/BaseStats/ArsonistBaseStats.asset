@@ -17,6 +17,6 @@ MonoBehaviour:
   attackRange: 4
   skill1Range: 4
   skill2range: 4
-  speed: 0
-  statusResist: 0
-  damageResist: 0
+  speed: 2
+  statusResist: 3
+  damageResist: 4
