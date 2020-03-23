@@ -26,6 +26,8 @@ public class Vanguard : Character
         Debug.Log("The enemy's health is now: " + target.health.runTimeValue);
 
         energy.runTimeValue -= AttackEnergy();
+
+        BattleManager.instance.NextMove();
     }
 
     public override void SkillOne(HexTile tile)
@@ -47,6 +49,8 @@ public class Vanguard : Character
         Debug.Log("The enemy's health is now: " + target.health.runTimeValue);
 
         energy.runTimeValue -= Skill1Energy();
+
+        BattleManager.instance.NextMove();
     }
 
     //In progress..
@@ -54,7 +58,10 @@ public class Vanguard : Character
     public override void SkillTwo(HexTile tile)
     {
         Debug.Log("I am using Skill2!");
+
         energy.runTimeValue -= Skill2Energy();
+
+        BattleManager.instance.NextMove();
     }
     //--------------------------------------------
 

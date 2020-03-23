@@ -27,6 +27,8 @@ public class Arsonist : Character
         Debug.Log("The enemy's health is now: " + target.health.runTimeValue);
 
         energy.runTimeValue -= AttackEnergy();
+
+        BattleManager.instance.NextMove();
     }
 
     public override void SkillOne(HexTile tile)
@@ -56,6 +58,8 @@ public class Arsonist : Character
         //---------------------------------------------------
         
         energy.runTimeValue -= Skill1Energy();
+
+        BattleManager.instance.NextMove();
     }
 
     public override void SkillTwo(HexTile tile)
@@ -89,6 +93,8 @@ public class Arsonist : Character
         this.health.runTimeValue = 0;   //Damages self
 
         energy.runTimeValue -= Skill2Energy();
+
+        BattleManager.instance.NextMove();
     }
 
     public override int MoveEnergy()

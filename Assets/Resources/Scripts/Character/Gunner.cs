@@ -29,6 +29,8 @@ public class Gunner : Character
         Debug.Log("The enemy's health is now: " + target.health.runTimeValue);
 
         energy.runTimeValue -= AttackEnergy();
+
+        BattleManager.instance.NextMove();
     }
         
     public override void SkillOne(HexTile tile)
@@ -38,6 +40,8 @@ public class Gunner : Character
         BattleManager.targetChara.health.runTimeValue -= 30; //Math for dmg drop-off will be done soon
 
         energy.runTimeValue -= Skill1Energy();
+
+        BattleManager.instance.NextMove();
     }
 
     //In progress..
@@ -45,7 +49,10 @@ public class Gunner : Character
     public override void SkillTwo(HexTile tile)
     {
         Debug.Log("I am using Skill2!");
+
         energy.runTimeValue -= Skill2Energy();
+
+        BattleManager.instance.NextMove();
     }
     //--------------------------------------------
 
