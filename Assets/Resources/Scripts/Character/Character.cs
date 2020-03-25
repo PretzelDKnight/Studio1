@@ -52,7 +52,7 @@ public abstract class Character : MonoBehaviour , IComparable
         render = GetComponent<MeshRenderer>();
         current = 0;
         current = Shader.PropertyToID("_Current");
-        normal = render.material.color;
+        //normal = render.material.color;
     }
 
     protected void Update()
@@ -264,7 +264,7 @@ public abstract class Character : MonoBehaviour , IComparable
     // Sends value of shader property back to the shader
     void PropertyToShader()
     {
-        render.material.SetFloat("_Current", current);
+        //render.material.SetFloat("_Current", current);
     }
 
     public void SkillPush(HexTile tile)
