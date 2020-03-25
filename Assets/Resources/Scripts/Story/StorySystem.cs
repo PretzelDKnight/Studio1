@@ -63,6 +63,9 @@ public class StorySystem : MonoBehaviour
                 if (CheckTimer())
                         currentStory.NextDialogue();
         }
+
+        if (BattleManager.Battle)
+            this.gameObject.SetActive(false);
     }
 
     // Adds in the fonts and values that go in at game start
