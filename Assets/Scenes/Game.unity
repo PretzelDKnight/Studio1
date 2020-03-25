@@ -228,6 +228,52 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &88055624
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 88055626}
+  - component: {fileID: 88055625}
+  m_Layer: 0
+  m_Name: InputController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &88055625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 88055624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41505c5a7cf21dc42bb7d910bfee031a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 4096
+--- !u!4 &88055626
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 88055624}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &185760499
 GameObject:
   m_ObjectHideFlags: 0
@@ -2223,9 +2269,16 @@ MonoBehaviour:
   energy: {fileID: 0}
   health: {fileID: 0}
   stats: {fileID: 0}
-  goals: []
-  actions: []
-  AI: 0
+  goals:
+  - key: kAttack
+    value: 0
+  - key: kMove
+    value: 0
+  actions:
+  - {fileID: 11400000, guid: 99692bd2641f99647b580db356af4921, type: 2}
+  - {fileID: 11400000, guid: 3140622650d7d184c9d884a9268e8fa3, type: 2}
+  - {fileID: 11400000, guid: 8288762388bdb194aa1099cad1f19e3a, type: 2}
+  AI: 1
   Busy: 0
 --- !u!1 &877400729
 GameObject:
@@ -2701,9 +2754,16 @@ MonoBehaviour:
   energy: {fileID: 0}
   health: {fileID: 0}
   stats: {fileID: 0}
-  goals: []
-  actions: []
-  AI: 0
+  goals:
+  - key: kAttack
+    value: 0
+  - key: kMove
+    value: 0
+  actions:
+  - {fileID: 11400000, guid: 99692bd2641f99647b580db356af4921, type: 2}
+  - {fileID: 11400000, guid: 3140622650d7d184c9d884a9268e8fa3, type: 2}
+  - {fileID: 11400000, guid: 8288762388bdb194aa1099cad1f19e3a, type: 2}
+  AI: 1
   Busy: 0
 --- !u!1 &1050461479
 GameObject:
@@ -3809,9 +3869,16 @@ MonoBehaviour:
   energy: {fileID: 0}
   health: {fileID: 0}
   stats: {fileID: 0}
-  goals: []
-  actions: []
-  AI: 0
+  goals:
+  - key: kAttack
+    value: 0
+  - key: kMove
+    value: 0
+  actions:
+  - {fileID: 11400000, guid: 99692bd2641f99647b580db356af4921, type: 2}
+  - {fileID: 11400000, guid: 3140622650d7d184c9d884a9268e8fa3, type: 2}
+  - {fileID: 11400000, guid: 8288762388bdb194aa1099cad1f19e3a, type: 2}
+  AI: 1
   Busy: 0
 --- !u!1 &1602991225
 GameObject:
