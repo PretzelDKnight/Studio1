@@ -1,14 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class BattleController : Controller
 {
     // Update is called once per frame
     void LateUpdate()
     {
-        if(BattleManager.Battle)
-            MouseFunction();
+        if (BattleManager.Battle)
+        {
+            if (!EventSystem.current.IsPointerOverGameObject())
+            {
+                MouseFunction();
+            }
+        }
     }
 
     public override void ReadInput(InputData data)
