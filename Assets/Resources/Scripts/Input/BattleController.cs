@@ -45,23 +45,43 @@ public class BattleController : Controller
                                 BattleManager.targetChara = temp.occupant;
                                 temp.SetSelected();
                                 BattleManager.instance.RecievedInput();
-                            }
-                            else if(BattleManager.instance.currentChar.GetType() == typeof(Gunner) && temp.Hovered && temp.Occupied && BattleManager.ReturnState() == State.Skill1)
+                            }                            
+                        }
+                        else if (BattleManager.ReturnState() == State.Skill1)
+                        {
+                            if (temp.Attackable)
                             {
-                                FindTilesInSight(BattleManager.instance.currentChar, temp);
                                 BattleManager.targetTile = temp;
                                 BattleManager.targetChara = temp.occupant;
                                 temp.SetSelected();
                                 BattleManager.instance.RecievedInput();
                             }
-                            else if (BattleManager.instance.currentChar.GetType() == typeof(Gunner) && temp.Hovered && temp.Occupied && BattleManager.ReturnState() == State.Skill2)
+                        }
+                        else if (BattleManager.ReturnState() == State.Skill2)
+                        {
+                            if (temp.Attackable)
                             {
-                                FindTilesInSight(BattleManager.instance.currentChar, temp);
                                 BattleManager.targetTile = temp;
                                 BattleManager.targetChara = temp.occupant;
                                 temp.SetSelected();
                                 BattleManager.instance.RecievedInput();
                             }
+                        }
+                        else if (BattleManager.instance.currentChar.GetType() == typeof(Gunner) && temp.Hovered && temp.Occupied && BattleManager.ReturnState() == State.Skill1)
+                        {
+                            FindTilesInSight(BattleManager.instance.currentChar, temp);
+                            BattleManager.targetTile = temp;
+                            BattleManager.targetChara = temp.occupant;
+                            temp.SetSelected();
+                            BattleManager.instance.RecievedInput();
+                        }
+                        else if (BattleManager.instance.currentChar.GetType() == typeof(Gunner) && temp.Hovered && temp.Occupied && BattleManager.ReturnState() == State.Skill2)
+                        {
+                            FindTilesInSight(BattleManager.instance.currentChar, temp);
+                            BattleManager.targetTile = temp;
+                            BattleManager.targetChara = temp.occupant;
+                            temp.SetSelected();
+                            BattleManager.instance.RecievedInput();
                         }
                     }
                 }

@@ -52,7 +52,7 @@ public class Protagonist : Character
     {
         Debug.Log("I am using Skill2!");
 
-        this.health.runTimeValue += 20;
+        BattleManager.instance.currentChar.health.runTimeValue += 20;
 
         energy.runTimeValue -= Skill2Energy();
 

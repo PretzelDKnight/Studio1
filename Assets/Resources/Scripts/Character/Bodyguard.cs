@@ -33,7 +33,14 @@ public class Bodyguard : Character
 
     public override void SkillOne(HexTile tile)
     {
-        Debug.Log("I am using Skill1!");
+        Character target = tile.occupant;
+
+        Debug.Log("I am attacking the " + target.tag + "!");
+
+        target.health.runTimeValue -= 1;
+
+        Debug.Log("The enemy's health is now: " + target.health.runTimeValue);
+
         energy.runTimeValue -= Skill1Energy();
 
         BattleManager.instance.NextMove();
@@ -41,7 +48,14 @@ public class Bodyguard : Character
 
     public override void SkillTwo(HexTile tile)
     {
-        Debug.Log("I am using Skill2!");
+        Character target = tile.occupant;
+
+        Debug.Log("I am attacking the " + target.tag + "!");
+
+        target.health.runTimeValue -= 1;
+
+        Debug.Log("The enemy's health is now: " + target.health.runTimeValue);
+
         energy.runTimeValue -= Skill2Energy();
 
         BattleManager.instance.NextMove();
