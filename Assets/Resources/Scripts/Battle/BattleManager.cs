@@ -220,7 +220,7 @@ public class BattleManager : MonoBehaviour
         StartCoroutine(CameraScript.instance.ChangeCurrent(currentChar));
         // TODO : Add in functionality to change card material depending on character
         //HandCards.instance.GenerateHand();
-        TurnCards.instance.GenerateStatCards();
+        //TurnCards.instance.GenerateStatCards();
 
         if (!currentChar.AI)
         {

@@ -10,10 +10,7 @@ public class BattleController : Controller
     {
         if (BattleManager.Battle)
         {
-            if (!EventSystem.current.IsPointerOverGameObject())
-            {
-                MouseFunction();
-            }
+            MouseFunction();
         }
     }
 

@@ -44,7 +44,6 @@ public class HexTile : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("Tile of ID " + tileID + " is at: " + currentPos);
         Hovered = false;
         if (!occupied)
             occupant = null;
