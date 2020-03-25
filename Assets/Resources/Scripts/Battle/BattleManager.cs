@@ -332,11 +332,6 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    public void SetState(State x)
-    {
-        state = x;
-    }
-
     public void Update()
     {
         if (currentChar)

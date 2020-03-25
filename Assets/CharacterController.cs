@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CharacterController : MonoBehaviour
 {
@@ -26,7 +27,9 @@ public class CharacterController : MonoBehaviour
     void Update()
     {
         if (!BattleManager.Battle)
+        {
             Move();
+        }
     }
 
     void Move()
