@@ -110,3 +110,5 @@ MonoBehaviour:
   gCost: 0
   fCost: 0
   energyCost: 0
+  tileID: 0
+  occupant: {fileID: 0}

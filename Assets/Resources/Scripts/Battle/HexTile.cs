@@ -8,6 +8,8 @@ public class HexTile : MonoBehaviour
     public float fCost = 0;
     public int energyCost = 0;
 
+    public Vector3 currentPos;
+
     public int tileID;
 
     List<HexTile> neighbours = new List<HexTile>();
@@ -34,6 +36,7 @@ public class HexTile : MonoBehaviour
         // 0 for False, 1 for True
         isStable = Shader.PropertyToID("_IsStable");
         walkable = false;
+        currentPos = transform.position;
         ResetTileValues();
         CheckAbove();
         FindNeighbours();
@@ -41,6 +44,7 @@ public class HexTile : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log("Tile of ID " + tileID + " is at: " + currentPos);
         Hovered = false;
         if (!occupied)
             occupant = null;
