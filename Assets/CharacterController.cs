@@ -26,7 +26,7 @@ public class CharacterController : MonoBehaviour
 
     void Update()
     {
-        if (!BattleManager.Battle)
+        if (!BattleManager.Battle && !StorySystem.instance.StoryPlaying())
         {
             Move();
         }
