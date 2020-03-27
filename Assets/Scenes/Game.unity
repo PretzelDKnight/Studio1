@@ -3902,7 +3902,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 36f1e7602a6354beb9e0bee820f8aa7a,
         type: 3}
       propertyPath: m_Name
-      value: newest map
+      value: New Map
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 36f1e7602a6354beb9e0bee820f8aa7a,
         type: 3}
@@ -5057,7 +5057,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 608f8debb4a2544ea86f7f7ff29cfaf9,
         type: 3}
       propertyPath: m_Name
-      value: final map
+      value: Old Map
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 608f8debb4a2544ea86f7f7ff29cfaf9,
         type: 3}
