@@ -19,7 +19,7 @@ public class BasicAttack : GOAPAction
 
     public override void Execute(Character chara, HexTile tile, Character target)
     {
-        //chara.Attack(target);
+        //chara.Attack(tile);
         Debug.Log("Attacking!");
     }
 }

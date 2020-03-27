@@ -1921,7 +1921,7 @@ MonoBehaviour:
   hexTile: {fileID: 8426013784161918312, guid: e84fbbc09394aa74db89cb6d1fe7bc87, type: 3}
   x: 15
   z: 15
-  radius: 0.5
+  radius: 1
   useAsInnerCircleRadius: 1
   whenSelected: {r: 3.5137255, g: 2.619608, b: 1.4117647, a: 1}
   whenHovered: {r: 1.254902, g: 1.9137255, b: 3.8431373, a: 1}
