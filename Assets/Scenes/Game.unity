@@ -51364,6 +51364,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bartender Basemesh
       objectReference: {fileID: 0}
+    - target: {fileID: 3062611525692017362, guid: ea69c272a1ba54021bf7b4c633b34895,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ea69c272a1ba54021bf7b4c633b34895, type: 3}
 --- !u!33 &4200479264480949654
