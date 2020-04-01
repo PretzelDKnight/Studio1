@@ -17,9 +17,9 @@ public class InS1Range : AITreeNode
 
         List<HexTile> temp = TileManager.instance.ReturnTilesWithinRange(currChar, currChar.stats.skill1range);
 
-        foreach (var tile in temp)
+        for (int i = 0; i < temp.Count; i++)
         {
-            if (tile.occupant == AITree.AIstarget)
+            if (temp[i].occupant == AITree.AIstarget)
             {
                 child.Execute();
                 return AITreeNodeState.Succeeded;

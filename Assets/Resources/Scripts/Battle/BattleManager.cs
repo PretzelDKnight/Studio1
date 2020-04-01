@@ -326,4 +326,15 @@ public class BattleManager : MonoBehaviour
             }
         }
     }
+
+    public void Update()
+    {
+        if (currentChar.AI)
+        {
+            Debug.Log("Current character is: " + currentChar);
+            Debug.Log("Current character's energy is: " + currentChar.energy.runTimeValue);
+            Debug.Log("Current character's health is: " + currentChar.health.runTimeValue);
+            Debug.Log("State: " + state);
+        }
+    }
 }

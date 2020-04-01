@@ -244,7 +244,7 @@ public class TileManager : MonoBehaviour
     public List<HexTile> ReturnTilesWithinRange(Character source, int Range)
     {
         HexTile start = source.GetCurrentTile();
-        float range = Range; ;
+        float range = Range;
         List<HexTile> tempList = new List<HexTile>() { start };
 
         while (tempList.Count > 0)
@@ -261,6 +261,7 @@ public class TileManager : MonoBehaviour
                     if (item.energyCost <= range)
                     {
                         tempList.Add(item);
+                        item.Attackable = true;
                     }
                 }
             }
