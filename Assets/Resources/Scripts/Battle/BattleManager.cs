@@ -145,7 +145,6 @@ public class BattleManager : MonoBehaviour
     // If the same character has energy left and is making a move after having done a move, an event raises this function
     public void NextMove()
     {
-        Debug.Log("Next Move!");
         ResetEverything();
 
         if (currentChar.energy.runTimeValue != 0)

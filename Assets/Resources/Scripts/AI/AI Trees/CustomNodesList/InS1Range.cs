@@ -13,11 +13,18 @@ public class InS1Range : AITreeNode
     }
     public override AITreeNodeState Execute()
     {
-        if (BattleManager.instance.currentChar.energy.runTimeValue >= BattleManager.instance.currentChar.stats.skill1range)
+        Character currChar = BattleManager.instance.currentChar;
+
+        List<HexTile> temp = TileManager.instance.ReturnTilesWithinRange(currChar, currChar.stats.skill1range);
+
+        foreach (var tile in temp)
         {
-            child.Execute(); return AITreeNodeState.Succeeded;
+            if (tile.occupant == AITree.AIstarget)
+            {
+                child.Execute();
+                return AITreeNodeState.Succeeded;
+            }
         }
-        else
-            return AITreeNodeState.Failed;
+        return AITreeNodeState.Failed;
     }
 }
