@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class UITemp : MonoBehaviour
 {
-    public GameObject storyTrigger;
+    public GameObject storyButton;
 
     // Start is called before the first frame update
     void Start()
     {
-        storyTrigger.SetActive(false);
+        storyButton.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
