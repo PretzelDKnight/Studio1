@@ -9,7 +9,7 @@ public class MoveBA : AITreeNode
 {
     public override AITreeNodeState Execute()
     {
-        throw new System.NotImplementedException();
-        //In progress......
+        return AITreeNodeState.Failed;
+        //In progress......         
     }
 }

@@ -145,6 +145,7 @@ public class BattleManager : MonoBehaviour
     // If the same character has energy left and is making a move after having done a move, an event raises this function
     public void NextMove()
     {
+        Debug.Log("Next Move!");
         ResetEverything();
 
         if (currentChar.energy.runTimeValue != 0)
@@ -158,12 +159,7 @@ public class BattleManager : MonoBehaviour
 
     public void AIFunction()
     {
-        Queue<Node> queue = GOAP.GOAPlan(currentChar, ConvertGoals());
-        for (int i = 0; i < queue.Count; i++)
-        {
-            Node node = queue.Dequeue();
-            node.action.Execute(currentChar, node.targetTile, node.target);
-        }
+        AITree.instance.Execute();
     }
 
     private HashSet<KeyValuePair<string, object>> ConvertGoals()
@@ -329,16 +325,6 @@ public class BattleManager : MonoBehaviour
                 enemy.MoveToNearestTile();
                 allChara.Add(enemy);
             }
-        }
-    }
-
-    public void Update()
-    {
-        if (currentChar)
-        {
-            Debug.Log("Current character's energy is: " + currentChar.energy.runTimeValue);
-            Debug.Log("Current character's health is: " + currentChar.health.runTimeValue);
-            Debug.Log("State: " + state);
         }
     }
 }

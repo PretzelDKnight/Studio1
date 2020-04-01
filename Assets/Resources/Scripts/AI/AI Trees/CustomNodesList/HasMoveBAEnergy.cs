@@ -13,7 +13,7 @@ public class HasMoveBAEnergy : AITreeNode
     }
     public override AITreeNodeState Execute()
     {
-        throw new System.NotImplementedException();
+        return AITreeNodeState.Failed;
         //In progress....
     }
 }

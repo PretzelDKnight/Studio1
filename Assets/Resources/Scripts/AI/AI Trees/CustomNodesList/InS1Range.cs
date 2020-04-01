@@ -14,7 +14,9 @@ public class InS1Range : AITreeNode
     public override AITreeNodeState Execute()
     {
         if (BattleManager.instance.currentChar.energy.runTimeValue >= BattleManager.instance.currentChar.stats.skill1range)
-            return AITreeNodeState.Succeeded;
+        {
+            child.Execute(); return AITreeNodeState.Succeeded;
+        }
         else
             return AITreeNodeState.Failed;
     }
