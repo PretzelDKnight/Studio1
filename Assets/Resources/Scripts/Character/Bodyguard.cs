@@ -73,11 +73,11 @@ public class Bodyguard : Character
 
     public override int Skill1Energy()
     {
-        return 3;
+        return stats.skill1Energy;
     }
 
     public override int Skill2Energy()
     {
-        return 4;
+        return stats.skill2Energy;
     }
 }

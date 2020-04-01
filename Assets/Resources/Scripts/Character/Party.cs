@@ -62,4 +62,9 @@ public class Party : MonoBehaviour
     {
         members = GetComponentsInChildren<Character>();
     }
+
+    public int ReturnCount()
+    {
+        return members.Length;
+    }
 }
