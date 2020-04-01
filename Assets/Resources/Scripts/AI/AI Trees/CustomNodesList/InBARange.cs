@@ -21,8 +21,7 @@ public class InBARange : AITreeNode
         {
             if (temp[i].occupant == AITree.AIstarget)
             {
-                child.Execute();
-                return AITreeNodeState.Succeeded;
+                return child.Execute();
             }
         }
         return AITreeNodeState.Failed;

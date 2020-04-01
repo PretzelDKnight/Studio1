@@ -19,8 +19,8 @@ public class Bodyguard : Character
     public override void Attack(HexTile tile)
     {
         Character target = tile.occupant;
-        
-        Debug.Log("I am attacking the " + target.tag + "!");
+
+        Debug.Log(this + " is attacking the " + target.tag + "!");
 
         target.health.runTimeValue -= 1;
 
@@ -35,7 +35,7 @@ public class Bodyguard : Character
     {
         Character target = tile.occupant;
 
-        Debug.Log("I am attacking the " + target.tag + "!");
+        Debug.Log(this + " is attacking the " + target.tag + "!");
 
         target.health.runTimeValue -= 1;
 
@@ -50,7 +50,7 @@ public class Bodyguard : Character
     {
         Character target = tile.occupant;
 
-        Debug.Log("I am attacking the " + target.tag + "!");
+        Debug.Log(this + " is attacking the " + target.tag + "!");
 
         target.health.runTimeValue -= 1;
 
@@ -80,4 +80,5 @@ public class Bodyguard : Character
     {
         return stats.skill2Energy;
     }
+
 }

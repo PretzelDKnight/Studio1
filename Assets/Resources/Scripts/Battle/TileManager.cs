@@ -247,6 +247,8 @@ public class TileManager : MonoBehaviour
         float range = Range;
         List<HexTile> tempList = new List<HexTile>() { start };
 
+        List<HexTile> toReturn = new List<HexTile> { start };
+
         while (tempList.Count > 0)
         {
             HexTile tile = GetLowestEnergyCost(tempList);
@@ -262,11 +264,11 @@ public class TileManager : MonoBehaviour
                     {
                         tempList.Add(item);
                         item.Attackable = true;
+                        toReturn.Add(item);
                     }
                 }
             }
         }
-
-        return tempList;
+        return toReturn;
     }
 }

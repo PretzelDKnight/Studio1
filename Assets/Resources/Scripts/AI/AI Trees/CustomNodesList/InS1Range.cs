@@ -20,9 +20,8 @@ public class InS1Range : AITreeNode
         for (int i = 0; i < temp.Count; i++)
         {
             if (temp[i].occupant == AITree.AIstarget)
-            {
-                child.Execute();
-                return AITreeNodeState.Succeeded;
+            {                
+                return child.Execute();
             }
         }
         return AITreeNodeState.Failed;

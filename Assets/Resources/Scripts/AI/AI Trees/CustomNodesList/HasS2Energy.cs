@@ -15,9 +15,8 @@ public class HasS2Energy : AITreeNode
     public override AITreeNodeState Execute()
     {
         if (BattleManager.instance.currentChar.energy.runTimeValue >= BattleManager.instance.currentChar.Skill2Energy())
-        {
-            child.Execute();
-            return AITreeNodeState.Succeeded;
+        {            
+            return child.Execute();
         }
         else
             return AITreeNodeState.Failed;

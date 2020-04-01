@@ -8,6 +8,6 @@ public class DoNothing : AITreeNode
 {
     public override AITreeNodeState Execute()
     {
-        throw new System.NotImplementedException();
+        return AITreeNodeState.Failed;
     }
 }

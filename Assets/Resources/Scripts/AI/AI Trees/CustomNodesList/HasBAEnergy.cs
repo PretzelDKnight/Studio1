@@ -15,8 +15,7 @@ public class HasBAEnergy : AITreeNode
     {
         if (BattleManager.instance.currentChar.energy.runTimeValue >= BattleManager.instance.currentChar.AttackEnergy())
         {
-            child.Execute();
-            return AITreeNodeState.Succeeded;
+            return child.Execute();
         }
         else
             return AITreeNodeState.Failed;

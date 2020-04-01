@@ -16,8 +16,7 @@ public class HasS1Energy : AITreeNode
     {
         if (BattleManager.instance.currentChar.energy.runTimeValue >= BattleManager.instance.currentChar.Skill1Energy())
         {
-            child.Execute();
-            return AITreeNodeState.Succeeded;
+            return child.Execute();
         }
         else
             return AITreeNodeState.Failed;
