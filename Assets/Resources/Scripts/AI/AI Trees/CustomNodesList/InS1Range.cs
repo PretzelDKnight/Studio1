@@ -13,6 +13,8 @@ public class InS1Range : AITreeNode
     }
     public override AITreeNodeState Execute()
     {
+        Debug.Log("Checking if target in S1 Range");
+
         Character currChar = BattleManager.instance.currentChar;
 
         List<HexTile> temp = TileManager.instance.ReturnTilesWithinRange(currChar, currChar.stats.skill1range);

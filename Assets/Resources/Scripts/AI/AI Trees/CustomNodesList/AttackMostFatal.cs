@@ -14,6 +14,8 @@ public class AttackMostFatal : AITreeNode
     }
     public override AITreeNodeState Execute()
     {
+        Debug.Log("Trying to attack fatalest");
+
         Character[] possibleTargets = BattleManager.instance.allies.Members();
 
         Character fatalest = possibleTargets[0];

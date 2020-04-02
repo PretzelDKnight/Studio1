@@ -8,6 +8,8 @@ public class AIS1 : AITreeNode
 {
     public override AITreeNodeState Execute()
     {
+        Debug.Log("Using S1!");
+
         BattleManager.instance.currentChar.SkillOne(AITree.AIstarget.GetCurrentTile());
         return AITreeNodeState.Succeeded;
     }

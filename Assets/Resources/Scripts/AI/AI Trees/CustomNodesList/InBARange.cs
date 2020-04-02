@@ -13,6 +13,8 @@ public class InBARange : AITreeNode
     }
     public override AITreeNodeState Execute()
     {
+        Debug.Log("Checking if target in BA Range");
+
         Character currChar = BattleManager.instance.currentChar;
 
         List<HexTile> temp = TileManager.instance.ReturnTilesWithinRange(currChar, currChar.stats.attackRange);

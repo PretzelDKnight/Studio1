@@ -8,6 +8,10 @@ public class DoNothing : AITreeNode
 {
     public override AITreeNodeState Execute()
     {
+        Debug.Log("AI Cannot do anything");
+
+        BattleManager.instance.NextMove();
+
         return AITreeNodeState.Failed;
     }
 }

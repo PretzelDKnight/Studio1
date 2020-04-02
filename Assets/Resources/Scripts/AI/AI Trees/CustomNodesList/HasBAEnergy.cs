@@ -13,6 +13,8 @@ public class HasBAEnergy : AITreeNode
     }
     public override AITreeNodeState Execute()
     {
+        Debug.Log("Checking if AI has BA energy");
+
         if (BattleManager.instance.currentChar.energy.runTimeValue >= BattleManager.instance.currentChar.AttackEnergy())
         {
             return child.Execute();

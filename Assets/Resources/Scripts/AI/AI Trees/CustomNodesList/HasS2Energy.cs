@@ -14,6 +14,8 @@ public class HasS2Energy : AITreeNode
     }
     public override AITreeNodeState Execute()
     {
+        Debug.Log("Checking if AI has S2 energy");
+
         if (BattleManager.instance.currentChar.energy.runTimeValue >= BattleManager.instance.currentChar.Skill2Energy())
         {            
             return child.Execute();
