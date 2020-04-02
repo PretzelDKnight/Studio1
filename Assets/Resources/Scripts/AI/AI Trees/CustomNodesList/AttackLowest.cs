@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -15,12 +16,21 @@ public class AttackLowest : AITreeNode
     public override AITreeNodeState Execute()
     {
         Character[] possibleTargets = BattleManager.instance.allies.Members();
+        
+        Character lowest = null;
 
-        Character lowest = possibleTargets[Random.Range(0, possibleTargets.Length - 1)];
+        float[] healths = new float[possibleTargets.Length];
 
         for (int i = 0; i < possibleTargets.Length; i++)
         {
-            if (possibleTargets[i].health.runTimeValue < lowest.health.runTimeValue)
+            healths[i] = possibleTargets[i].health.runTimeValue;
+        }
+
+        float lowestHP = healths.Min();
+
+        for (int i = 0; i < possibleTargets.Length; i++)
+        {
+            if (possibleTargets[i].health.runTimeValue == lowestHP)
             {
                 lowest = possibleTargets[i];
             }

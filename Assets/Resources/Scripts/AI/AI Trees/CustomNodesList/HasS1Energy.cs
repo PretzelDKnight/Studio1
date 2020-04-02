@@ -14,8 +14,6 @@ public class HasS1Energy : AITreeNode
 
     public override AITreeNodeState Execute()
     {
-        Debug.Log("Checking if AI has S1 energy");
-
         if (BattleManager.instance.currentChar.energy.runTimeValue >= BattleManager.instance.currentChar.Skill1Energy())
         {
             return child.Execute();

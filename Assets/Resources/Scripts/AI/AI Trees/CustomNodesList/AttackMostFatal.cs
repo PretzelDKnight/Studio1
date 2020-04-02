@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
 
@@ -15,11 +16,20 @@ public class AttackMostFatal : AITreeNode
     {
         Character[] possibleTargets = BattleManager.instance.allies.Members();
 
-        Character fatalest = possibleTargets[Random.Range(0, possibleTargets.Length - 1)];
+        Character fatalest = null;
+
+        float[] healths = new float[possibleTargets.Length];
 
         for (int i = 0; i < possibleTargets.Length; i++)
         {
-            if (possibleTargets[i].health.runTimeValue < fatalest.health.runTimeValue)
+            healths[i] = possibleTargets[i].health.runTimeValue;
+        }
+
+        float fatalestHP = healths.Min();
+
+        for (int i = 0; i < possibleTargets.Length; i++)
+        {
+            if (possibleTargets[i].health.runTimeValue == fatalestHP)
             {
                 fatalest = possibleTargets[i];
             }

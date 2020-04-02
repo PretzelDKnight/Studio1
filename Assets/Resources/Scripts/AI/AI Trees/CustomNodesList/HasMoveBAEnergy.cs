@@ -13,8 +13,6 @@ public class HasMoveBAEnergy : AITreeNode
     }
     public override AITreeNodeState Execute()
     {
-        Debug.Log("Checking if AI has move to BA energy");
-
         return AITreeNodeState.Failed;
         //In progress....
     }
