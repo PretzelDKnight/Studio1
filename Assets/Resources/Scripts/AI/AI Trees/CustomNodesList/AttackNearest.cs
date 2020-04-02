@@ -14,6 +14,8 @@ public class AttackNearest : AITreeNode
     }
     public override AITreeNodeState Execute()
     {
+        BattleManager.instance.ResetEverything();
+
         Character[] possibleTargets = BattleManager.instance.allies.Members();
 
         Character nearest = null;
@@ -33,7 +35,6 @@ public class AttackNearest : AITreeNode
             }
         }
 
-        Debug.Log("Nearest is: " + nearest);
         AITree.AIstarget = nearest;
 
         switch (child.Execute())

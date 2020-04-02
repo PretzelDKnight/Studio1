@@ -35,11 +35,11 @@ public class BattleUIScript : MonoBehaviour
             if (BattleManager.instance.currentChar.energy.runTimeValue < BattleManager.instance.currentChar.Skill2Energy())
                 S2Button.SetActive(false);
             if (BattleManager.instance.currentChar.energy.runTimeValue < BattleManager.instance.currentChar.Skill1Energy())
-                S2Button.SetActive(false);
+                S1Button.SetActive(false);
             if (BattleManager.instance.currentChar.energy.runTimeValue < BattleManager.instance.currentChar.AttackEnergy())
-                S2Button.SetActive(false);
+                BAButton.SetActive(false);
             if (BattleManager.instance.currentChar.energy.runTimeValue < BattleManager.instance.currentChar.MoveEnergy())
-                S2Button.SetActive(false);
+                moveButton.SetActive(false);
         }
 
     }

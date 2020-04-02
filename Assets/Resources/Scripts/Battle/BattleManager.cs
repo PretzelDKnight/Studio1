@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
+using System.Collections;
 
 public enum State
 {
@@ -116,7 +117,9 @@ public class BattleManager : MonoBehaviour
     // Pass to send the turn to the next character in queue
     public void Pass()
     {
-        Debug.Log("Passing turn!");
+        if(currentChar.AI)
+            Debug.Log("Passing turn!");
+
         BattleUIScript.instance.ResetUI();
         currentChar.SetNotShown();
         InitTurnQueue();
@@ -160,6 +163,7 @@ public class BattleManager : MonoBehaviour
 
     public void AIFunction()
     {
+        Debug.Log("AIs turn");
         AITree.instance.Execute();
     }
 
@@ -327,16 +331,5 @@ public class BattleManager : MonoBehaviour
                 allChara.Add(enemy);
             }
         }
-    }
-
-    public void Update()
-    {
-        if (currentChar.AI)
-        {
-            Debug.Log("Current character is: " + currentChar);
-            Debug.Log("Current character's energy is: " + currentChar.energy.runTimeValue);
-            Debug.Log("Current character's health is: " + currentChar.health.runTimeValue);
-            Debug.Log("State: " + state);
-        }
-    }
+    }    
 }

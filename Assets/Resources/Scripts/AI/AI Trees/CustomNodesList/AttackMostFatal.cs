@@ -14,6 +14,8 @@ public class AttackMostFatal : AITreeNode
     }
     public override AITreeNodeState Execute()
     {
+        BattleManager.instance.ResetEverything();
+
         Character[] possibleTargets = BattleManager.instance.allies.Members();
 
         Character fatalest = null;
@@ -35,7 +37,7 @@ public class AttackMostFatal : AITreeNode
             }
         }
 
-        Debug.Log("Fatalest is: " + fatalest);
+
         AITree.AIstarget = fatalest;
 
         //In progress.....

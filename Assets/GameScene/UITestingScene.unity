@@ -731,7 +731,7 @@ GameObject:
   - component: {fileID: 539420240}
   - component: {fileID: 539420239}
   m_Layer: 11
-  m_Name: Enemy
+  m_Name: GrayNemy
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -834,7 +834,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 539420238}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -475.64, y: -319.2, z: -16.76}
+  m_LocalPosition: {x: -480.87, y: -319.2, z: -16.76}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children: []
   m_Father: {fileID: 1896111516}
@@ -1583,7 +1583,7 @@ GameObject:
   - component: {fileID: 987743468}
   - component: {fileID: 987743467}
   m_Layer: 11
-  m_Name: Enemy (2)
+  m_Name: PurpLemy
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1649,7 +1649,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a8635e14fc789c648a6c293395a20388, type: 2}
+  - {fileID: 2100000, guid: c60d5eb326daeb044854c1dbba17a4e7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2247,7 +2247,7 @@ GameObject:
   - component: {fileID: 1338792604}
   - component: {fileID: 1338792603}
   m_Layer: 11
-  m_Name: Enemy (1)
+  m_Name: GreeNemy
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2313,7 +2313,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a8635e14fc789c648a6c293395a20388, type: 2}
+  - {fileID: 2100000, guid: 79d43296b0dcfc44fac21a9b391996b4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2350,7 +2350,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1338792602}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -477.32, y: -319.2, z: -15.370001}
+  m_LocalPosition: {x: -477.32, y: -319.2, z: -14.14}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children: []
   m_Father: {fileID: 1896111516}
