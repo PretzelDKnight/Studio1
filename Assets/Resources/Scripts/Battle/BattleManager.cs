@@ -117,6 +117,7 @@ public class BattleManager : MonoBehaviour
     public void Pass()
     {
         Debug.Log("Passing turn!");
+        BattleUIScript.instance.ResetUI();
         currentChar.SetNotShown();
         InitTurnQueue();
     }

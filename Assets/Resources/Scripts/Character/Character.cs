@@ -58,6 +58,8 @@ public abstract class Character : MonoBehaviour , IComparable
     protected void Update()
     {
         hovered = false;
+        if (this.energy.runTimeValue < 2 && BattleManager.instance.currentChar.AI)
+            BattleManager.instance.Pass();
     }
 
     protected void LateUpdate()

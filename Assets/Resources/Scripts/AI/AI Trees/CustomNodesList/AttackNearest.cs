@@ -33,7 +33,7 @@ public class AttackNearest : AITreeNode
             }
         }
 
-        Debug.Log("NEarest is: " + nearest);
+        Debug.Log("Nearest is: " + nearest);
         AITree.AIstarget = nearest;
 
         switch (child.Execute())

@@ -1032,6 +1032,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleUI: {fileID: 176182578}
+  moveButton: {fileID: 1781124567}
+  BAButton: {fileID: 1337541603}
+  S1Button: {fileID: 830663389}
+  S2Button: {fileID: 1980079905}
 --- !u!1 &662952478
 GameObject:
   m_ObjectHideFlags: 0
