@@ -20,7 +20,7 @@ public class Bodyguard : Character
     {
         Character target = tile.occupant;
 
-        Debug.Log(this + " is attacking the " + target.tag + "!");
+        Debug.Log(this + " is attacking the " + target + "!");
 
         target.health.runTimeValue -= 1;
 
@@ -35,7 +35,7 @@ public class Bodyguard : Character
     {
         Character target = tile.occupant;
 
-        Debug.Log(this + " is attacking the " + target.tag + "!");
+        Debug.Log(this + " is attacking the " + target + "!");
 
         target.health.runTimeValue -= 1;
 
@@ -50,7 +50,7 @@ public class Bodyguard : Character
     {
         Character target = tile.occupant;
 
-        Debug.Log(this + " is attacking the " + target.tag + "!");
+        Debug.Log(this + " is attacking the " + target + "!");
 
         target.health.runTimeValue -= 1;
 

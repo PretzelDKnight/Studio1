@@ -10,7 +10,7 @@ public class DoNothing : AITreeNode
     {
         Debug.Log("AI Cannot do anything");
 
-        BattleManager.instance.NextMove();
+        BattleManager.instance.Pass();
 
         return AITreeNodeState.Failed;
     }

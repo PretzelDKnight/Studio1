@@ -116,6 +116,7 @@ public class BattleManager : MonoBehaviour
     // Pass to send the turn to the next character in queue
     public void Pass()
     {
+        Debug.Log("Passing turn!");
         currentChar.SetNotShown();
         InitTurnQueue();
     }

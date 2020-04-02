@@ -14,11 +14,9 @@ public class AttackLowest : AITreeNode
     }
     public override AITreeNodeState Execute()
     {
-        Debug.Log("Trying to attack lowest");
-
         Character[] possibleTargets = BattleManager.instance.allies.Members();
 
-        Character lowest = possibleTargets[0];
+        Character lowest = possibleTargets[Random.Range(0, possibleTargets.Length - 1)];
 
         for (int i = 0; i < possibleTargets.Length; i++)
         {
@@ -28,6 +26,7 @@ public class AttackLowest : AITreeNode
             }
         }
 
+        Debug.Log("Lowest is: " + lowest);
         AITree.AIstarget = lowest;
 
         switch (child.Execute())

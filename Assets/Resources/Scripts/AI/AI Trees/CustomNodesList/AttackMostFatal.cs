@@ -1,8 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-
+using UnityEngine.SocialPlatforms;
 
 public class AttackMostFatal : AITreeNode
 {
@@ -14,11 +13,9 @@ public class AttackMostFatal : AITreeNode
     }
     public override AITreeNodeState Execute()
     {
-        Debug.Log("Trying to attack fatalest");
-
         Character[] possibleTargets = BattleManager.instance.allies.Members();
 
-        Character fatalest = possibleTargets[0];
+        Character fatalest = possibleTargets[Random.Range(0, possibleTargets.Length - 1)];
 
         for (int i = 0; i < possibleTargets.Length; i++)
         {
@@ -28,6 +25,7 @@ public class AttackMostFatal : AITreeNode
             }
         }
 
+        Debug.Log("Fatalest is: " + fatalest);
         AITree.AIstarget = fatalest;
 
         //In progress.....

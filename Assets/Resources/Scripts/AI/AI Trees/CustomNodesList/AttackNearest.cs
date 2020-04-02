@@ -14,14 +14,11 @@ public class AttackNearest : AITreeNode
     }
     public override AITreeNodeState Execute()
     {
-        Debug.Log("Trying to attack nearest");
-
         Character[] possibleTargets = BattleManager.instance.allies.Members();
 
-        Character nearest = possibleTargets[0];
+        Character nearest = null;
 
         float nearestDist = Vector3.Distance(BattleManager.instance.currentChar.transform.position, possibleTargets[0].transform.position);
-
 
         for (int i = 0; i < possibleTargets.Length; i++)
         {
@@ -30,8 +27,13 @@ public class AttackNearest : AITreeNode
                 nearestDist = Vector3.Distance(BattleManager.instance.currentChar.transform.position, possibleTargets[i].transform.position);
                 nearest = possibleTargets[i];
             }
+            else if ((Vector3.Distance(BattleManager.instance.currentChar.transform.position, possibleTargets[0].transform.position) == nearestDist))
+            {
+                nearest = possibleTargets[0];
+            }
         }
 
+        Debug.Log("NEarest is: " + nearest);
         AITree.AIstarget = nearest;
 
         switch (child.Execute())
