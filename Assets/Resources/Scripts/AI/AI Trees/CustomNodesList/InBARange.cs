@@ -15,7 +15,7 @@ public class InBARange : AITreeNode
     {
         Character currChar = BattleManager.instance.currentChar;
 
-        List<HexTile> temp = TileManager.instance.ReturnTilesWithinRange(currChar, currChar.stats.attackRange);
+        List<HexTile> temp = TileManager.instance.ReturnTilesWithinRangeToAI(currChar, currChar.stats.attackRange);
 
         for (int i = 0; i < temp.Count; i++)
         {

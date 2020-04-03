@@ -11,7 +11,10 @@ public class MoveBA : AITreeNode
     {
         Debug.Log("Moving to BA Range!");
 
-        return AITreeNodeState.Failed;
-        //In progress......         
+        Character thisChar = BattleManager.instance.currentChar;
+
+        thisChar.Move(AITree.tileToMoveTo);
+
+        return AITreeNodeState.Succeeded;
     }
 }

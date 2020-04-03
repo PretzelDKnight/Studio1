@@ -241,7 +241,7 @@ public class TileManager : MonoBehaviour
         return result;
     }
 
-    public List<HexTile> ReturnTilesWithinRange(Character source, int Range)
+    public List<HexTile> ReturnTilesWithinRangeToAI(Character source, int Range)
     {
         HexTile start = source.GetCurrentTile();
         float range = Range;
@@ -269,6 +269,38 @@ public class TileManager : MonoBehaviour
                 }
             }
         }
+        return toReturn;
+    }
+
+    public List<HexTile> ReturnTilesToAI(Character source)
+    {
+        HexTile start = source.GetCurrentTile();
+        float energy = source.energy.runTimeValue;
+        List<HexTile> tempList = new List<HexTile>() { start };
+        List<HexTile> toReturn = new List<HexTile>() { start };
+
+        while (tempList.Count > 0)
+        {
+            HexTile tile = GetLowestEnergyCost(tempList);
+
+            tempList.Remove(tile);
+
+            foreach (var item in tile.ReturnNeighbours())
+            {
+                if (!item.Walkable && !item.Occupied)
+                {
+                    item.energyCost = source.MoveEnergy() + tile.energyCost;
+                    if (item.energyCost <= energy)
+                    {
+                        tempList.Add(item);
+                        toReturn.Add(item);
+                        item.Walkable = true;
+                    }
+                }
+            }
+        }
+        start.ResetTileValues();
+
         return toReturn;
     }
 }

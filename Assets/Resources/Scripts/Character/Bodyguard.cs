@@ -54,7 +54,7 @@ public class Bodyguard : Character
 
         target.health.runTimeValue -= 1;
 
-        Debug.Log("The enemy's health is now: " + target.health.runTimeValue);
+        Debug.Log(target + "'s health is now: " + target.health.runTimeValue);
 
         energy.runTimeValue -= Skill2Energy();
 

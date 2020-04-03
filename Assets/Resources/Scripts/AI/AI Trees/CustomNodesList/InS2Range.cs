@@ -15,7 +15,7 @@ public class InS2Range : AITreeNode
     {
         Character currChar = BattleManager.instance.currentChar;
 
-        List<HexTile> temp = TileManager.instance.ReturnTilesWithinRange(currChar, currChar.stats.skill2range);
+        List<HexTile> temp = TileManager.instance.ReturnTilesWithinRangeToAI(currChar, currChar.stats.skill2range);
 
         for (int i = 0; i < temp.Count; i++)
         {

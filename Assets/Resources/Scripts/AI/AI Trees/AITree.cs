@@ -9,6 +9,8 @@ public class AITree : MonoBehaviour
     public AITreeNode rootNode;
 
     public static Character AIstarget;
+
+    public static HexTile tileToMoveTo;
     void Start()
     {
         instance = this;
