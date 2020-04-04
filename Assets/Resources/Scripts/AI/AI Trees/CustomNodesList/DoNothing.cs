@@ -12,6 +12,6 @@ public class DoNothing : AITreeNode
 
         BattleManager.instance.Pass();
 
-        return AITreeNodeState.Failed;
+        return AITreeNodeState.Succeeded;
     }
 }

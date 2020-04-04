@@ -14,6 +14,12 @@ public class AttackMostFatal : AITreeNode
     }
     public override AITreeNodeState Execute()
     {
+        //AI need not check this condition if its not an arsonist
+        //--------------------------------------------------------------------
+        if (BattleManager.instance.currentChar.GetType() != typeof(Arsonist))
+            return AITreeNodeState.Failed;
+        //--------------------------------------------------------------------
+
         BattleManager.instance.ResetEverything();
 
         Character[] possibleTargets = BattleManager.instance.allies.Members();
