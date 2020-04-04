@@ -20,13 +20,16 @@ public class Bodyguard : Character
     {
         Character target = tile.occupant;
 
-        Debug.Log(this + " is attacking the " + target + "!");
+        if (target != null)
+        {
+            Debug.Log(this + " is attacking the " + target + "!");
 
-        target.health.runTimeValue -= 1;
+            target.health.runTimeValue -= 1;
 
-        Debug.Log("The enemy's health is now: " + target.health.runTimeValue);
+            Debug.Log("The enemy's health is now: " + target.health.runTimeValue);
 
-        energy.runTimeValue -= AttackEnergy();
+            energy.runTimeValue -= AttackEnergy();
+        }
 
         BattleManager.instance.NextMove();
     }
@@ -35,13 +38,16 @@ public class Bodyguard : Character
     {
         Character target = tile.occupant;
 
-        Debug.Log(this + " is attacking the " + target + "!");
+        if (target != null)
+        {
+            Debug.Log(this + " is attacking the " + target + "!");
 
-        target.health.runTimeValue -= 1;
+            target.health.runTimeValue -= 1;
 
-        Debug.Log("The enemy's health is now: " + target.health.runTimeValue);
+            Debug.Log("The enemy's health is now: " + target.health.runTimeValue);
 
-        energy.runTimeValue -= Skill1Energy();
+            energy.runTimeValue -= Skill1Energy();
+        }
 
         BattleManager.instance.NextMove();
     }
@@ -50,13 +56,16 @@ public class Bodyguard : Character
     {
         Character target = tile.occupant;
 
-        Debug.Log(this + " is attacking the " + target + "!");
+        if (target != null)
+        {
+            Debug.Log(this + " is attacking the " + target + "!");
 
-        target.health.runTimeValue -= 1;
+            target.health.runTimeValue -= 1;
 
-        Debug.Log(target + "'s health is now: " + target.health.runTimeValue);
+            Debug.Log(target + "'s health is now: " + target.health.runTimeValue);
 
-        energy.runTimeValue -= Skill2Energy();
+            energy.runTimeValue -= Skill2Energy();
+        }
 
         BattleManager.instance.NextMove();
     }
