@@ -2120,25 +2120,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1 &813170262 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919633270725644559, guid: 98735487453824c5b98b944d33225c08,
-    type: 3}
-  m_PrefabInstance: {fileID: 8247088424711683625}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &813170267
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 813170262}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cea7f818dafd3043ab716476bfd6259, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  storyButton: {fileID: 185760499}
 --- !u!1 &844970262
 GameObject:
   m_ObjectHideFlags: 0
@@ -3542,6 +3523,7 @@ GameObject:
   - component: {fileID: 1130609597}
   - component: {fileID: 1130609596}
   - component: {fileID: 1130609594}
+  - component: {fileID: 1130609598}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -3667,6 +3649,19 @@ MonoBehaviour:
   actions: []
   AI: 0
   Busy: 0
+--- !u!114 &1130609598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1130609590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cea7f818dafd3043ab716476bfd6259, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  storyButton: {fileID: 185760499}
 --- !u!1 &1135734263
 GameObject:
   m_ObjectHideFlags: 0
