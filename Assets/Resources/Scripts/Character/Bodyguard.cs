@@ -14,7 +14,7 @@ public class Bodyguard : Character
     {
         StartCoroutine(MoveDownPath(Pathfinder.instance.FindPath(GetCurrentTile(), tile)));
 
-        BattleUIScript.instance.tempUIforInfo.text = this.name + " has moved to  tile " + tile.tileID;
+        BattleUIScript.instance.tempUIforInfo.text = this.name + " has moved to tile " + tile.tileID;
 
         energy.runTimeValue -= tile.energyCost;
     }

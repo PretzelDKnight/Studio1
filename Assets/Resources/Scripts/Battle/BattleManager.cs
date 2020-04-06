@@ -117,8 +117,11 @@ public class BattleManager : MonoBehaviour
     // Pass to send the turn to the next character in queue
     public void Pass()
     {
-        if(currentChar.AI)
+        if (currentChar.AI)
+        {
             Debug.Log("Passing turn!");
+            BattleUIScript.instance.tempUIforInfo.text = currentChar.name + " has passed their turn.";
+        }
 
         BattleUIScript.instance.ResetUI();
         currentChar.SetNotShown();
