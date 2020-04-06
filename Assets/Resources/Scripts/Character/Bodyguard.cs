@@ -47,7 +47,7 @@ public class Bodyguard : Character
         {
             Debug.Log(this.name + " is attacking the " + target.name + "!");
 
-            target.health.runTimeValue -= 1;
+            target.health.runTimeValue -= 2;
 
             Debug.Log(target.name + "'s health is now: " + target.health.runTimeValue);
 
@@ -67,7 +67,7 @@ public class Bodyguard : Character
         {
             Debug.Log(this.name + " is attacking the " + target.name + "!");
 
-            target.health.runTimeValue -= 1;
+            target.health.runTimeValue -= 4;
 
             Debug.Log(target.name + "'s health is now: " + target.health.runTimeValue);
 
