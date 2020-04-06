@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BattleUIScript : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class BattleUIScript : MonoBehaviour
     [SerializeField] GameObject BAButton;
     [SerializeField] GameObject S1Button;
     [SerializeField] GameObject S2Button;
+    
+    public Text tempUIforInfo;
 
     private void Start()
     {

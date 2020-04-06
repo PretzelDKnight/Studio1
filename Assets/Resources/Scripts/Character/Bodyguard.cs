@@ -13,6 +13,9 @@ public class Bodyguard : Character
     public override void Move(HexTile tile)
     {
         StartCoroutine(MoveDownPath(Pathfinder.instance.FindPath(GetCurrentTile(), tile)));
+
+        BattleUIScript.instance.tempUIforInfo.text = this.name + " has moved to  tile " + tile.tileID;
+
         energy.runTimeValue -= tile.energyCost;
     }
 
@@ -22,11 +25,13 @@ public class Bodyguard : Character
 
         if (target != null)
         {
-            Debug.Log(this + " is attacking the " + target + "!");
+            Debug.Log(this.name + " is attacking the " + target.name + "!");
 
             target.health.runTimeValue -= 1;
 
-            Debug.Log("The enemy's health is now: " + target.health.runTimeValue);
+            Debug.Log(target.name + "'s health is now: " + target.health.runTimeValue);
+
+            BattleUIScript.instance.tempUIforInfo.text = this.name + " attacked the " + target.name + "! " + target.name + "'s health is now: " + target.health.runTimeValue;
 
             energy.runTimeValue -= AttackEnergy();
         }
@@ -40,11 +45,13 @@ public class Bodyguard : Character
 
         if (target != null)
         {
-            Debug.Log(this + " is attacking the " + target + "!");
+            Debug.Log(this.name + " is attacking the " + target.name + "!");
 
             target.health.runTimeValue -= 1;
 
-            Debug.Log("The enemy's health is now: " + target.health.runTimeValue);
+            Debug.Log(target.name + "'s health is now: " + target.health.runTimeValue);
+
+            BattleUIScript.instance.tempUIforInfo.text = this.name + " attacked the " + target.name + "! " + target.name + "'s health is now: " + target.health.runTimeValue;
 
             energy.runTimeValue -= Skill1Energy();
         }
@@ -58,11 +65,13 @@ public class Bodyguard : Character
 
         if (target != null)
         {
-            Debug.Log(this + " is attacking the " + target + "!");
+            Debug.Log(this.name + " is attacking the " + target.name + "!");
 
             target.health.runTimeValue -= 1;
 
-            Debug.Log(target + "'s health is now: " + target.health.runTimeValue);
+            Debug.Log(target.name + "'s health is now: " + target.health.runTimeValue);
+
+            BattleUIScript.instance.tempUIforInfo.text = this.name + " attacked the " + target.name + "! " + target.name + "'s health is now: " + target.health.runTimeValue;
 
             energy.runTimeValue -= Skill2Energy();
         }
