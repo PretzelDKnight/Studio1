@@ -10,6 +10,8 @@ public class DoNothing : AITreeNode
     {
         Debug.Log("AI Cannot do anything");
 
+        BattleUIScript.instance.tempUIforInfo.text = "AI Cannot do anything and has skipped it's turn";
+
         BattleManager.instance.Pass();
 
         return AITreeNodeState.Succeeded;
