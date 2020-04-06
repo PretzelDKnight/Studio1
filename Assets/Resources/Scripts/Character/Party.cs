@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Party : MonoBehaviour
 {
-    [SerializeField] Character[] members;
+    [SerializeField] List<Character> members;
     [SerializeField] bool AI;
 
     // Start is called before the first frame update
@@ -16,7 +17,7 @@ public class Party : MonoBehaviour
             Convert();
     }
 
-    public Character[] Members()
+    public List<Character> Members()
     {
         return members;
     }
@@ -31,40 +32,41 @@ public class Party : MonoBehaviour
 
     public void DeleteMember(Character chara)
     {
-        for (int i = 0; i < members.Length; i++)
-        {
-            if (members[i] == chara)
-            {
-                members[i] = null;
-            }
-        }
+        members.Remove(chara);
     }
 
     public void AddMember(Character chara)
     {
         bool added = false;
-        for (int i = 0; i < members.Length; i++)
+
+        for (int i = 0; i < members.Count; i++)
         {
-            if (members[i] == null)
+            if (members[i] == chara)
             {
-                members[i] = chara;
                 added = true;
             }
         }
 
-        if (!added)
+        if (!added && members.Count == 3)
         {
             Debug.Log("Character Not Added!! Party may be full!");
         }
+        else if (!added)
+            members.Add(chara);
     }
 
     void RetrieveChildren()
     {
-        members = GetComponentsInChildren<Character>();
+        var temp = GetComponentsInChildren<Character>();
+        
+        for (int i = 0; i < temp.Length; i++)
+        {
+            members.Add(temp[i]);
+        }
     }
 
     public int ReturnCount()
     {
-        return members.Length;
+        return members.Count;
     }
 }

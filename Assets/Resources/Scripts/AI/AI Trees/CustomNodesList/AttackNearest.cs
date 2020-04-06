@@ -16,13 +16,13 @@ public class AttackNearest : AITreeNode
     {
         BattleManager.instance.ResetEverything();
 
-        Character[] possibleTargets = BattleManager.instance.allies.Members();
+        List<Character> possibleTargets = BattleManager.instance.allies.Members();
 
         Character nearest = null;
 
         float nearestDist = Vector3.Distance(BattleManager.instance.currentChar.transform.position, possibleTargets[0].transform.position);
 
-        for (int i = 0; i < possibleTargets.Length; i++)
+        for (int i = 0; i < possibleTargets.Count; i++)
         {
             if (Vector3.Distance(BattleManager.instance.currentChar.transform.position, possibleTargets[i].transform.position) < nearestDist)
             {

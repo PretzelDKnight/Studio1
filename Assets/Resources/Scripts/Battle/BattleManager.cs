@@ -256,19 +256,10 @@ public class BattleManager : MonoBehaviour
                     if (allChara.Contains(member))
                     {
                         allChara.Remove(member);
+                        allies.DeleteMember(member);
+                        BattleUIScript.instance.tempUIforInfo.text = member.name + " has died.";
                     }
                 }
-                else
-                {
-                    if (!allChara.Contains(member))
-                    {
-                        allChara.Add(member);
-                    }
-                }
-            }
-            else
-            {
-                allyDead++;
             }
         }
 
@@ -282,28 +273,19 @@ public class BattleManager : MonoBehaviour
                     if (allChara.Contains(member))
                     {
                         allChara.Remove(member);
+                        enemies.DeleteMember(member);
+                        BattleUIScript.instance.tempUIforInfo.text = member.name + " has died.";
                     }
                 }
-                else
-                {
-                    if (!allChara.Contains(member))
-                    {
-                        allChara.Add(member);
-                    }
-                }
-            }
-            else
-            {
-                enemyDead++;
             }
         }
 
-        if (allyDead == allies.Members().Length)
+        if (allyDead == allies.Members().Count)
         {
             // Game Over Call
         }
 
-        if (enemyDead == enemies.Members().Length)
+        if (enemyDead == enemies.Members().Count)
         {
             // Battle Win Call
         }
@@ -342,10 +324,15 @@ public class BattleManager : MonoBehaviour
         var tempEnemyArray = enemies.Members();
 
 
-        for (int i = 0; i < allies.Members().Length; i++)
+        for (int i = 0; i < allies.Members().Count; i++)
         {
             tempAllyArray[i].transform.LookAt(tempEnemyArray[i].transform.position);
             tempEnemyArray[i].transform.LookAt(tempAllyArray[i].transform.position);
         }
-    }    
+    }
+
+    public void Update()
+    {
+        HealthCheck();
+    }
 }

@@ -17,20 +17,20 @@ public class AttackLowest : AITreeNode
     {
         BattleManager.instance.ResetEverything();
 
-        Character[] possibleTargets = BattleManager.instance.allies.Members();
+        List<Character> possibleTargets = BattleManager.instance.allies.Members();
         
         Character lowest = null;
 
-        float[] healths = new float[possibleTargets.Length];
+        float[] healths = new float[possibleTargets.Count];
 
-        for (int i = 0; i < possibleTargets.Length; i++)
+        for (int i = 0; i < possibleTargets.Count; i++)
         {
             healths[i] = possibleTargets[i].health.runTimeValue;
         }
 
         float lowestHP = healths.Min();
 
-        for (int i = 0; i < possibleTargets.Length; i++)
+        for (int i = 0; i < possibleTargets.Count; i++)
         {
             if (possibleTargets[i].health.runTimeValue == lowestHP)
             {
