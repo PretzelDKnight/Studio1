@@ -120,7 +120,6 @@ public class BattleManager : MonoBehaviour
         if (currentChar.AI)
         {
             Debug.Log("Passing turn!");
-            BattleUIScript.instance.tempUIforInfo.text = currentChar.name + " has passed their turn.";
         }
 
         BattleUIScript.instance.ResetUI();
