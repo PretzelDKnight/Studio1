@@ -121,6 +121,10 @@ public class BattleManager : MonoBehaviour
         {
             Debug.Log("Passing turn!");
         }
+        else
+        {
+            BattleUIScript.instance.tempUIforInfo.text = currentChar.name + " has passed their turn.";
+        }
 
         BattleUIScript.instance.ResetUI();
         currentChar.SetNotShown();
@@ -332,6 +336,16 @@ public class BattleManager : MonoBehaviour
                 enemy.MoveToNearestTile();
                 allChara.Add(enemy);
             }
+        }
+
+        var tempAllyArray = allies.Members();
+        var tempEnemyArray = enemies.Members();
+
+
+        for (int i = 0; i < allies.Members().Length; i++)
+        {
+            tempAllyArray[i].transform.LookAt(tempEnemyArray[i].transform.position);
+            tempEnemyArray[i].transform.LookAt(tempAllyArray[i].transform.position);
         }
     }    
 }
