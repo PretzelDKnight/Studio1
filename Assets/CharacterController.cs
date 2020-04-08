@@ -7,6 +7,9 @@ using UnityEngine.EventSystems;
 public class CharacterController : MonoBehaviour
 {
     [HideInInspector] public bool able = true;
+    bool moving;
+
+    Animator animator;
 
     Rigidbody rb;
 
@@ -23,6 +26,8 @@ public class CharacterController : MonoBehaviour
         rb = this.GetComponent<Rigidbody>();
         able = true;
         destination = transform.position;
+        moving = false;
+        animator = GetComponentInChildren<Animator>();
     }
 
     void Update()
@@ -67,5 +72,16 @@ public class CharacterController : MonoBehaviour
 
         transform.position += velocity * Time.deltaTime;
         velocity *= slowDownFactor;
+
+        if (velocity.magnitude <= 0.2)
+        {
+            moving = false;
+            animator.ResetTrigger("moving");
+        }
+        else
+        {
+            moving = true;
+            animator.SetTrigger("moving");
+        }
     }
 }
