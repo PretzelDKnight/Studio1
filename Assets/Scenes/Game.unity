@@ -4225,10 +4225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab1f4c055f97d464e890e9d108f3098a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  members:
-  - {fileID: 1534903848}
-  - {fileID: 1035686381}
-  - {fileID: 875567085}
+  members: []
   AI: 1
 --- !u!4 &1643447087 stripped
 Transform:
