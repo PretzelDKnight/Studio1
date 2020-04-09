@@ -170,7 +170,7 @@ public class BattleManager : MonoBehaviour
     public void AIFunction()
     {
         Debug.Log("AIs turn");
-        AITree.instance.Execute();
+        currentChar.myTree.Execute();
     }
 
     private HashSet<KeyValuePair<string, object>> ConvertGoals()

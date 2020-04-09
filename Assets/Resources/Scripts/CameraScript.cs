@@ -48,7 +48,7 @@ public class CameraScript : MonoBehaviour
 
         while (time <= 1)
         {
-            transform.position = Vector3.Lerp(currentPos, destPos, time* time);
+            transform.position = Vector3.Lerp(currentPos, destPos, time * time);
             time += Time.deltaTime * speed;
             yield return null;
         }

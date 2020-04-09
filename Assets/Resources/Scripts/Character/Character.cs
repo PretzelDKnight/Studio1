@@ -19,6 +19,8 @@ public abstract class Character : MonoBehaviour , IComparable
     public FloatVariable health;
     public Stats stats;
 
+    public AITree myTree;
+
     public List<KVPair> goals;
     public GOAPAction[] actions;
 
