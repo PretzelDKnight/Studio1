@@ -133,6 +133,7 @@ public abstract class Character : MonoBehaviour , IComparable
                 Vector3 destPos = tile.ReturnTargetPosition(currentPos);
                 while (time < 1)
                 {
+                    transform.LookAt(new Vector3(tile.ReturnTargetPosition(currentPos).x, transform.position.y, tile.ReturnTargetPosition(currentPos).z));
                     transform.position = Vector3.Lerp(currentPos, tile.ReturnTargetPosition(currentPos), time);
                     time += Time.deltaTime * stats.speed;
                     yield return null;

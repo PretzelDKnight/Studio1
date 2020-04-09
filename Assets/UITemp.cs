@@ -6,9 +6,12 @@ public class UITemp : MonoBehaviour
 {
     public GameObject storyButton;
 
+    Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponentInChildren<Animator>();
         storyButton.SetActive(false);
     }
 
@@ -16,7 +19,8 @@ public class UITemp : MonoBehaviour
     {
         if (other.tag == "StoryTrigger")
         {
-            Debug.Log(other.gameObject.tag);
+            animator.ResetTrigger("isMoving");
+            animator.SetTrigger("notMoving");
             StorySystem.instance.PlayStory();
         }
     }

@@ -4,10 +4,18 @@ using UnityEngine;
 
 public class Bodyguard : Character
 {
+    private float TimeToFire;
+
+    private GameObject effectToSpawn;
+    public GameObject FirePoint;
+
+    public List<GameObject> vfx = new List<GameObject>();
+
     // Start is called before the first frame update
     void Start()
     {
         Initialize();
+        effectToSpawn = vfx[0];
     }
 
     public override void Move(HexTile tile)
@@ -25,6 +33,11 @@ public class Bodyguard : Character
 
         if (target != null)
         {
+            transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
+
+            TimeToFire = Time.time + 1 / effectToSpawn.GetComponent<ProjectileMove>().FireRate;
+            SpawnVFX();
+
             Debug.Log(this.name + " is attacking the " + target.name + "!");
 
             target.health.runTimeValue -= 1;
@@ -45,6 +58,11 @@ public class Bodyguard : Character
 
         if (target != null)
         {
+            transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
+
+            TimeToFire = Time.time + 1 / effectToSpawn.GetComponent<ProjectileMove>().FireRate;
+            SpawnVFX();
+
             Debug.Log(this.name + " is attacking the " + target.name + "!");
 
             target.health.runTimeValue -= 2;
@@ -65,6 +83,11 @@ public class Bodyguard : Character
 
         if (target != null)
         {
+            transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
+
+            TimeToFire = Time.time + 1 / effectToSpawn.GetComponent<ProjectileMove>().FireRate;
+            SpawnVFX();
+
             Debug.Log(this.name + " is attacking the " + target.name + "!");
 
             target.health.runTimeValue -= 4;
@@ -99,4 +122,22 @@ public class Bodyguard : Character
         return stats.skill2Energy;
     }
 
+    void SpawnVFX()
+    {
+        GameObject vfx;
+
+        if (FirePoint != null)
+        {
+            vfx = Instantiate(effectToSpawn, FirePoint.transform.position, Quaternion.identity);
+
+            if (FirePoint != null)
+            {
+                vfx.transform.localRotation = FirePoint.transform.rotation;
+            }
+        }
+        else
+        {
+            Debug.Log("No Fire Point");
+        }
+    }
 }
