@@ -58,7 +58,6 @@ public class CharacterController : MonoBehaviour
             if (Physics.Raycast(ray, out hit, 100, layer))
             {
                 destination = hit.point;
-                //transform.LookAt(new Vector3(hit.point.x, transform.position.y, hit.point.z));
                 moving = true;
             }
         }
