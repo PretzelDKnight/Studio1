@@ -16,6 +16,7 @@ public class Bodyguard : Character
     {
         Initialize();
         effectToSpawn = vfx[0];
+        myTree = this.gameObject.GetComponent<AITree>();
     }
 
     public override void Move(HexTile tile)
