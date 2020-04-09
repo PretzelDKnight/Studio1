@@ -15,7 +15,7 @@ public class CharacterController : MonoBehaviour
 
     float destDist;
     public float speed = 5f;
-    public float slowingRadius = 1f;        // Radius for slowing zone
+    public float rotSpeed = 1f;
 
     public LayerMask layer;
 
@@ -58,7 +58,7 @@ public class CharacterController : MonoBehaviour
             if (Physics.Raycast(ray, out hit, 100, layer))
             {
                 destination = hit.point;
-                transform.LookAt(new Vector3(hit.point.x, transform.position.y, hit.point.z));
+                //transform.LookAt(new Vector3(hit.point.x, transform.position.y, hit.point.z));
                 moving = true;
             }
         }
@@ -86,6 +86,11 @@ public class CharacterController : MonoBehaviour
             }
 
             transform.position = Vector3.MoveTowards(transform.position,destination, speed * Time.deltaTime);
+
+            Vector3 dir = destination - transform.position;
+            dir.y = 0;
+            Quaternion rotation = Quaternion.LookRotation(dir);
+            transform.rotation = Quaternion.Lerp(transform.rotation, rotation, rotSpeed * Time.deltaTime);
         }
     }
 }
