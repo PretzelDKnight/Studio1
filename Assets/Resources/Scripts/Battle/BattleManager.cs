@@ -286,11 +286,15 @@ public class BattleManager : MonoBehaviour
 
         if (allyDead == allies.Members().Count)
         {
+            Debug.Log("Lost the Battle!");
+            EndBattle();
             // Game Over Call
         }
 
         if (enemyDead == enemies.Members().Count)
         {
+            Debug.Log("Won the Battle!");
+            EndBattle();
             // Battle Win Call
         }
     }
