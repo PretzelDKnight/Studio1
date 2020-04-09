@@ -1309,6 +1309,20 @@ MonoBehaviour:
   actions: []
   AI: 0
   Busy: 0
+--- !u!136 &428460074
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 428460072}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2.6484451
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.0029278, z: 0}
 --- !u!1 &502233126
 GameObject:
   m_ObjectHideFlags: 0
@@ -2401,6 +2415,20 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8288762388bdb194aa1099cad1f19e3a, type: 2}
   AI: 1
   Busy: 0
+--- !u!136 &875567086
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 875567084}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2.6484451
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.0029278, z: 0}
 --- !u!1 &877400729
 GameObject:
   m_ObjectHideFlags: 0
@@ -2926,6 +2954,20 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8288762388bdb194aa1099cad1f19e3a, type: 2}
   AI: 1
   Busy: 0
+--- !u!136 &1035686382
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1035686380}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2.6484451
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.0029278, z: 0}
 --- !u!1 &1048001892
 GameObject:
   m_ObjectHideFlags: 0
@@ -3982,6 +4024,20 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8288762388bdb194aa1099cad1f19e3a, type: 2}
   AI: 1
   Busy: 0
+--- !u!136 &1534903849
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534903847}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2.6484451
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.0029278, z: 0}
 --- !u!1 &1602991225
 GameObject:
   m_ObjectHideFlags: 0
@@ -4529,6 +4585,20 @@ MonoBehaviour:
   actions: []
   AI: 0
   Busy: 0
+--- !u!136 &1735451412
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1735451410}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2.6484451
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.0029278, z: 0}
 --- !u!1001 &1761011790
 PrefabInstance:
   m_ObjectHideFlags: 0
