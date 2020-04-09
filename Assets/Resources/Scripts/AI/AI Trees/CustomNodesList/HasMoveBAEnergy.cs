@@ -14,18 +14,14 @@ public class HasMoveBAEnergy : AITreeNode
     {
         List<HexTile> movableTiles = TileManager.instance.ReturnTilesToAI(BattleManager.instance.currentChar);
 
-        for (int i = 0; i < movableTiles.Count; i++)
+        HexTile temp = movableTiles[Random.Range(0, movableTiles.Count)];
+
+        if (temp != null)
         {
-            List<HexTile> temp = movableTiles[i].ReturnNeighbours();
-            for (int j = 0; j < temp.Count; j++)
-            {
-                if (temp[j].occupant == AITree.AIstarget)
-                {
-                    AITree.tileToMoveTo = movableTiles[i];
-                    return AITreeNodeState.Succeeded;
-                }
-            }
+            AITree.tileToMoveTo = temp;
+            return child.Execute();
         }
-        return AITreeNodeState.Failed;
+        else
+            return AITreeNodeState.Failed;
     }
 }
