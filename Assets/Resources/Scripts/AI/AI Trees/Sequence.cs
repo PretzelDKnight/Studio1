@@ -5,7 +5,9 @@ using UnityEngine;
 public class Sequence : AITreeNode
 {
     List<AITreeNode> children = new List<AITreeNode>();
-    
+
+    int lastChild = 0;
+
     //Constructor for assigning children
     public Sequence(List<AITreeNode> nodes)
     {
@@ -14,31 +16,27 @@ public class Sequence : AITreeNode
 
     public override AITreeNodeState Execute()
     {
-        bool childRun = false;
-
-        foreach (AITreeNode node in children)
+        for (int i = lastChild; i < children.Count; i++)
         {
-            switch (node.Execute())
+            switch (children[i].Execute())
             {
                 case AITreeNodeState.Failed:
-                    currNodeState = AITreeNodeState.Failed;
-                    return currNodeState;
-                case AITreeNodeState.Succeeded:
-                    continue;
+                    {
+                        currNodeState = AITreeNodeState.Failed;
+                        lastChild = 0;
+                        return currNodeState;
+                    }
                 case AITreeNodeState.Running:
-                    childRun = true;
-                    continue;
-                default:
-                    currNodeState = AITreeNodeState.Succeeded;
-                    return currNodeState;
-            }
+                    {
+                        lastChild = i;
+                        currNodeState = AITreeNodeState.Running;
+                        return currNodeState;
+                    }
+            }            
         }
 
-        if (childRun)
-            currNodeState = AITreeNodeState.Running;
-        else
-            currNodeState = AITreeNodeState.Succeeded;
-
+        currNodeState = AITreeNodeState.Succeeded;
+        lastChild = 0;
         return currNodeState;
     }
 }

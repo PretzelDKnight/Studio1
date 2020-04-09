@@ -166,12 +166,7 @@ public class BattleManager : MonoBehaviour
         else
             Pass();
     }
-
-    public void AIFunction()
-    {
-        Debug.Log("AIs turn");
-        currentChar.myTree.Execute();
-    }
+       
 
     private HashSet<KeyValuePair<string, object>> ConvertGoals()
     {
@@ -233,10 +228,6 @@ public class BattleManager : MonoBehaviour
         {
             //HandCards.instance.SetHandMove();
             Move();
-        }
-        else
-        {
-            AIFunction();
         }
     }
 
@@ -342,5 +333,10 @@ public class BattleManager : MonoBehaviour
     public void Update()
     {
         HealthCheck();
+        if (currentChar!=null && currentChar.AI)
+        {
+            Debug.Log("I am AI!");
+            currentChar.myTree.Execute();
+        }
     }
 }

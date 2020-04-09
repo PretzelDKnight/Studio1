@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Runtime.Remoting;
 
 public enum Status
 {
@@ -144,7 +145,7 @@ public abstract class Character : MonoBehaviour , IComparable
                 if (time >= 1)
                     time = 0;
             }
-        }
+        }        
 
         transform.position = path[path.Count - 1].ReturnTargetPosition(transform.position);
 

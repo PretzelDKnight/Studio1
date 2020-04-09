@@ -6,6 +6,8 @@ public class Selector : AITreeNode
 {
     List<AITreeNode> children = new List<AITreeNode>();
 
+    int lastChild;
+
     //Constructor for assigning children
     public Selector(List<AITreeNode> nodes)
     {
@@ -15,23 +17,27 @@ public class Selector : AITreeNode
     /* If a child succeeds selector succeeds immediately else it fails*/
     public override AITreeNodeState Execute()
     {
-        foreach (AITreeNode node in children)
+        for (int i = lastChild; i < children.Count; i++)
         {
-            switch (node.Execute())
+            switch (children[i].Execute())
             {
-                case AITreeNodeState.Failed:
-                    continue;
                 case AITreeNodeState.Succeeded:
-                    currNodeState = AITreeNodeState.Succeeded;
-                    return currNodeState;
+                    {
+                        currNodeState = AITreeNodeState.Succeeded;
+                        lastChild = 0;
+                        return currNodeState;
+                    }
                 case AITreeNodeState.Running:
-                    currNodeState = AITreeNodeState.Running;
-                    return currNodeState;
-                default:
-                    continue;
+                    {
+                        currNodeState = AITreeNodeState.Running;
+                        lastChild = i;
+                        return currNodeState;
+                    }
             }
         }
         currNodeState = AITreeNodeState.Failed;
+        lastChild = 0;
         return currNodeState;
     }
 }
+

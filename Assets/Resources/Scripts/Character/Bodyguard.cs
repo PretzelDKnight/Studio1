@@ -21,7 +21,7 @@ public class Bodyguard : Character
                 new HasBAEnergy(new InBARange(new AIBasic())), new HasMoveBAEnergy(new MoveBA()) })), new AttackLowest(new Selector(new List<AITreeNode>
                 { new HasS2Energy(new InS2Range(new AIS2())), new HasS1Energy(new InS1Range(new AIS1())), new HasBAEnergy(new InBARange(new AIBasic())),
                     new HasMoveBAEnergy(new MoveBA()) })), new AttackNearest(new Selector(new List<AITreeNode> { new HasS2Energy(new InS2Range(new AIS2())),
-                        new HasS1Energy(new InS1Range(new AIS1())), new HasBAEnergy(new InBARange(new AIBasic())), new HasMoveBAEnergy(new MoveBA()) })) }) }), new DoNothing() }));
+                        new HasS1Energy(new InS1Range(new AIS1())), new HasBAEnergy(new InBARange(new AIBasic())), new Sequence(new List<AITreeNode>(){new PickATile(), new MoveBA() }) })) }) }), new DoNothing() }));
     }
 
     public override void Move(HexTile tile)
