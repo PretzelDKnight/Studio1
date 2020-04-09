@@ -16,7 +16,7 @@ public class HasMoveBAEnergy : AITreeNode
 
         HexTile temp = movableTiles[Random.Range(0, movableTiles.Count)];
 
-        if (temp.Occupied)
+        if (!temp.Occupied)
         {
             AITree.tileToMoveTo = temp;
             return child.Execute();
