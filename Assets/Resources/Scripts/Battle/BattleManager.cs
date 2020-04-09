@@ -255,10 +255,12 @@ public class BattleManager : MonoBehaviour
                     allyDead++;
                     if (allChara.Contains(member))
                     {
+                        member.gameObject.SetActive(false);
                         allChara.Remove(member);
                         allies.DeleteMember(member);
                         BattleUIScript.instance.tempUIforInfo.text = member.name + " has died.";
                     }
+                    BattleManager.instance.Pass();
                 }
             }
         }
@@ -272,10 +274,12 @@ public class BattleManager : MonoBehaviour
                     enemyDead++;
                     if (allChara.Contains(member))
                     {
+                        member.gameObject.SetActive(false);
                         allChara.Remove(member);
                         enemies.DeleteMember(member);
                         BattleUIScript.instance.tempUIforInfo.text = member.name + " has died.";
                     }
+                    BattleManager.instance.Pass();
                 }
             }
         }
