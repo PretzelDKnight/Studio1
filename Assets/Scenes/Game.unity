@@ -1675,6 +1675,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3279926837390587938, guid: 771abd1c16f134b78b400fd57dc2398d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -2790305389222140532, guid: 771abd1c16f134b78b400fd57dc2398d,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -3274,7 +3279,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   able: 1
-  speed: 10
+  speed: 5
   slowingRadius: 2
   layer:
     serializedVersion: 2

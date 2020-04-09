@@ -13,6 +13,7 @@ public class CharacterController : MonoBehaviour
 
     Rigidbody rb;
 
+    float destDist;
     public float speed = 5f;
     public float slowingRadius = 1f;        // Radius for slowing zone
 
@@ -38,6 +39,14 @@ public class CharacterController : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        if (!BattleManager.Battle && !StorySystem.instance.StoryPlaying())
+        {
+            MoveTowards();
+        }
+    }
+
     void Move()
     {
         RaycastHit hit;
@@ -50,38 +59,33 @@ public class CharacterController : MonoBehaviour
             {
                 destination = hit.point;
                 transform.LookAt(new Vector3(hit.point.x, transform.position.y, hit.point.z));
-                Arrive();
+                moving = true;
             }
-        }
-        else
-        {
-            Arrive();
         }
     }
 
-    public void Arrive()
+    public void MoveTowards()
     {
-        Vector3 distToDest = destination - transform.position;
-        Vector3 desiredVel = distToDest.normalized * speed;
-        desiredVel.y = 0;
-        Vector3 steering = desiredVel - velocity;
-
-        velocity += steering * Time.deltaTime;
-
-        float slowDownFactor = Mathf.Clamp01(distToDest.magnitude / slowingRadius);
-
-        transform.position += velocity * Time.deltaTime;
-        velocity *= slowDownFactor;
-
-        if (velocity.magnitude <= 0.2)
+        if (moving)
         {
-            moving = false;
-            animator.ResetTrigger("moving");
-        }
-        else
-        {
-            moving = true;
-            animator.SetTrigger("moving");
+            destDist = Vector3.Distance(destination, transform.position);
+
+            if (destDist > 2f)
+            {
+                moving = true;
+                animator.SetTrigger("isMoving");
+                animator.ResetTrigger("notMoving");
+            }
+            else
+            {
+                moving = false;
+                Debug.Log(animator.GetBool("notMoving"));
+                animator.SetTrigger("notMoving");
+                animator.ResetTrigger("isMoving");
+                return;
+            }
+
+            transform.position = Vector3.MoveTowards(transform.position,destination, speed * Time.deltaTime);
         }
     }
 }
