@@ -10,7 +10,7 @@ public class AITree
 
     public static Character AIstarget;
 
-    public static HexTile tileToMoveTo;
+    public HexTile tileToMoveTo;
 
     public AITree(AITreeNode node)
     {

@@ -333,10 +333,5 @@ public class BattleManager : MonoBehaviour
     public void Update()
     {
         HealthCheck();
-        if (currentChar!=null && currentChar.AI)
-        {
-            Debug.Log("I am AI!");
-            currentChar.myTree.Execute();
-        }
     }
 }

@@ -11,7 +11,7 @@ public enum Status
     Staggered
 }
 
-public abstract class Character : MonoBehaviour , IComparable
+public abstract class Character : MonoBehaviour, IComparable
 {
     public BaseStats baseStats;
     public CoolDowns baseCD;
@@ -42,6 +42,7 @@ public abstract class Character : MonoBehaviour , IComparable
     Color normal = Color.white;
 
     public abstract void Move(HexTile tile);
+    public abstract void AIMove(HexTile tile);
     public abstract void Attack(HexTile tile);
     public abstract void SkillOne(HexTile tile);
     public abstract void SkillTwo(HexTile tile);
@@ -61,13 +62,15 @@ public abstract class Character : MonoBehaviour , IComparable
     protected void Update()
     {
         hovered = false;
+        if (BattleManager.instance.currentChar.AI)
+            BattleManager.instance.currentChar.myTree.Execute();
         if (this.energy.runTimeValue < 2 && BattleManager.instance.currentChar.AI)
             BattleManager.instance.Pass();
     }
 
     protected void LateUpdate()
     {
-        PropertyToShader();   
+        PropertyToShader();
     }
 
     // Instantiates and assigns Scriptable object
@@ -128,7 +131,7 @@ public abstract class Character : MonoBehaviour , IComparable
     {
         Busy = true;
         float time = 0;
-        foreach(var tile in path)
+        foreach (var tile in path)
         {
             if (tile != currentTile)
             {
@@ -145,7 +148,7 @@ public abstract class Character : MonoBehaviour , IComparable
                 if (time >= 1)
                     time = 0;
             }
-        }        
+        }
 
         transform.position = path[path.Count - 1].ReturnTargetPosition(transform.position);
 
@@ -276,5 +279,38 @@ public abstract class Character : MonoBehaviour , IComparable
     public void SkillPush(HexTile tile)
     {
         StartCoroutine(MoveToTile(tile));
+    }
+
+    protected void AIMoveAcrossPath(List<HexTile> path)
+    {
+        Busy = true;
+        float time = 0;
+        foreach (var tile in path)
+        {
+            if (tile != currentTile)
+            {
+                Vector3 currentPos = transform.position;
+                Vector3 destPos = tile.ReturnTargetPosition(currentPos);
+                while (time < 1)
+                {
+                    transform.LookAt(new Vector3(tile.ReturnTargetPosition(currentPos).x, transform.position.y, tile.ReturnTargetPosition(currentPos).z));
+                    transform.position = Vector3.Lerp(currentPos, tile.ReturnTargetPosition(currentPos), time);
+                    time += Time.deltaTime * stats.speed;
+                }
+
+                if (time >= 1)
+                    time = 0;
+            }
+        }
+
+        transform.position = path[path.Count - 1].ReturnTargetPosition(transform.position);
+
+        currentTile.Occupied = false;
+        currentTile = path[path.Count - 1];
+        currentTile.Occupied = true;
+        currentTile.Walkable = false;
+        currentTile.occupant = this;
+        BattleManager.instance.NextMove();
+        Busy = false;
     }
 }

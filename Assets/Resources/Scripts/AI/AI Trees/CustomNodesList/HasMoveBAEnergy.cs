@@ -12,13 +12,15 @@ public class HasMoveBAEnergy : AITreeNode
     }
     public override AITreeNodeState Execute()
     {
-        List<HexTile> movableTiles = TileManager.instance.ReturnTilesToAI(BattleManager.instance.currentChar);
+        var thisChar = BattleManager.instance.currentChar;
+
+        List<HexTile> movableTiles = TileManager.instance.ReturnTilesToAI(thisChar);
 
         HexTile temp = movableTiles[Random.Range(0, movableTiles.Count)];
 
         if (!temp.Occupied)
         {
-            AITree.tileToMoveTo = temp;
+            thisChar.myTree.tileToMoveTo = temp;
             return child.Execute();
         }
         else

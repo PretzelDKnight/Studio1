@@ -75,4 +75,13 @@ public class Gunner : Character
     {
         return 4;
     }
+
+    public override void AIMove(HexTile tile)
+    {
+        AIMoveAcrossPath(Pathfinder.instance.FindPath(GetCurrentTile(), tile));
+
+        BattleUIScript.instance.tempUIforInfo.text = this.name + " has moved to tile " + tile.tileID;
+
+        energy.runTimeValue -= tile.energyCost;
+    }
 }

@@ -12,13 +12,12 @@ public class MoveBA : AITreeNode
         Debug.Log("Moving to BA Range!");
 
         Character thisChar = BattleManager.instance.currentChar;
-                
 
-        thisChar.transform.position = Vector3.MoveTowards(thisChar.transform.position, AITree.tileToMoveTo.transform.position, 0.1f);
+        thisChar.AIMove(thisChar.myTree.tileToMoveTo);
 
-        Debug.Log("AI's current tile is: " + thisChar.GetCurrentTile().tileID + " and AI's destination tile is: " + AITree.tileToMoveTo.tileID);
+        Debug.Log("AI's current tile is: " + thisChar.GetCurrentTile().tileID + " and AI's destination tile is: " + thisChar.myTree.tileToMoveTo.tileID);
 
-        if (thisChar.GetCurrentTile() != AITree.tileToMoveTo)
+        if (thisChar.GetCurrentTile() != thisChar.myTree.tileToMoveTo)
             return AITreeNodeState.Running;
 
         return AITreeNodeState.Succeeded;
