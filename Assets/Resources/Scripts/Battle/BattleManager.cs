@@ -195,9 +195,11 @@ public class BattleManager : MonoBehaviour
 
     public void EndBattle()
     {
+        StorySystem.instance.SetPlayingFalse();
+        Debug.Log("Ended battle!");
         Battle = false;
         TileManager.instance.DestroyGrid();
-        TurnCards.instance.DestroyStatCards();
+        //TurnCards.instance.DestroyStatCards();
         turnOrder = new Queue<Character>();
         StartCoroutine(CameraScript.instance.ChangeCurrent(Player.instance.protagonist));
     }
@@ -279,6 +281,7 @@ public class BattleManager : MonoBehaviour
         {
             Debug.Log("Lost the Battle!");
             EndBattle();
+            allyDead = 0;
             // Game Over Call
         }
 
@@ -286,6 +289,7 @@ public class BattleManager : MonoBehaviour
         {
             Debug.Log("Won the Battle!");
             EndBattle();
+            enemyDead = 0;
             // Battle Win Call
         }
     }
@@ -331,10 +335,10 @@ public class BattleManager : MonoBehaviour
     }
 
     public void Update()
-    {
-        HealthCheck();
+    {        
         if (BattleManager.Battle)
         {
+            HealthCheck();
             for (int i = 0; i < enemies.Members().Count; i++)
             {
                 if (enemies.Members()[i].GetCurrentTile().occupant != enemies.Members()[i])

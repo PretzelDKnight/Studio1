@@ -11,7 +11,7 @@ public class CameraScript : MonoBehaviour
     public Vector3 camOffset;
     public float speed = 1;
 
-    static bool busy = false;
+    bool busy = false;
 
     void Awake()
     {

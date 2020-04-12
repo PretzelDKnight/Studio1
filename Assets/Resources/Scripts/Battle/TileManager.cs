@@ -223,7 +223,7 @@ public class TileManager : MonoBehaviour
     {
         for (int i = tileList.Count - 1; i >= 0; i--)
         {
-            tileList[i].DestroyMeself();
+            tileList[i].DestroyMyself();
             tileList.RemoveAt(i);
         }
     }

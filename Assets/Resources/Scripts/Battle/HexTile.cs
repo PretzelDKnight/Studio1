@@ -51,7 +51,7 @@ public class HexTile : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (isStable != 0) 
+        if (isStable != 0)
             isStable = TileManager.LerpValue();
         PropertyToShader();
     }
@@ -59,7 +59,7 @@ public class HexTile : MonoBehaviour
     // Function to find neighbours of the current tile
     void FindNeighbours()
     {
-        List<Vector3> dir = TileManager.instance.Directions(transform); 
+        List<Vector3> dir = TileManager.instance.Directions(transform);
 
         for (int i = 0; i < dir.Count; i++)
         {
@@ -78,9 +78,9 @@ public class HexTile : MonoBehaviour
     }
 
     // Function to return neighbours
-    public List<HexTile> ReturnNeighbours() 
-    { 
-        return neighbours; 
+    public List<HexTile> ReturnNeighbours()
+    {
+        return neighbours;
     }
 
     // Calculates and assigns Fcost
@@ -96,7 +96,7 @@ public class HexTile : MonoBehaviour
         if (Physics.Raycast(transform.position, Vector3.up, out hit, 0.5f))
             if (hit.collider.tag == "Enviro")
             {
-                DestroyMeself();
+                DestroyMyself();
             }
     }
 
@@ -239,12 +239,12 @@ public class HexTile : MonoBehaviour
     {
         RaycastHit hit;
         if (Physics.Raycast(transform.position, Vector3.up, out hit, 0.5f))
-                return hit.collider.GetComponent<Character>();
+            return hit.collider.GetComponent<Character>();
         return null;
     }
 
     // Destroys meself!!!
-    public void DestroyMeself()
+    public void DestroyMyself()
     {
         Destroy(gameObject);
         Destroy(this);

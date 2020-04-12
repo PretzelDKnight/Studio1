@@ -15,8 +15,6 @@ public class MoveBA : AITreeNode
 
         thisChar.Move(thisChar.myTree.tileToMoveTo);
 
-        Debug.Log("AI's current tile is: " + thisChar.GetCurrentTile().tileID + " and AI's destination tile is: " + thisChar.myTree.tileToMoveTo.tileID);
-
         if (thisChar.GetCurrentTile() != thisChar.myTree.tileToMoveTo)
             return AITreeNodeState.Running;
 

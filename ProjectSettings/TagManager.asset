@@ -10,6 +10,10 @@ TagManager:
   - Ally
   - StoryTrigger
   - BattleTrigger
+  - StoryTrigger2
+  - StoryTrigger3
+  - RandomBattleTrigger
+  - StoryTrigger4
   layers:
   - Default
   - TransparentFX

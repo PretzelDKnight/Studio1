@@ -264,4 +264,9 @@ public class StorySystem : MonoBehaviour
     {
         return playing;
     }
+
+    public void SetPlayingFalse()
+    {
+        playing = false;
+    }
 }
