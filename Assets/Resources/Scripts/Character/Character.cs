@@ -38,6 +38,8 @@ public abstract class Character : MonoBehaviour, IComparable
 
     HexTile currentTile = null;
 
+    int CurrentTileID;
+
     Renderer render;
     Color normal = Color.white;
 
@@ -62,8 +64,14 @@ public abstract class Character : MonoBehaviour, IComparable
     protected void Update()
     {
         hovered = false;
+
+        if (BattleManager.Battle)
+            BattleManager.instance.currentChar.CurrentTileID = BattleManager.instance.currentChar.GetCurrentTile().tileID;
+
         if (BattleManager.Battle && BattleManager.instance.currentChar.AI)
-            BattleManager.instance.currentChar.myTree.Execute();
+        {
+            BattleManager.instance.currentChar.myTree.Execute();            
+        }
         if (this.energy.runTimeValue < 2 && BattleManager.instance.currentChar.AI)
             BattleManager.instance.Pass();
     }

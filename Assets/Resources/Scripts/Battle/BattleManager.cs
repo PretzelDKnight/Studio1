@@ -333,5 +333,13 @@ public class BattleManager : MonoBehaviour
     public void Update()
     {
         HealthCheck();
+        if (BattleManager.Battle)
+        {
+            for (int i = 0; i < enemies.Members().Count; i++)
+            {
+                if (enemies.Members()[i].GetCurrentTile().occupant != enemies.Members()[i])
+                    enemies.Members()[i].MoveToNearestTile();
+            }
+        }
     }
 }
