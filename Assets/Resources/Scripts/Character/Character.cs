@@ -62,7 +62,7 @@ public abstract class Character : MonoBehaviour, IComparable
     protected void Update()
     {
         hovered = false;
-        if (BattleManager.instance.currentChar.AI)
+        if (BattleManager.Battle && BattleManager.instance.currentChar.AI)
             BattleManager.instance.currentChar.myTree.Execute();
         if (this.energy.runTimeValue < 2 && BattleManager.instance.currentChar.AI)
             BattleManager.instance.Pass();
@@ -125,43 +125,7 @@ public abstract class Character : MonoBehaviour, IComparable
         Busy = false;
         yield return null;
     }
-
-    // Coroutine for smoothly moving character down a list of tiles
-    protected IEnumerator MoveDownPath(List<HexTile> path)
-    {
-        Busy = true;
-        float time = 0;
-        foreach (var tile in path)
-        {
-            if (tile != currentTile)
-            {
-                Vector3 currentPos = transform.position;
-                Vector3 destPos = tile.ReturnTargetPosition(currentPos);
-                while (time < 1)
-                {
-                    transform.LookAt(new Vector3(tile.ReturnTargetPosition(currentPos).x, transform.position.y, tile.ReturnTargetPosition(currentPos).z));
-                    transform.position = Vector3.Lerp(currentPos, tile.ReturnTargetPosition(currentPos), time);
-                    time += Time.deltaTime * stats.speed;
-                    yield return null;
-                }
-
-                if (time >= 1)
-                    time = 0;
-            }
-        }
-
-        transform.position = path[path.Count - 1].ReturnTargetPosition(transform.position);
-
-        currentTile.Occupied = false;
-        currentTile = path[path.Count - 1];
-        currentTile.Occupied = true;
-        currentTile.Walkable = false;
-        currentTile.occupant = this;
-        BattleManager.instance.NextMove();
-        Busy = false;
-        yield return null;
-    }
-
+    
     // Compare function for IComparable, ordering by speed of the characters
     public int CompareTo(object obj)
     {
@@ -281,7 +245,8 @@ public abstract class Character : MonoBehaviour, IComparable
         StartCoroutine(MoveToTile(tile));
     }
 
-    protected void AIMoveAcrossPath(List<HexTile> path)
+    // Coroutine for smoothly moving character down a list of tiles
+    protected IEnumerator MoveDownPath(List<HexTile> path)
     {
         Busy = true;
         float time = 0;
@@ -296,6 +261,41 @@ public abstract class Character : MonoBehaviour, IComparable
                     transform.LookAt(new Vector3(tile.ReturnTargetPosition(currentPos).x, transform.position.y, tile.ReturnTargetPosition(currentPos).z));
                     transform.position = Vector3.Lerp(currentPos, tile.ReturnTargetPosition(currentPos), time);
                     time += Time.deltaTime * stats.speed;
+                    yield return null;
+                }
+
+                if (time >= 1)
+                    time = 0;
+            }
+        }
+
+        transform.position = path[path.Count - 1].ReturnTargetPosition(transform.position);
+
+        currentTile.Occupied = false;
+        currentTile = path[path.Count - 1];
+        currentTile.Occupied = true;
+        currentTile.Walkable = false;
+        currentTile.occupant = this;
+        BattleManager.instance.NextMove();
+        Busy = false;
+        yield return null;
+    }
+
+    protected void AIMoveAcrossPath(List<HexTile> path)
+    {
+        Busy = true;
+        float time = 0;
+        foreach (var tile in path)
+        {
+            if (tile != currentTile)
+            {
+                Vector3 currentPos = transform.position;
+                Vector3 destPos = tile.ReturnTargetPosition(currentPos);
+                while (time < 1)
+                {
+                    transform.LookAt(new Vector3(tile.ReturnTargetPosition(currentPos).x, transform.position.y, tile.ReturnTargetPosition(currentPos).z));
+                    transform.position = Vector3.Lerp(currentPos, tile.ReturnTargetPosition(currentPos), time);
+                    time += Time.unscaledDeltaTime * stats.speed;
                 }
 
                 if (time >= 1)

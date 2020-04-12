@@ -7,12 +7,6 @@ using UnityEngine;
 
 public class AttackLowest : AITreeNode
 {
-    private AITreeNode child;
-
-    public AttackLowest (AITreeNode node)
-    {
-        child = node;
-    }
     public override AITreeNodeState Execute()
     {
         BattleManager.instance.ResetEverything();
@@ -40,16 +34,6 @@ public class AttackLowest : AITreeNode
 
         AITree.AIstarget = lowest;
 
-        switch (child.Execute())
-        {
-            case AITreeNodeState.Failed:
-                return AITreeNodeState.Failed;
-            case AITreeNodeState.Succeeded:
-                return AITreeNodeState.Succeeded;
-            case AITreeNodeState.Running:
-                return AITreeNodeState.Running;
-            default:
-                return AITreeNodeState.Succeeded;
-        }
+        return AITreeNodeState.Succeeded;
     }
 }

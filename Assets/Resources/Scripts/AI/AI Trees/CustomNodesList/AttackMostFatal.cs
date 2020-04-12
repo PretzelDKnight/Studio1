@@ -6,12 +6,6 @@ using UnityEngine.SocialPlatforms;
 
 public class AttackMostFatal : AITreeNode
 {
-    private AITreeNode child;
-
-    public AttackMostFatal(AITreeNode node)
-    {
-        child = node;
-    }
     public override AITreeNodeState Execute()
     {
         //AI need not check this condition if its not an arsonist
@@ -43,21 +37,9 @@ public class AttackMostFatal : AITreeNode
             }
         }
 
-
         AITree.AIstarget = fatalest;
 
-        //In progress.....
 
-        switch (child.Execute())
-        {
-            case AITreeNodeState.Failed:
-                return AITreeNodeState.Failed;
-            case AITreeNodeState.Succeeded:
-                return AITreeNodeState.Succeeded;
-            case AITreeNodeState.Running:
-                return AITreeNodeState.Running;
-            default:
-                return AITreeNodeState.Succeeded;
-        }
+        return AITreeNodeState.Succeeded;
     }
 }

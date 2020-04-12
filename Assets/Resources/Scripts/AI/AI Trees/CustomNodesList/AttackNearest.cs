@@ -6,12 +6,6 @@ using UnityEngine;
 
 public class AttackNearest : AITreeNode
 {
-    private AITreeNode child;
-
-    public AttackNearest(AITreeNode node)
-    {
-        child = node;
-    }
     public override AITreeNodeState Execute()
     {
         BattleManager.instance.ResetEverything();
@@ -37,16 +31,6 @@ public class AttackNearest : AITreeNode
 
         AITree.AIstarget = nearest;
 
-        switch (child.Execute())
-        {
-            case AITreeNodeState.Failed:
-                return AITreeNodeState.Failed;
-            case AITreeNodeState.Succeeded:
-                return AITreeNodeState.Succeeded;
-            case AITreeNodeState.Running:
-                return AITreeNodeState.Running;
-            default:
-                return AITreeNodeState.Succeeded;
-        }
+        return AITreeNodeState.Succeeded;
     }
 }

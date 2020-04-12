@@ -13,7 +13,7 @@ public class MoveBA : AITreeNode
 
         Character thisChar = BattleManager.instance.currentChar;
 
-        thisChar.AIMove(thisChar.myTree.tileToMoveTo);
+        thisChar.Move(thisChar.myTree.tileToMoveTo);
 
         Debug.Log("AI's current tile is: " + thisChar.GetCurrentTile().tileID + " and AI's destination tile is: " + thisChar.myTree.tileToMoveTo.tileID);
 
