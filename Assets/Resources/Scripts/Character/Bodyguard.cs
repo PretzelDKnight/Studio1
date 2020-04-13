@@ -6,6 +6,8 @@ public class Bodyguard : Character
 {
     private float TimeToFire;
 
+    Animator animator;
+
     private GameObject effectToSpawn;
     public GameObject FirePoint;
 
@@ -14,6 +16,8 @@ public class Bodyguard : Character
     // Start is called before the first frame update
     void Start()
     {
+        animator = this.gameObject.GetComponentInChildren<Animator>();
+
         Initialize();
         effectToSpawn = vfx[0];
         myTree = new AITree(new Selector(new List<AITreeNode> { new Sequence(new List<AITreeNode> { new AttackMostFatal(), new Selector(new List<AITreeNode>
@@ -41,6 +45,8 @@ public class Bodyguard : Character
         {
             transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
 
+            animator.SetTrigger("punch");
+
             TimeToFire = Time.time + 1 / effectToSpawn.GetComponent<ProjectileMove>().FireRate;
             SpawnVFX();
 
@@ -65,6 +71,8 @@ public class Bodyguard : Character
         if (target != null)
         {
             transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
+
+            animator.SetTrigger("smash");
 
             TimeToFire = Time.time + 1 / effectToSpawn.GetComponent<ProjectileMove>().FireRate;
             SpawnVFX();
