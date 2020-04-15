@@ -1,16 +1,3 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-
-
-public class AIBasic : AITreeNode
-{
-    public override AITreeNodeState Execute()
-    {
-        Debug.Log("Using BA!");
-
-        BattleManager.instance.currentChar.Attack(AITree.AIstarget.GetCurrentTile());
-        return AITreeNodeState.Succeeded;
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:23a4bc0095ec02cbfa7f3cde42fddbeb6903ba52a1839be00c71c5bfaf550f00
+size 341

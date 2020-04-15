@@ -1,26 +1,3 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class MenuEventListener : MonoBehaviour
-{
-    public MenuEvent menuEvent;
-
-    public UnityEngine.Events.UnityEvent response;
-
-    private void Start()
-    {
-        if(menuEvent!=null)
-        {
-            if(MenuEvent.CheckListener(this))
-            {
-                MenuEvent.AddListener(this);
-            }
-        }
-    }
-
-    public void OnCallEvent()
-    {
-        response.Invoke();
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:f6a4f4cccdf886b7fc926779a50b29dd86275d9087e2d126bc6844d42dfac68c
+size 493

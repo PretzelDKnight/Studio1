@@ -1,29 +1,3 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-
-
-public class InS2Range : AITreeNode
-{
-    private AITreeNode child;
-    public InS2Range(AITreeNode node)
-    {
-        child = node;
-    }
-    public override AITreeNodeState Execute()
-    {
-        Character currChar = BattleManager.instance.currentChar;
-
-        List<HexTile> temp = TileManager.instance.ReturnTilesWithinRangeToAI(currChar, currChar.stats.skill2range);
-
-        for (int i = 0; i < temp.Count; i++)
-        {
-            if (temp[i].occupant == AITree.AIstarget)
-            {                
-                return child.Execute();
-            }
-        }
-        return AITreeNodeState.Failed;
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:25a3d64aaf926ca6958812aab5928955909c0d71f1710bcffa161e8db31cbdc1
+size 709

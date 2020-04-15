@@ -1,21 +1,3 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class CoolDowns : ScriptableObject
-{
-    public int S1CD;
-    public int S2CD;
-
-    public void Copy(CoolDowns cd)
-    {
-        S1CD = cd.S1CD;
-        S2CD = cd.S2CD;
-    }
-
-    public void Reset()
-    {
-        S1CD = 0;
-        S2CD = 0;
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:d44a33fd41bd0d8958e596ba93f7b050dac1bb554380c30a02be2e1696847e67
+size 361

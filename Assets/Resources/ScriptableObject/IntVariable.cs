@@ -1,24 +1,3 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
-
-[CreateAssetMenu]
-public class IntVariable : ScriptableObject, ISerializationCallbackReceiver
-{
-    public int initialValue;
-    [NonSerialized] public int runTimeValue;
-
-    public void Copy(int value)
-    {
-        initialValue = value;
-        runTimeValue = value;
-    }
-
-    public void OnAfterDeserialize()
-    {
-        runTimeValue = initialValue;
-    }
-
-    public void OnBeforeSerialize() { }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:c0ef16c87b9c6c5b485f9787134a6ed74c3e3e101ce0e739020fae53f1352825
+size 526

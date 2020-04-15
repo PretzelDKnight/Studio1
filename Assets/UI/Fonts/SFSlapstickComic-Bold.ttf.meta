@@ -1,22 +1,3 @@
-fileFormatVersion: 2
-guid: 5b2f1418873948a409715113db65919c
-TrueTypeFontImporter:
-  externalObjects: {}
-  serializedVersion: 4
-  fontSize: 16
-  forceTextureCase: -2
-  characterSpacing: 0
-  characterPadding: 1
-  includeFontData: 1
-  fontName: SF Slapstick Comic
-  fontNames:
-  - SF Slapstick Comic
-  fallbackFontReferences: []
-  customCharacters: 
-  fontRenderingMode: 0
-  ascentCalculationMode: 1
-  useLegacyBoundsCalculation: 0
-  shouldRoundAdvanceValue: 1
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+version https://git-lfs.github.com/spec/v1
+oid sha256:13aafe307d242b3b2e78174f3a44ff47795f2b4008d86e3f9c44a6f05c3caea5
+size 514

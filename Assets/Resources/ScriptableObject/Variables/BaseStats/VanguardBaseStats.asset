@@ -1,22 +1,3 @@
-%YAML 1.1
-%TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b95666c702b8b394d82b85b64490a525, type: 3}
-  m_Name: VanguardBaseStats
-  m_EditorClassIdentifier: 
-  energy: 20
-  health: 120
-  attackRange: 1
-  skill1Range: 1
-  skill2range: 2
-  speed: 1
-  statusResist: 1
-  damageResist: 8
+version https://git-lfs.github.com/spec/v1
+oid sha256:f32fd9d187cde49b9582e94ec74bdb3a6de55a0e08a5496d95c19a60dd183443
+size 531

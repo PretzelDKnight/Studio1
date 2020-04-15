@@ -1,23 +1,3 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-[CreateAssetMenu]
-public class Move : GOAPAction
-{
-    public override bool CheckAction(Character chara, out HexTile tile, out Character target)
-    {
-        return GOAP.MoveCheck(chara, out tile, out target);
-    }
-
-    public override bool CheckProceduralPrecondition(Character chara)
-    {
-        return true;
-    }
-
-    public override void Execute(Character chara, HexTile tile, Character target)
-    {
-        //chara.Move(tile);
-        Debug.Log("Moving!");
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:02d0bb9fd4e0a985a5c1d48d83c3c6800f0d2df1ba52bdce0b92cfccd669ed80
+size 582

@@ -1,16 +1,3 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-
-
-public class AIS2 : AITreeNode
-{
-    public override AITreeNodeState Execute()
-    {
-        Debug.Log("Using S2!");
-
-        BattleManager.instance.currentChar.SkillTwo(AITree.AIstarget.GetCurrentTile());
-        return AITreeNodeState.Succeeded;
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:a9e67d4c62f3b2881e8642952a8d31e0d92add88c015b92dee638ae802428406
+size 340

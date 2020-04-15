@@ -1,20 +1,3 @@
-﻿using UnityEngine;
-using UnityEditor;
-
-[CustomEditor(typeof(InputManager))]
-public class InputManagerEditor : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        InputManager IM = target as InputManager;
-
-        EditorGUI.BeginChangeCheck();
-
-        base.OnInspectorGUI();
-
-        if (EditorGUI.EndChangeCheck())
-        {
-            IM.RefreshTracker();
-        }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:9fea2397e150eee93982ad41fa309b34c0722cf2411327c5fce0f6f4295cdf03
+size 413

@@ -1,24 +1,3 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
-
-[ExecuteInEditMode, ImageEffectAllowedInSceneView]
-public class OutlinePP : MonoBehaviour
-{
-    public Material outline;
-
-    private Camera cam;
-
-    private void Start()
-    {
-        //get the camera and tell it to render a depthnormals texture
-        cam = GetComponent<Camera>();
-        cam.depthTextureMode = cam.depthTextureMode | DepthTextureMode.DepthNormals;
-    }
-
-    void OnRenderImage(RenderTexture source, RenderTexture destination)
-    {
-        Graphics.Blit(source, destination, outline, 0);
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:ff964bffb1b2355914837f0e30ef7680a220d95f526b7bf13ff86858db8b7aa0
+size 641

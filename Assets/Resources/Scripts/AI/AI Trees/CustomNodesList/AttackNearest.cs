@@ -1,36 +1,3 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-
-
-public class AttackNearest : AITreeNode
-{
-    public override AITreeNodeState Execute()
-    {
-        BattleManager.instance.ResetEverything();
-
-        List<Character> possibleTargets = BattleManager.instance.allies.Members();
-
-        Character nearest = null;
-
-        float nearestDist = Vector3.Distance(BattleManager.instance.currentChar.transform.position, possibleTargets[0].transform.position);
-
-        for (int i = 0; i < possibleTargets.Count; i++)
-        {
-            if (Vector3.Distance(BattleManager.instance.currentChar.transform.position, possibleTargets[i].transform.position) < nearestDist)
-            {
-                nearestDist = Vector3.Distance(BattleManager.instance.currentChar.transform.position, possibleTargets[i].transform.position);
-                nearest = possibleTargets[i];
-            }
-            else if ((Vector3.Distance(BattleManager.instance.currentChar.transform.position, possibleTargets[0].transform.position) == nearestDist))
-            {
-                nearest = possibleTargets[0];
-            }
-        }
-
-        AITree.AIstarget = nearest;
-
-        return AITreeNodeState.Succeeded;
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:28465f5934c44f75d620c64d1f3072559a30be24e8412a9212c48604d0cc8b1c
+size 1235

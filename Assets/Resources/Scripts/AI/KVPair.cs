@@ -1,17 +1,3 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-[System.Serializable]
-public struct KVPair
-{
-    public string key;
-    public bool value;
-
-    public KeyValuePair<string, object> Convert()
-    {
-        if (key == "")
-            value = true;
-        return new KeyValuePair<string, object>(key, value);
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:9383a56b5471ee9c431e9dbb8ee09e9c0a32640f36c4e7d0a8ad911ae983cabd
+size 366

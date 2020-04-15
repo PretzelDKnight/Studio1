@@ -1,18 +1,3 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-[CreateAssetMenu]
-public class BaseStats : ScriptableObject
-{
-    public int energy;
-    public float health;
-    public int attackRange;
-    public int skill1Range;
-    public int skill2range;
-    public int skill1Energy;
-    public int skill2Energy;
-    public int speed;
-    public float statusResist;
-    public float damageResist;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:2ba0662b806a60113a3d3c808dd442b61c85f5e657251ca80bedcc5b2791e53c
+size 439

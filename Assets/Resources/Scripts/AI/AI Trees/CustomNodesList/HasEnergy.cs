@@ -1,15 +1,3 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-
-public class HasEnergy : AITreeNode
-{
-    public override AITreeNodeState Execute()
-    {
-        if (BattleManager.instance.currentChar.energy.runTimeValue > 0)
-            return AITreeNodeState.Succeeded;
-        else
-            return AITreeNodeState.Failed;
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:d8df07641453ba3ff6b66c3b5e21e1e603447f8578e3ded2718a32785484789a
+size 356

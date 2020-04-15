@@ -1,18 +1,3 @@
-%YAML 1.1
-%TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58a4bedf13d466147a5e12c9d3edf29c, type: 3}
-  m_Name: Party
-  m_EditorClassIdentifier: 
-  members:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+version https://git-lfs.github.com/spec/v1
+oid sha256:17a49c56722b7c6e5105ed6a136cdf144caeae0d76a2ed8235d134740d9884df
+size 453

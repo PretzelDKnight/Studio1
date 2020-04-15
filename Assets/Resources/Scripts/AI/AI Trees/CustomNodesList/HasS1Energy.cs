@@ -1,24 +1,3 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-
-
-public class HasS1Energy : AITreeNode
-{
-    private AITreeNode child;
-    public HasS1Energy(AITreeNode node)
-    {
-        child = node;
-    }
-
-    public override AITreeNodeState Execute()
-    {
-        if (BattleManager.instance.currentChar.energy.runTimeValue >= BattleManager.instance.currentChar.Skill1Energy())
-        {
-            return child.Execute();
-        }
-        else
-            return AITreeNodeState.Failed;
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:e379d97ebb83034a9305a55bae7867a866c0cd7f8c0345b1ed1def978114e5b6
+size 522

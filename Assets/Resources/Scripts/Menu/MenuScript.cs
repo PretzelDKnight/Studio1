@@ -1,15 +1,3 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class MenuScript : MonoBehaviour
-{
-    public GameObject nextChoice;
-    public GameObject currentChoice;
-
-    public void Next()
-    {
-        nextChoice.gameObject.SetActive(true);
-        currentChoice.gameObject.SetActive(false);
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:16c7e9e132e02e13f9a24e4b80e7bead0963488b77bacf2c69fdc69b7f6d6fc1
+size 332

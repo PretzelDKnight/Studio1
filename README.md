@@ -1,9 +1,3 @@
-# Studio1
-  GPG210
-  Studio 1 Project
-  
-  This is a tactical RPG game that utilizes multiple intuitive concepts to provide a good, challenging and entertaining experience.
-  
-  The game aesthetic is a noir-themed toon style aesthetic.
-  
-  The game will utilize features such as A* pathfinding, bezier curve camera moves, GOAP implementation and more.
+version https://git-lfs.github.com/spec/v1
+oid sha256:17953145f6fe10268e4ee109ca9e6f11db6989c5afac123d1df286402dab29d4
+size 353

@@ -1,10 +1,3 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-[System.Serializable]
-struct CameraPlacements
-{
-    [SerializeField] public Vector3 cameraRot;
-    [SerializeField] public Vector3 cameraPos;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:dca1cce9c7627bf9364072ec786a5069b3bb56ae6b183c2e672fc906546ab7fe
+size 227

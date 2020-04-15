@@ -1,29 +1,3 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Tilemaps;
-
-public class HasMoveBAEnergy : AITreeNode
-{
-    private AITreeNode child;
-    public HasMoveBAEnergy(AITreeNode node)
-    {
-        child = node;
-    }
-    public override AITreeNodeState Execute()
-    {
-        var thisChar = BattleManager.instance.currentChar;
-
-        List<HexTile> movableTiles = TileManager.instance.ReturnTilesToAI(thisChar);
-
-        HexTile temp = movableTiles[Random.Range(0, movableTiles.Count)];
-
-        if (!temp.Occupied)
-        {
-            thisChar.myTree.tileToMoveTo = temp;
-            return child.Execute();
-        }
-        else
-            return AITreeNodeState.Failed;
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:82d79a46a0c19cf0cea2e84ed070e7a243e63879756aaa575ccd06fc7ab45e37
+size 733
