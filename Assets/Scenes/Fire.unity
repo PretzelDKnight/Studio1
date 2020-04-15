@@ -9721,7 +9721,7 @@ GameObject:
   - component: {fileID: 512665125}
   - component: {fileID: 512665124}
   m_Layer: 0
-  m_Name: 1
+  m_Name: Fire Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
